@@ -10,14 +10,6 @@ const ScoutSchema = Schema({
         type: String,
         required: true,
     },
-    fecha_nacimiento: {
-        type: String,
-        required: true,
-    },
-    ciudad_residencia: {
-        type: String,
-        required: true,
-    },
     email: {
         type: String,
         required: true,
@@ -27,6 +19,24 @@ const ScoutSchema = Schema({
         type: String,
         required: true,
     },
+    link_ficha_medica: {
+        type: String,
+        required: true,
+    },
+    fecha_nacimiento: {
+        type: String,
+        required: true,
+    },
+    celular: {
+        type: String,
+        required: true,
+    },
+    remaAsociada: {
+        type: String,
+        required: false,
+    },
+
+
 
 })
 
