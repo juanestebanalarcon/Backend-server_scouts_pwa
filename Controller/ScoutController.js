@@ -29,9 +29,8 @@ const createScout = async(req,res=response) => {
 
 }
 const readScouts=(req,res=response)=>{
-    const {email}=req.body;
     try{
-        const scouts_ = await Scout.find({email});
+        const scouts_ = await Scout.find({});
         if(scouts){
             return res.status(200).json({
                 ok:true,

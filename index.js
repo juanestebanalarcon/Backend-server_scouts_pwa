@@ -13,9 +13,13 @@ app.use( express.static('public'))
 
 app.use( express.json() );
 
-
-    // app.use('/api/auth', require('./routes/auth'));
-    // app.use('/api/events', require('./routes/events'));]
+app.use(`${process.env.BASE_URL}/scouts`, require('./routes/Scouts'));
+app.use(`${process.env.BASE_URL}/admins`, require('./routes/Administrador'));
+app.use(`${process.env.BASE_URL}/superAdmin`, require('./routes/SuperAdmin'));
+app.use(`${process.env.BASE_URL}/rama`, require('./routes/Rama'));
+app.use(`${process.env.BASE_URL}/canal`, require('./routes/Canal'));
+app.use(`${process.env.BASE_URL}/evento`, require('./routes/Evento'));
+app.use(`${process.env.BASE_URL}/publicaciones`, require('./routes/Publicaciones'));
 
 app.listen( process.env.PORT, () => {
     console.log(`Servidor corriendo en el puerto ${process.env.PORT}`)

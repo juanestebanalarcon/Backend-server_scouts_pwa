@@ -15,6 +15,29 @@ const createAdmin=(req,res=response)=>{
     
 }
 const readAdmin=(req,res=response)=>{
+    const uid=req.params.uid;
+    try{
+        const admin_ = await Administrador.findById(uid);
+        if(admin_){
+            return res.status(200).json({
+                ok:true,
+                admin_ 
+            });
+            
+        }else{
+            return res.status(404).json({
+                ok:false,
+                msg:"Not found"
+            });
+
+        }
+        
+    }catch(e){
+        console.log(e);
+        return res.status(500).json({ok:false,msg:'Error interno del servidor'})
+    }
+}
+const readAdmins=(req,res=response)=>{
     try
     {
     const {email} = req.body;
@@ -98,10 +121,30 @@ const deleteAdmin =(req,res=response)=>{
     }
 
 }
+const loginAdmin= async(req,res=response) => {
+    const {email,password}=req.body;
+    try {
+     const adminDB=await Scout.findOne({email});
+     if(!adminDB){
+         res.status(400).json({ok:false,msg:'El correo no existe.'})
+     }
+     const validPassword=bcrypt.compareSync(password,adminDB.password);
+     if(!validPassword){
+        res.status(400).json({ok:false,msg:'La password no es válida.'})
+     }
+     const token= await generateJWT(adminDB.id,adminDB.nombre,adminDB.email);
+     return res.json({ok:true,uid:adminDB.id,name:adminDB.nombre,email,token})
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ok:false,msg:'Error interno del servidor'})
+    }
+}
 
 module.exports={
+    loginAdmin,
     createAdmin,
     readAdmin,
+    readAdmins,
     updateAdmin,
     deleteAdmin
 

@@ -1,30 +1,26 @@
 const { Router } = require("express");
 const {check} = require("express-validators");
 const { validarCampos } = require("../middlewares/validar-campos");
-const {createScout,readScouts,readScout,updateScout,deleteScout,
-    loginScout,revalidateToken} = require("../Controller/ScoutController");
+const {createAdmin,readAdmin,readAdmins,updateAdmin,deleteAdmin,loginAdmin} = require("../Controller/AdminController");
 const router = Router();
 
-router.post("/create-scout",[
+router.post("/create-admin",[
     check("nombre","Nombre es obligatorio").not().isEmpty(),
-    check("apellido","Nombre es obligatorio").not().isEmpty(),
     check("email","Email es obligatorio").isEmail(),
     check("password","Password es obligatorio").not().isEmpty(),
-    check("fecha_nacimiento","fecha nacimiento es obligatorio").not().isEmpty(),
-    check("celular","celular es obligatorio").not().isEmpty(),
     check("ramaAsociada","rama asociada es obligatorio").not().isEmpty(),
     validarCampos,
-],createScout);
-router.post('/log-in-scout',[
+],createAdmin);
+router.post('/log-in-admin',[
     check('email','El email es obligatorio').isEmail(),
     check('password','La es contraseña es obligatoria').isLength({min:8}),
     validarCampos
-],loginScout);
+],loginAdmin);
 router.put("/:id",[
     check("email","Email es obligatorio").isEmail(),
     validarCampos,
-],updateScout);
-router.get("/allScouts",readScouts);
-router.get("/:uid",readScout);
-router.delete("/:uid",deleteScout);
+],updateAdmin);
+router.get("/AllAdmins",readAdmins);
+router.get("/:uid",readAdmin);
+router.delete("/:uid",deleteAdmin);
 module.exports=router;

@@ -30,6 +30,20 @@ const readPublicacion=(req,res=response)=>{
     }
 
 }
+const readPublicaciones=(req,res=response)=>{
+    const fecha = req.body.fecha
+    try{
+        const publis__ = await Rama.find({fecha});
+        if(publis__){
+            res.status(200).json({ok:true,publis__});
+        }else{
+            res.status(404).json({ok:false,msg:"Not found"});
+        }
+    }catch(e){
+        console.log(e);
+        res.status(500).json({ok:false,msg:"Error interno en el servidor."});
+    }
+}
 const updatePublicacion=(req,res=response)=>{
     const id  = req.params.id;
 
@@ -101,6 +115,7 @@ const deletePublicacion =(req,res=response)=>{
 module.exports={
    createPublicacion,
    readPublicacion,
+   readPublicaciones,
    updatePublicacion,
    deletePublicacion
 
