@@ -1,24 +1,24 @@
 const {response}=require('express');
-const Rama = require("../Model/Rama");
+const Evento = require("../Model/Evento");
 
-const createRama=(req,res=response)=>{
+const createEvento=(req,res=response)=>{
     const uid = req.uid;
-    const rama = new Rama({Scout:uid,...req.body});
+    const Evento = new Evento({Scout:uid,...req.body});
 
     try{
-        ramaDB = await rama.save();
-        res.status(200).json({ok:true,rama:ramaDB})
+        EventoDB = await Evento.save();
+        res.status(200).json({ok:true,Evento:EventoDB})
     }catch(e) {
         console.log(e);
         res.status(500).json({ok:false,msg:"Error interno en el servidor."});
     }
 }
-const readRamas=(req,res=response)=>{
+const readEventos=(req,res=response)=>{
     const uuid = req.params.uid
     try{
-        const ramas_ = await Rama.find({uuid});
-        if(ramas_){
-            res.status(200).json({ok:true,ramas_});
+        const Eventos_ = await Evento.find({uuid});
+        if(Eventos_){
+            res.status(200).json({ok:true,Eventos_});
         }else{
             res.status(404).json({ok:false,msg:"Not found"});
         }
@@ -27,14 +27,14 @@ const readRamas=(req,res=response)=>{
         res.status(500).json({ok:false,msg:"Error interno en el servidor."});
     }
 }
-const readRama=(req,res=response)=>{
+const readEvento=(req,res=response)=>{
     const uid=req.params.uid;
     try{
-        const rama_ = await Rama.findById(uid);
-        if(rama_){
+        const Evento_ = await Evento.findById(uid);
+        if(Evento_){
             return res.status(200).json({
                 ok:true,
-                rama_ 
+                Evento_ 
             });
             
         }else{
@@ -50,33 +50,33 @@ const readRama=(req,res=response)=>{
         return res.status(500).json({ok:false,msg:'Error interno del servidor'})
     }
 }
-const updateRama = async (req, res = response) => {
+const updateEvento = async (req, res = response) => {
 
     const id  = req.params.id;
     const uid = req.uid;
 
     try {
         
-        const rama = await Rama.findById( id );
+        const Evento = await Evento.findById( id );
 
-        if ( !rama ) {
+        if ( !Evento ) {
             return res.status(404).json({
                 ok: true,
-                msg: 'Rama no encontrada por id',
+                msg: 'Evento no encontrada por id',
             });
         }
 
-        const cambioRama = {
+        const cambioEvento = {
             ...req.body,
             Scout: uid
         }
 
-        const ramaActualizada = await Rama.findByIdAndUpdate( id, cambioRama, { new: true } );
+        const EventoActualizad = await Evento.findByIdAndUpdate( id, cambioEvento, { new: true } );
 
 
         res.json({
             ok: true,
-            rama:ramaActualizada
+            Evento:EventoActualizad
         })
 
     } catch (error) {
@@ -89,27 +89,27 @@ const updateRama = async (req, res = response) => {
         })
     }
 }
-const deleteRama=(req,res=response)=>{
+const deleteEvento=(req,res=response)=>{
     
     const id  = req.params.id;
     
     try {
         
-        const rama = await Rama.findById( id );
+        const Evento = await Evento.findById( id );
     
-        if ( !rama ) {
+        if ( !Evento ) {
             return res.status(404).json({
                 ok: true,
-                msg: 'Rama no encontrada por id',
+                msg: 'Evento no encontrada por id',
             });
         }
     
-        await rama.findByIdAndDelete( id );
+        await Evento.findByIdAndDelete( id );
     
     
         res.json({
             ok: true,
-            msg: 'Rama eliminada'
+            msg: 'Evento eliminada'
         });
     
     } catch (error) {
@@ -124,9 +124,9 @@ const deleteRama=(req,res=response)=>{
 }
 
 module.exports={
-    createRama,
-    readRama,
-    readRamas,
-    updateRama,
-    deleteRama
+    createEvento,
+    readEvento,
+    readEventos,
+    updateEvento,
+    deleteEvento
 }

@@ -1,24 +1,24 @@
 const {response}=require('express');
-const Rama = require("../Model/Rama");
+const Canal = require("../Model/Canal");
 
-const createRama=(req,res=response)=>{
+const createCanal=(req,res=response)=>{
     const uid = req.uid;
-    const rama = new Rama({Scout:uid,...req.body});
+    const canal = new Canal({publicacion:uid,...req.body});
 
     try{
-        ramaDB = await rama.save();
-        res.status(200).json({ok:true,rama:ramaDB})
+        CanalDB = await canal.save();
+        res.status(200).json({ok:true,Canal:CanalDB})
     }catch(e) {
         console.log(e);
         res.status(500).json({ok:false,msg:"Error interno en el servidor."});
     }
 }
-const readRamas=(req,res=response)=>{
+const readCanals=(req,res=response)=>{
     const uuid = req.params.uid
     try{
-        const ramas_ = await Rama.find({uuid});
-        if(ramas_){
-            res.status(200).json({ok:true,ramas_});
+        const Canals_ = await Canal.find({uuid});
+        if(Canals_){
+            res.status(200).json({ok:true,Canals_});
         }else{
             res.status(404).json({ok:false,msg:"Not found"});
         }
@@ -27,14 +27,14 @@ const readRamas=(req,res=response)=>{
         res.status(500).json({ok:false,msg:"Error interno en el servidor."});
     }
 }
-const readRama=(req,res=response)=>{
+const readCanal=(req,res=response)=>{
     const uid=req.params.uid;
     try{
-        const rama_ = await Rama.findById(uid);
-        if(rama_){
+        const Canal_ = await Canal.findById(uid);
+        if(Canal_){
             return res.status(200).json({
                 ok:true,
-                rama_ 
+                Canal_ 
             });
             
         }else{
@@ -50,33 +50,33 @@ const readRama=(req,res=response)=>{
         return res.status(500).json({ok:false,msg:'Error interno del servidor'})
     }
 }
-const updateRama = async (req, res = response) => {
+const updateCanal = async (req, res = response) => {
 
     const id  = req.params.id;
     const uid = req.uid;
 
     try {
         
-        const rama = await Rama.findById( id );
+        const canal = await Canal.findById( id );
 
-        if ( !rama ) {
+        if ( !canal ) {
             return res.status(404).json({
                 ok: true,
-                msg: 'Rama no encontrada por id',
+                msg: 'Canal no encontrado por id',
             });
         }
 
-        const cambioRama = {
+        const cambioCanal = {
             ...req.body,
-            Scout: uid
+            publicacion: uid
         }
 
-        const ramaActualizada = await Rama.findByIdAndUpdate( id, cambioRama, { new: true } );
+        const CanalActualizado = await Canal.findByIdAndUpdate( id, cambioCanal, { new: true } );
 
 
         res.json({
             ok: true,
-            rama:ramaActualizada
+            Canal:CanalActualizado
         })
 
     } catch (error) {
@@ -89,27 +89,27 @@ const updateRama = async (req, res = response) => {
         })
     }
 }
-const deleteRama=(req,res=response)=>{
+const deleteCanal=(req,res=response)=>{
     
     const id  = req.params.id;
     
     try {
         
-        const rama = await Rama.findById( id );
+        const canal = await Canal.findById( id );
     
-        if ( !rama ) {
+        if ( !canal ) {
             return res.status(404).json({
                 ok: true,
-                msg: 'Rama no encontrada por id',
+                msg: 'Canal no encontrado por id',
             });
         }
     
-        await rama.findByIdAndDelete( id );
+        await canal.findByIdAndDelete( id );
     
     
         res.json({
             ok: true,
-            msg: 'Rama eliminada'
+            msg: 'Canal eliminado'
         });
     
     } catch (error) {
@@ -124,9 +124,9 @@ const deleteRama=(req,res=response)=>{
 }
 
 module.exports={
-    createRama,
-    readRama,
-    readRamas,
-    updateRama,
-    deleteRama
+    createCanal,
+    readCanal,
+    readCanals,
+    updateCanal,
+    deleteCanal
 }
