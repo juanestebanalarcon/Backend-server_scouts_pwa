@@ -1,0 +1,961 @@
+{
+	"info": {
+		"_postman_id": "7ce03da4-e3d1-4e15-ba7e-f2450360a79d",
+		"name": "BackendPi2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16938553"
+	},
+	"item": [
+		{
+			"name": "/api/scouts/create-scout",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n    \"nombre\": \"\",\r\n    \"apellido\":\"\",\r\n    \"email\": \"\",\r\n    \"password\":\"\",\r\n    \"link_ficha_medica\":\"\",\r\n    \"fecha_nacimiento\": \"\",\r\n    \"celular\": \"\",\r\n    \"ramaAsociada\":\"\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/api/scouts/create-scout",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"scouts",
+						"create-scout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/canal/create-canal",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n    \"nombre\": \"\",\r\n    \"ramaAsignada\":\"\",\r\n    \"linkImagen\":\"\",\r\n    \"publicacion\":\"\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/api/canal/create-canal",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"canal",
+						"create-canal"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/publicaciones/create-publicacion",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n    \"titulo\": \"\",\r\n    \"descripcion\":\"\",\r\n    \"linkImagen\":\"\",\r\n    \"autor\":\"\",\r\n    \"fecha\":\"\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/api/publicaciones/create-publicacion",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"publicaciones",
+						"create-publicacion"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/publicaciones/allPublicaciones",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/api/publicaciones/allPublicaciones",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"publicaciones",
+						"allPublicaciones"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/publicaciones/id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/api/publicaciones/id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"publicaciones",
+						"id"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/publicaciones/id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/api/publicaciones/id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"publicaciones",
+						"id"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/publicaciones/id",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n    \"titulo\": \"\",\r\n    \"descripcion\":\"\",\r\n    \"linkImagen\":\"\",\r\n    \"autor\":\"\",\r\n    \"fecha\":\"\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/api/publicaciones/id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"publicaciones",
+						"id"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/evento/id",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n    \"titulo\": \"\",\r\n    \"descripcion\":\"\",\r\n    \"linkImagen\":\"\",\r\n    \"autor\":\"\",\r\n    \"fechaYHoraInicio\":\"\",\r\n    \"fechaYHoraFinal\":\"\",\r\n    \"ramaAsignada\":\"\",\r\n    \"inscritos\":\"\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/api/evento/id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"evento",
+						"id"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/evento/id Copy",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n    \"titulo\": \"\",\r\n    \"descripcion\":\"\",\r\n    \"linkImagen\":\"\",\r\n    \"autor\":\"\",\r\n    \"fechaYHoraInicio\":\"\",\r\n    \"fechaYHoraFinal\":\"\",\r\n    \"ramaAsignada\":\"\",\r\n    \"inscritos\":\"\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/api/evento/create-event",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"evento",
+						"create-event"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/evento/id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/api/evento/id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"evento",
+						"id"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/evento/id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/api/evento/id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"evento",
+						"id"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/evento/allEvents",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/api/evento/allEvents",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"evento",
+						"allEvents"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/canal/{uid}",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n    \"nombre\": \"\",\r\n    \"ramaAsignada\":\"\",\r\n    \"linkImagen\":\"\",\r\n    \"publicacion\":\"\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/api/canal/id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"canal",
+						"id"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/canal/{uid}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/api/canal/uid",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"canal",
+						"uid"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/canal/allCanals",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/api/canal/allCanals",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"canal",
+						"allCanals"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/canal/{uid}",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/api/canal/uid",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"canal",
+						"uid"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/rama/create-rama",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n    \"nombre\": \"\",\r\n    \"linkImagen\":\"\",\r\n    \"Scout\": \"\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/api/rama/create-rama",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"rama",
+						"create-rama"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/rama/id",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n    \"nombre\": \"\",\r\n    \"linkImagen\":\"\",\r\n    \"Scout\": \"\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/api/rama/id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"rama",
+						"id"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/admin/create-admin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n    \"nombre\": \"\",\r\n    \"email\": \"\",\r\n    \"password\":\"\",\r\n    \"remasAsignadas\":\"\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/api/admin/create-admin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"admin",
+						"create-admin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/allSuperAdmins/create-superAdmin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n    \"nombre\": \"\",\r\n    \"email\": \"\",\r\n    \"password\":\"\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/api/superAdmin/create-superAdmin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"superAdmin",
+						"create-superAdmin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/scouts/log-in-scout",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n    \"email\": \"\",\r\n    \"password\":\"\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/api/scouts/log-in-scout",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"scouts",
+						"log-in-scout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/admin/log-in-admin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n    \"email\": \"\",\r\n    \"password\":\"\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/api/scouts/log-in-admin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"scouts",
+						"log-in-admin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/admin/log-in-superAdmin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n    \"email\": \"\",\r\n    \"password\":\"\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/api/scouts/log-in-superAdmin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"scouts",
+						"log-in-superAdmin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/scouts/allScouts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/api/scouts/allScouts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"scouts",
+						"allScouts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/admin/AllAdmins",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/api/admin/AllAdmins",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"admin",
+						"AllAdmins"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/rama/AllRamas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/api/rama/AllRamas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"rama",
+						"AllRamas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/superAdmin/allSuperAdmins",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/api/superAdmin/allSuperAdmins",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"superAdmin",
+						"allSuperAdmins"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/scouts/{uid}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/api/scouts/{uid}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"scouts",
+						"{uid}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/apiadmin/{id}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/api/admin/{uid}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"admin",
+						"{uid}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/apirama/{id}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/api/rama/{uid}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"rama",
+						"{uid}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/apisuperAdmin/{id}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/api/superAdmin/{uid}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"superAdmin",
+						"{uid}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/scouts/{uid}",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/api/scouts/{uid}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"scouts",
+						"{uid}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/admin/{uid}",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/api/admin/{uid}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"admin",
+						"{uid}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/superAdmin/{uid}",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/api/superAdmin/{uid}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"superAdmin",
+						"{uid}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/rama/{uid}",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:9000/api/rama/{uid}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"rama",
+						"{uid}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/scouts/{uid}",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n    \"nombre\": \"\",\r\n    \"apellido\":\"\",\r\n    \"email\": \"\",\r\n    \"password\":\"\",\r\n    \"link_ficha_medica\":\"\",\r\n    \"fecha_nacimiento\": \"\",\r\n    \"celular\": \"\",\r\n    \"remaAsociada\":\"\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/api/scouts/{uid}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"scouts",
+						"{uid}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/admin/{uid}",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n    \"nombre\": \"\",\r\n    \"email\": \"\",\r\n    \"password\":\"\",\r\n    \"ramasAsignadas\":\"\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/api/admin/{uid}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"admin",
+						"{uid}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/superAdmin/{uid}",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n    \"nombre\": \"\",\r\n    \"email\": \"\",\r\n    \"password\":\"\",\r\n    \"ramasAsignadas\":\"\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9000/api/superAdmin/{uid}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9000",
+					"path": [
+						"api",
+						"superAdmin",
+						"{uid}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
