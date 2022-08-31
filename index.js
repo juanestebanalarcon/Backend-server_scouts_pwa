@@ -14,7 +14,7 @@ app.use( express.static('public'))
 app.use( express.json() );
 
 app.use(`${process.env.BASE_URL}/scouts`, require('./routes/Scouts'));
-app.use(`${process.env.BASE_URL}/admins`, require('./routes/Administrador'));
+app.use(`${process.env.BASE_URL}/admin`, require('./routes/Administrador'));
 app.use(`${process.env.BASE_URL}/superAdmin`, require('./routes/SuperAdmin'));
 app.use(`${process.env.BASE_URL}/rama`, require('./routes/Rama'));
 app.use(`${process.env.BASE_URL}/canal`, require('./routes/Canal'));
