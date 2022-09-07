@@ -6,7 +6,7 @@ const createCanal= async(req,res=response)=>{
     const canal = new Canal({publicacion:uid,...req.body});
 
     try{
-        CanalDB = await canal.save();
+       const CanalDB = await canal.save();
         res.status(200).json({ok:true,Canal:CanalDB})
     }catch(e) {
         console.log(e);

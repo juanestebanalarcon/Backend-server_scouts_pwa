@@ -5,7 +5,7 @@ const createPublicacion= async(req,res=response)=>{
     
     const publi_ = new Publicaciones({...req.body});
     try{
-       publicacionDB = await publi_.save();
+     const  publicacionDB = await publi_.save();
         res.status(200).json({ok:true,publicacionDB})
     }catch(e) {
         console.log(e);

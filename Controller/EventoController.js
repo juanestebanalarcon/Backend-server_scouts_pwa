@@ -6,7 +6,7 @@ const createEvento= async(req,res=response)=>{
     const Evento = new Evento({Scout:uid,...req.body});
 
     try{
-        EventoDB = await Evento.save();
+      const EventoDB = await Evento.save();
         res.status(200).json({ok:true,Evento:EventoDB})
     }catch(e) {
         console.log(e);

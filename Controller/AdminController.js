@@ -6,7 +6,7 @@ const createAdmin= async(req,res=response)=>{
     const uid = req.uid;
     const admin_ = new Administrador({ramasAsignadas:uid,...req.body});
     try{
-       adminDB = await admin_.save();
+     const  adminDB = await admin_.save();
         res.status(200).json({ok:true,adminDB})
     }catch(e) {
         console.log(e);

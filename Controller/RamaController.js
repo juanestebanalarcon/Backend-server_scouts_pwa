@@ -6,7 +6,7 @@ const createRama= async(req,res=response)=>{
     const rama = new Rama({Scout:uid,...req.body});
 
     try{
-        ramaDB = await rama.save();
+      const  ramaDB = await rama.save();
         res.status(200).json({ok:true,rama:ramaDB})
     }catch(e) {
         console.log(e);
