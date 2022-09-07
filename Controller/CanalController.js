@@ -1,7 +1,7 @@
 const {response}=require('express');
 const Canal = require("../Model/Canal");
 
-const createCanal=(req,res=response)=>{
+const createCanal= async(req,res=response)=>{
     const uid = req.uid;
     const canal = new Canal({publicacion:uid,...req.body});
 
@@ -13,7 +13,7 @@ const createCanal=(req,res=response)=>{
         res.status(500).json({ok:false,msg:"Error interno en el servidor."});
     }
 }
-const readCanals=(req,res=response)=>{
+const readCanals= async(req,res=response)=>{
     const uuid = req.params.uid
     try{
         const Canals_ = await Canal.find({uuid});
@@ -27,7 +27,7 @@ const readCanals=(req,res=response)=>{
         res.status(500).json({ok:false,msg:"Error interno en el servidor."});
     }
 }
-const readCanal=(req,res=response)=>{
+const readCanal= async(req,res=response)=>{
     const uid=req.params.uid;
     try{
         const Canal_ = await Canal.findById(uid);
@@ -89,7 +89,7 @@ const updateCanal = async (req, res = response) => {
         })
     }
 }
-const deleteCanal=(req,res=response)=>{
+const deleteCanal= async(req,res=response)=>{
     
     const id  = req.params.id;
     

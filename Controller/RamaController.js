@@ -1,7 +1,7 @@
 const {response}=require('express');
 const Rama = require("../Model/Rama");
 
-const createRama=(req,res=response)=>{
+const createRama= async(req,res=response)=>{
     const uid = req.uid;
     const rama = new Rama({Scout:uid,...req.body});
 
@@ -13,7 +13,7 @@ const createRama=(req,res=response)=>{
         res.status(500).json({ok:false,msg:"Error interno en el servidor."});
     }
 }
-const readRamas=(req,res=response)=>{
+const readRamas= async(req,res=response)=>{
     const uuid = req.params.uid
     try{
         const ramas_ = await Rama.find({uuid});
@@ -27,7 +27,7 @@ const readRamas=(req,res=response)=>{
         res.status(500).json({ok:false,msg:"Error interno en el servidor."});
     }
 }
-const readRama=(req,res=response)=>{
+const readRama= async(req,res=response)=>{
     const uid=req.params.uid;
     try{
         const rama_ = await Rama.findById(uid);
@@ -89,7 +89,7 @@ const updateRama = async (req, res = response) => {
         })
     }
 }
-const deleteRama=(req,res=response)=>{
+const deleteRama= async(req,res=response)=>{
     
     const id  = req.params.id;
     

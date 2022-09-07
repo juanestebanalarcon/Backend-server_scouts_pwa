@@ -28,7 +28,7 @@ const createSuperAdministrador = async(req,res=response) => {
     
 
 }
-const readSuperAdministradors=(req,res=response)=>{
+const readSuperAdministradors= async(req,res=response)=>{
     const {email}=req.body;
     try{
         const SuperAdministradors_ = await SuperAdministrador.find({email});
@@ -51,7 +51,7 @@ const readSuperAdministradors=(req,res=response)=>{
         return res.status(500).json({ok:false,msg:'Error interno del servidor'})
     }
 }
-const readSuperAdministrador=(req,res=response)=>{
+const readSuperAdministrador= async(req,res=response)=>{
     const uid=req.params.uid;
     try{
         const SuperAdministradors_ = await SuperAdministrador.findById(uid);

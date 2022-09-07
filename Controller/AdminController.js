@@ -1,7 +1,7 @@
 const {response} = require("express");
 const Administrador = require("../Model/Administrador");
 
-const createAdmin=(req,res=response)=>{
+const createAdmin= async(req,res=response)=>{
     
     const uid = req.uid;
     const admin_ = new Administrador({ramasAsignadas:uid,...req.body});
@@ -14,7 +14,7 @@ const createAdmin=(req,res=response)=>{
     }
     
 }
-const readAdmin=(req,res=response)=>{
+const readAdmin= async(req,res=response)=>{
     const uid=req.params.uid;
     try{
         const admin_ = await Administrador.findById(uid);
@@ -37,7 +37,7 @@ const readAdmin=(req,res=response)=>{
         return res.status(500).json({ok:false,msg:'Error interno del servidor'})
     }
 }
-const readAdmins=(req,res=response)=>{
+const readAdmins= async(req,res=response)=>{
     try
     {
     const {email} = req.body;
@@ -54,7 +54,7 @@ const readAdmins=(req,res=response)=>{
     }
 
 }
-const updateAdmin=(req,res=response)=>{
+const updateAdmin=async(req,res=response)=>{
     const id  = req.params.id;
 
     try {
@@ -88,7 +88,7 @@ const updateAdmin=(req,res=response)=>{
         })
     }
 }
-const deleteAdmin =(req,res=response)=>{
+const deleteAdmin =async(req,res=response)=>{
     const id  = req.params.id;
     
     try {

@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const {check} = require("express-validators");
+const {check} = require("express-validator");
 const { validarCampos } = require("../middlewares/validar-campos");
 const {createEvento,
     readEvento,
@@ -17,7 +17,7 @@ router.post("/create-evento",[
     check("linkImagen","link es obligatorio").not().isEmpty(),
     check("inscritos","Id de Scout es obligatorio").not().isEmpty(),
     validarCampos,
-],createRama);
+],createEvento);
 router.put("/:id",updateEvento);
 router.get("/allEvents",readEventos);
 router.get("/:uid",readEvento);

@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const {check} = require("express-validators");
+const {check} = require("express-validator");
 const { validarCampos } = require("../middlewares/validar-campos");
 const {createScout,readScouts,readScout,updateScout,deleteScout,
     loginScout,revalidateToken} = require("../Controller/ScoutController");

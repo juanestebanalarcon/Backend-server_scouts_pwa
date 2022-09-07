@@ -28,7 +28,7 @@ const createScout = async(req,res=response) => {
     
 
 }
-const readScouts=(req,res=response)=>{
+const readScouts= async(req,res=response)=>{
     try{
         const scouts_ = await Scout.find({});
         if(scouts){
@@ -50,7 +50,7 @@ const readScouts=(req,res=response)=>{
         return res.status(500).json({ok:false,msg:'Error interno del servidor'})
     }
 }
-const readScout=(req,res=response)=>{
+const readScout= async(req,res=response)=>{
     const uid=req.params.uid;
     try{
         const scouts_ = await Scout.findById(uid);

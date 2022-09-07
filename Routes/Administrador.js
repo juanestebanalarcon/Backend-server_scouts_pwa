@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const {check} = require("express-validators");
+const {check} = require("express-validator");
 const { validarCampos } = require("../middlewares/validar-campos");
 const {createAdmin,readAdmin,readAdmins,updateAdmin,deleteAdmin,loginAdmin} = require("../Controller/AdminController");
 const router = Router();

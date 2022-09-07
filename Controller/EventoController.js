@@ -1,7 +1,7 @@
 const {response}=require('express');
 const Evento = require("../Model/Evento");
 
-const createEvento=(req,res=response)=>{
+const createEvento= async(req,res=response)=>{
     const uid = req.uid;
     const Evento = new Evento({Scout:uid,...req.body});
 
@@ -13,7 +13,7 @@ const createEvento=(req,res=response)=>{
         res.status(500).json({ok:false,msg:"Error interno en el servidor."});
     }
 }
-const readEventos=(req,res=response)=>{
+const readEventos= async(req,res=response)=>{
     const uuid = req.params.uid
     try{
         const Eventos_ = await Evento.find({uuid});
@@ -27,7 +27,7 @@ const readEventos=(req,res=response)=>{
         res.status(500).json({ok:false,msg:"Error interno en el servidor."});
     }
 }
-const readEvento=(req,res=response)=>{
+const readEvento= async(req,res=response)=>{
     const uid=req.params.uid;
     try{
         const Evento_ = await Evento.findById(uid);
@@ -89,7 +89,7 @@ const updateEvento = async (req, res = response) => {
         })
     }
 }
-const deleteEvento=(req,res=response)=>{
+const deleteEvento= async(req,res=response)=>{
     
     const id  = req.params.id;
     

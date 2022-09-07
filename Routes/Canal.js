@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const {check} = require("express-validators");
+const {check} = require("express-validator");
 const { validarCampos } = require("../middlewares/validar-campos");
 const {createCanal,
     readCanal,
@@ -14,7 +14,7 @@ router.post("/create-canal",[
     check("linkImagen","link es obligatorio").not().isEmpty(),
     check("publicacion","Id de Publicacion es obligatorio").not().isEmpty(),
     validarCampos,
-],createRama);
+],createCanal);
 router.put("/:id",updateCanal);
 router.get("/allCanals",readCanals);
 router.get("/:uid",readCanal);

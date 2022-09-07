@@ -1,7 +1,7 @@
 const {response} = require("express");
 const Publicaciones = require("../Model/Publicaciones");
 
-const createPublicacion=(req,res=response)=>{
+const createPublicacion= async(req,res=response)=>{
     
     const publi_ = new Publicaciones({...req.body});
     try{
@@ -13,7 +13,7 @@ const createPublicacion=(req,res=response)=>{
     }
     
 }
-const readPublicacion=(req,res=response)=>{
+const readPublicacion= async(req,res=response)=>{
     try
     {
     const {fecha} = req.body;
@@ -30,7 +30,7 @@ const readPublicacion=(req,res=response)=>{
     }
 
 }
-const readPublicaciones=(req,res=response)=>{
+const readPublicaciones= async(req,res=response)=>{
     const fecha = req.body.fecha
     try{
         const publis__ = await Rama.find({fecha});
@@ -44,7 +44,7 @@ const readPublicaciones=(req,res=response)=>{
         res.status(500).json({ok:false,msg:"Error interno en el servidor."});
     }
 }
-const updatePublicacion=(req,res=response)=>{
+const updatePublicacion= async(req,res=response)=>{
     const id  = req.params.id;
 
     try {
@@ -78,7 +78,7 @@ const updatePublicacion=(req,res=response)=>{
         })
     }
 }
-const deletePublicacion =(req,res=response)=>{
+const deletePublicacion = async(req,res=response)=>{
     const id  = req.params.id;
     
     try {
