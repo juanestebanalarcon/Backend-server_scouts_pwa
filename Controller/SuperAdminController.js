@@ -75,32 +75,35 @@ const readSuperAdministrador= async(req,res=response)=>{
 
 const loginSuperAdministrador= async(req,res=response) => {
     const {email,password}=req.body;
+    
     try {
-     const SuperAdministradorDB=await SuperAdministrador.findOne({email});
+     const SuperAdministradorDB = await SuperAdministrador.findOne({email});
      if(!SuperAdministradorDB){
-         res.status(400).json({ok:false,msg:'El correo no existe.'})
+        return res.status(400).json({ok:false,msg:'El correo no existe.'})
      }
      const validPassword=bcrypt.compareSync(password,SuperAdministradorDB.password);
      if(!validPassword){
-        res.status(400).json({ok:false,msg:'La password no es válida.'})
+        return res.status(400).json({ok:false,msg:'La password no es válida.'})
      }
-     const token= await generateJWT(SuperAdministradorDB.id,SuperAdministradorDB.nombre,SuperAdministradorDB.email);
-     return res.json({ok:true,uid:SuperAdministradorDB.id,name:SuperAdministradorDB.nombre,email,token})
+     const token= await generateJWT(SuperAdministradorDB.id,SuperAdministradorDB.nombre,SuperAdministradorDB.email,0);
+     return res.json({ok:true,uid:SuperAdministradorDB.id,name:SuperAdministradorDB.nombre,email,rol:0,token})
     } catch (error) {
         console.log(error);
         return res.status(500).json({ok:false,msg:'Error interno del servidor'})
     }
 }
 
-const revalidateToken= async(req,res) => {
-    const {uid}=req;
-    const dbSuperAdministrador=await SuperAdministrador.findById(uid);
-    const token= await generaTEJWT(uid,dbSuperAdministrador.nombre);
+const revalidateToken= async(req,res=response) => {
+
+    const { uid, name, email, rol}=req;
+    
+    const token= await generateJWT(uid,name,email,rol);
     return res.json({
         ok:true,
         uid,
-        name:dbSuperAdministrador.nombre,
-        email:dbSuperAdministrador.email,
+        name:name,
+        email:email,
+        rol: rol,
         token
     });
 }

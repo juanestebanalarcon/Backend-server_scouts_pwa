@@ -8,6 +8,7 @@ const {createSuperAdministrador,
     deleteSuperAdministrador,
     loginSuperAdministrador,
     revalidateToken} = require("../Controller/SuperAdminController");
+const { validarJWT } = require("../middlewares/validar-jwt");
 const router = Router();
 
 router.post("/create-superAdmin",[
@@ -16,16 +17,24 @@ router.post("/create-superAdmin",[
     check("password","Password es obligatorio").not().isEmpty(),
     validarCampos,
 ],createSuperAdministrador);
+
 router.post('/log-in-superAdmin',[
     check('email','El email es obligatorio').isEmail(),
     check('password','La es contraseña es obligatoria').isLength({min:8}),
     validarCampos
 ],loginSuperAdministrador);
+
 router.put("/:id",[
     check("email","Email es obligatorio").isEmail(),
     validarCampos,
 ],updateSuperAdministrador);
+
 router.get("/allSuperAdmins",readSuperAdministradors);
+
 router.get("/:uid",readSuperAdministrador);
+
 router.delete("/:uid",deleteSuperAdministrador);
+
+router.get("/renew",validarJWT,revalidateToken);
+
 module.exports=router;

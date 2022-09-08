@@ -8,9 +8,11 @@ const validarJWT=(req,res=response,next)=>{
         return res.status(401).json({ok:false,msg:'Error: token no enviado.'});
     }
     try {
-       const {uid,name}=jwt.verify(token,process.env.SECRET_JWT_SEED);
+       const {uid,name,email,rol}=jwt.verify(token,process.env.SECRET_JWT_SEED);
        req.uid=uid;
        req.name=name;
+       req.email=email;
+       req.rol=rol;
     } catch (error) {
         res.status(401).json({ok:false,msg:'Token no válido.'})
     }
