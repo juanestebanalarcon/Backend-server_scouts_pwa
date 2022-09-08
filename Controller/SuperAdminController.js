@@ -12,8 +12,7 @@ const createSuperAdministrador = async(req,res=response) => {
         }
         let dbSuperAdministrador=new SuperAdministrador(req.body);
 
-        const salt=bcrypt.genSaltSync();
-        dbSuperAdministrador.password=bcrypt.hashSync(password,salt);
+        dbSuperAdministrador.password=bcrypt.hashSync(password,bcrypt.genSaltSync());
         const token= await generateJWT(dbSuperAdministrador.id,nombre);
         await dbSuperAdministrador.save();
         return res.status(201).json({ok:true,uid:dbSuperAdministrador.id,nombre,email,token});
@@ -26,7 +25,6 @@ const createSuperAdministrador = async(req,res=response) => {
         });
     }
     
-
 }
 const readSuperAdministradors= async(req,res=response)=>{
     const {email}=req.body;
