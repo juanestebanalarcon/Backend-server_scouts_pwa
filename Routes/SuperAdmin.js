@@ -35,6 +35,6 @@ router.get("/:uid",readSuperAdministrador);
 
 router.delete("/:uid",deleteSuperAdministrador);
 
-router.get("/renew",validarJWT,revalidateToken);
+router.get("/revalidar-supAdmin",validarJWT,revalidateToken);
 
 module.exports=router;
