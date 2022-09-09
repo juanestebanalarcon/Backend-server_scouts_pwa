@@ -95,14 +95,14 @@ const loginSuperAdministrador= async(req,res=response) => {
 
 const revalidateToken= async(req,res=response) => {
 
-    const { uid, name, email}=req;
-    
-    const token= await generateJWT(uid,name,email);
+    const { uid}=req;
+    const supAdminDb = await SuperAdministrador.findById(uid);
+    const token= await generateJWT(uid,supAdminDb.nombre,supAdminDb.email);
     return res.json({
         ok:true,
         uid,
-        name:name,
-        email:email,
+        name:supAdminDB.nombre,
+        email:supAdminDb.email,
         token
     });
 }
