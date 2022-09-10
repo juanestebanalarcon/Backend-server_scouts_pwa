@@ -85,10 +85,8 @@ const loginScout= async(req,res=response) => {
      if(!validPassword){
         res.status(400).json({ok:false,msg:'La password no es válida.'})
      }
-     //Generar JWT
      const token= await generateJWT(scoutDB.id,scoutDB.nombre,scoutDB.email);
-     //Respuesta del servicio
-     return res.json({ok:true,uid:scoutDB.id,name:scoutDB.nombre,email,token})
+     return res.json({ok:true,_id:scoutDB.id,name:scoutDB.nombre,email,token})
     } catch (error) {
         console.log(error);
         return res.status(500).json({ok:false,msg:'Error interno del servidor'})
@@ -96,9 +94,9 @@ const loginScout= async(req,res=response) => {
 }
 
 const revalidateToken= async(req,res) => {
-    const {uid}=req;
+    const {uid}=req.params.id;
     const dbScout=await Scout.findById(uid);
-    const token= await generaTEJWT(uid,dbScout.nombre);
+    const token= await generateJWT(uid,dbScout.nombre);
     return res.json({
         ok:true,
         uid,
@@ -119,7 +117,7 @@ const updateScout= async(req,res=response) =>{
         if(scoutDb.email===email){
             delete campos.email;
         }else{
-            const existeEmail = await Usuario.findOne({email});
+            const existeEmail = await Scout.findOne({email});
             if(existeEmail){
                 return res.status(400).json({ok:false,msg:"Ya existe scout con ese email"});
             }
