@@ -7,11 +7,8 @@ const createScout = async(req,res=response) => {
     const {nombre,email,password}=req.body;
     try {
         const scout=await Scout.findOne({email});
-        if(scout){
-            return res.status(400).json({ok:false,msg:"El Scout ya existe con ese email."});
-        }
+        if(scout){return res.status(400).json({ok:false,msg:"El Scout ya existe con ese email."});}
         let dbScout=new Scout(req.body);
-
         const salt=bcrypt.genSaltSync();
         dbScout.password=bcrypt.hashSync(password,salt);
         const token= await generateJWT(dbScout.id,nombre);
@@ -31,60 +28,36 @@ const createScout = async(req,res=response) => {
 const readScouts= async(req,res=response)=>{
     try{
         const scouts_ = await Scout.find({});
-        if(scouts){
-            return res.status(200).json({
-                ok:true,
-                scouts_ 
-            });
-            
-        }else{
-            return res.status(404).json({
-                ok:false,
-                msg:"Not found"
-            });
-
-        }
-        
+        if(scouts_){return res.status(200).json({ok:true,scouts_ });}
+        return res.status(404).json({ok:false,msg:"Not found"});
     }catch(e){
         console.log(e);
         return res.status(500).json({ok:false,msg:'Error interno del servidor'})
     }
 }
 const readScout= async(req,res=response)=>{
-    const uid=req.params.uid;
+    let uid=req.params.uid;
     try{
         const scouts_ = await Scout.findById(uid);
-        if(scouts){
-            return res.status(200).json({
-                ok:true,
-                scouts_ 
-            });
-            
-        }else{
-            return res.status(404).json({
+        if(scouts_){return res.status(200).json({ok:true,scouts_ });}    
+        return res.status(404).json({
                 ok:false,
                 msg:"Not found"
             });
-
-        }
-        
     }catch(e){
         console.log(e);
         return res.status(500).json({ok:false,msg:'Error interno del servidor'})
     }
 }
-
 const loginScout= async(req,res=response) => {
-    const {email,password}=req.body;
+    let {email,password}=req.body;
     try {
-     const scoutDB=await Scout.findOne({email});
+     let scoutDB=await Scout.findOne({email});
      if(!scoutDB){
          res.status(400).json({ok:false,msg:'El correo no existe.'})
      }
-     const validPassword=bcrypt.compareSync(password,scoutDB.password);
-     if(!validPassword){
-        res.status(400).json({ok:false,msg:'La password no es válida.'})
-     }
+     let validPassword=bcrypt.compareSync(password,scoutDB.password);
+     if(!validPassword){res.status(400).json({ok:false,msg:'La password no es válida.'})}
      const token= await generateJWT(scoutDB.id,scoutDB.nombre,scoutDB.email);
      return res.json({ok:true,_id:scoutDB.id,name:scoutDB.nombre,email,token})
     } catch (error) {
@@ -97,57 +70,36 @@ const revalidateToken= async(req,res) => {
     const {uid}=req.params.id;
     const dbScout=await Scout.findById(uid);
     const token= await generateJWT(uid,dbScout.nombre);
-    return res.json({
-        ok:true,
-        uid,
-        name:dbScout.nombre,
-        email:dbScout.email,
-        token
-    });
+    return res.json({ok:true,uid,name:dbScout.nombre,email:dbScout.email,token});
 }
 const updateScout= async(req,res=response) =>{
-    
     try{
-        const uid = req.params.id;
-        const scoutDb = Scout.findById(uid);
-        if(!scoutDb){
-            return res.status(404).json({ok:false,msg:"No existe usuario por ese uid."});
-        }
-        const {password,email,...campos} = req.body;
-        if(scoutDb.email===email){
-            delete campos.email;
-        }else{
-            const existeEmail = await Scout.findOne({email});
-            if(existeEmail){
-                return res.status(400).json({ok:false,msg:"Ya existe scout con ese email"});
-            }
-        }
+        let uid = req.params.id;
+        let scoutDb = Scout.findById(uid);
+        if(!scoutDb){return res.status(404).json({ok:false,msg:"No existe usuario por ese uid."});}
+        let {password,email,...campos} = req.body;
+        if(scoutDb.email===email){delete campos.email;}
+        let existeEmail = await Scout.findOne({email});
+        if(existeEmail){return res.status(400).json({ok:false,msg:"Ya existe scout con ese email"});}
         campos.email=email;
         const scoutUpdate = await Scout.findByIdAndUpdate(uid,campos,{new:true});
-
         res.status(200).json({ok:true,scoutUpdate})
     }catch(e){
         console.log(e);
         return res.status(500).json({ok:false,msg:'Error interno del servidor'})
-        
     }
 }
 
 const deleteScout = async (req,res=response) =>{
     try{
-        const uid = req.params.id;
+        let uid = req.params.id;
         const scoutDB = Scout.findById(uid);
-        if(!scoutDB){
-            return res.status(404).json({ok:false,msg:"No existe scout por ese uid."});
-        }else{
+        if(!scoutDB){return res.status(404).json({ok:false,msg:"No existe scout por ese uid."});}
             await Scout.findByIdAndDelete(uid);
             res.status(200).json({ok:true,msg:"Scout eliminado."});
-        }
-        
     }catch(e){
         console.log(e);
         return res.status(500).json({ok:false,msg:'Error interno del servidor'})
-
     }
 }
 
