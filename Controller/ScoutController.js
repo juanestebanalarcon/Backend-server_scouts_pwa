@@ -25,9 +25,19 @@ const createScout = async(req,res=response) => {
     
 
 }
+const readActiveScouts = async(req,res=response) =>{
+    try{
+        let _activeScouts = await Scout.find({esActivo:true});
+        if(_activeScouts){return res.status(200).json({ok:true,_activeScouts});}
+        return res.status(404).json({ok:false,msg:"Not found"});
+    }catch(e){
+        console(e);
+        return res.status(500).json({ok:false,msg:'Error interno del servidor'})
+    }
+}
 const readScouts= async(req,res=response)=>{
     try{
-        const scouts_ = await Scout.find({});
+        let scouts_ = await Scout.find({});
         if(scouts_){return res.status(200).json({ok:true,scouts_ });}
         return res.status(404).json({ok:false,msg:"Not found"});
     }catch(e){
@@ -38,7 +48,7 @@ const readScouts= async(req,res=response)=>{
 const readScout= async(req,res=response)=>{
     let uid=req.params.uid;
     try{
-        const scouts_ = await Scout.findById(uid);
+        let scouts_ = await Scout.findById(uid);
         if(scouts_){return res.status(200).json({ok:true,scouts_ });}    
         return res.status(404).json({
                 ok:false,
@@ -67,8 +77,8 @@ const loginScout= async(req,res=response) => {
 }
 
 const revalidateToken= async(req,res) => {
-    const {uid}=req.params.id;
-    const dbScout=await Scout.findById(uid);
+    let {uid}=req.params.id;
+    let dbScout=await Scout.findById(uid);
     const token= await generateJWT(uid,dbScout.nombre);
     return res.json({ok:true,uid,name:dbScout.nombre,email:dbScout.email,token});
 }
@@ -107,6 +117,7 @@ module.exports={
     createScout,
     readScouts,
     readScout,
+    readActiveScouts,
     updateScout,
     deleteScout,
     loginScout,

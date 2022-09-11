@@ -31,13 +31,14 @@ const ScoutSchema = Schema({
         type: String,
         required: true,
     },
+    esActivo: {
+        type: Boolean,
+        required: true,
+    },
     remaAsociada: {
         type: String,
         required: false,
     },
-
-
-
 })
 
 module.exports = model('Scout', ScoutSchema)

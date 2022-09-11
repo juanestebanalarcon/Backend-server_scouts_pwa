@@ -2,7 +2,7 @@ const { Router } = require("express");
 const {check} = require("express-validator");
 const { validarCampos } = require("../middlewares/validar-campos");
 const {createScout,readScouts,readScout,updateScout,deleteScout,
-    loginScout,revalidateToken} = require("../Controller/ScoutController");
+    loginScout,revalidateToken, readActiveScouts} = require("../Controller/ScoutController");
 const router = Router();
 
 router.post("/create-scout",[
@@ -25,6 +25,7 @@ router.put("/:id",[
     validarCampos,
 ],updateScout);
 router.get("/allScouts",readScouts);
+router.get("/activeScouts",readActiveScouts);
 router.get("/:uid",readScout);
-router.delete("/:uid",deleteScout);
+router.delete("/:id",deleteScout);
 module.exports=router;
