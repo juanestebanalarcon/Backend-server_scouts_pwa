@@ -46,7 +46,7 @@ const readScouts= async(req,res=response)=>{
     }
 }
 const readScout= async(req,res=response)=>{
-    let uid=req.params.uid;
+    let uid=req.params.id;
     try{
         let scouts_ = await Scout.findById(uid);
         if(scouts_){return res.status(200).json({ok:true,scouts_ });}    

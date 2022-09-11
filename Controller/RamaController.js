@@ -2,7 +2,7 @@ const {response}=require('express');
 const Rama = require("../Model/Rama");
 
 const createRama= async(req,res=response)=>{
-    const uid = req.uid;
+    const uid = req.id;
     const rama = new Rama({Scout:uid,...req.body});
 
     try{
@@ -14,7 +14,7 @@ const createRama= async(req,res=response)=>{
     }
 }
 const readRamas= async(req,res=response)=>{
-    let _id = req.params.uid
+    let _id = req.params.id
     try{
         const ramas_ = await Rama.findById(_id);
         if(ramas_){
