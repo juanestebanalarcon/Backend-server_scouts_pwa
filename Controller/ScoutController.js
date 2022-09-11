@@ -14,7 +14,6 @@ const createScout = async(req,res=response) => {
         const token= await generateJWT(dbScout.id,nombre);
         await dbScout.save();
         return res.status(201).json({ok:true,uid:dbScout.id,nombre,email,token});
-
     } catch (error) {       
         console.log(error);
         return res.status(500).json({
@@ -22,8 +21,6 @@ const createScout = async(req,res=response) => {
             msg:'Error interno del servidor.'
         });
     }
-    
-
 }
 const readActiveScouts = async(req,res=response) =>{
     try{

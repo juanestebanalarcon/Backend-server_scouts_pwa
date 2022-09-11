@@ -31,9 +31,9 @@ router.put("/:id",[
 
 router.get("/allSuperAdmins",readSuperAdministradors);
 
-router.get("/:uid",readSuperAdministrador);
+router.get("/:id",readSuperAdministrador);
 
-router.delete("/:uid",deleteSuperAdministrador);
+router.delete("/:id",deleteSuperAdministrador);
 
 router.get("/revalidar-supAdmin",validarJWT,revalidateToken);
 

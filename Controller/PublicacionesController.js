@@ -2,7 +2,6 @@ const {response} = require("express");
 const Publicaciones = require("../Model/Publicaciones");
 
 const createPublicacion= async(req,res=response)=>{
-    
     let publi_ = new Publicaciones({...req.body});
     try{
      const  publicacionDB = await publi_.save();

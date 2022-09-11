@@ -3,7 +3,7 @@ const Administrador = require("../Model/Administrador");
 
 const createAdmin= async(req,res=response)=>{
     
-    const uid = req.uid;
+    const uid = req.id;
     const admin_ = new Administrador({ramasAsignadas:uid,...req.body});
     try{
      const  adminDB = await admin_.save();
@@ -15,7 +15,7 @@ const createAdmin= async(req,res=response)=>{
     
 }
 const readAdmin= async(req,res=response)=>{
-    const uid=req.params.uid;
+    const uid=req.params.id;
     try{
         const admin_ = await Administrador.findById(uid);
         if(admin_){

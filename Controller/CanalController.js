@@ -2,7 +2,7 @@ const {response}=require('express');
 const Canal = require("../Model/Canal");
 
 const createCanal= async(req,res=response)=>{
-    const uid = req.uid;
+    const uid = req.id;
     const canal = new Canal({publicacion:uid,...req.body});
 
     try{
@@ -14,7 +14,7 @@ const createCanal= async(req,res=response)=>{
     }
 }
 const readCanals= async(req,res=response)=>{
-    const uuid = req.params.uid
+    let uuid = req.params.id
     try{
         const Canals_ = await Canal.find({uuid});
         if(Canals_){
@@ -28,7 +28,7 @@ const readCanals= async(req,res=response)=>{
     }
 }
 const readCanal= async(req,res=response)=>{
-    const uid=req.params.uid;
+    const uid=req.params.id;
     try{
         const Canal_ = await Canal.findById(uid);
         if(Canal_){
@@ -53,7 +53,7 @@ const readCanal= async(req,res=response)=>{
 const updateCanal = async (req, res = response) => {
 
     const id  = req.params.id;
-    const uid = req.uid;
+    const uid = req.id;
 
     try {
         
