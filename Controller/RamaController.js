@@ -14,9 +14,9 @@ const createRama= async(req,res=response)=>{
     }
 }
 const readRamas= async(req,res=response)=>{
-    const uuid = req.params.uid
+    let _id = req.params.uid
     try{
-        const ramas_ = await Rama.find({uuid});
+        const ramas_ = await Rama.findById(_id);
         if(ramas_){
             res.status(200).json({ok:true,ramas_});
         }else{
@@ -28,98 +28,47 @@ const readRamas= async(req,res=response)=>{
     }
 }
 const readRama= async(req,res=response)=>{
-    const uid=req.params.uid;
+    const uid=req.params.id;
     try{
         const rama_ = await Rama.findById(uid);
-        if(rama_){
-            return res.status(200).json({
-                ok:true,
-                rama_ 
-            });
-            
-        }else{
-            return res.status(404).json({
-                ok:false,
-                msg:"Not found"
-            });
-
-        }
-        
+        if(rama_){return res.status(200).json({ok:true,rama_ });   }
+            return res.status(404).json({ok:false,msg:"Not found"});
     }catch(e){
         console.log(e);
         return res.status(500).json({ok:false,msg:'Error interno del servidor'})
     }
 }
 const updateRama = async (req, res = response) => {
-
     const id  = req.params.id;
-    const uid = req.uid;
-
+    const _id = req._id;
     try {
         
         const rama = await Rama.findById( id );
 
         if ( !rama ) {
-            return res.status(404).json({
-                ok: true,
-                msg: 'Rama no encontrada por id',
-            });
+            return res.status(404).json({ok: true,msg: 'Rama no encontrada por id',});
         }
-
         const cambioRama = {
             ...req.body,
-            Scout: uid
+            Scout: _id
         }
-
         const ramaActualizada = await Rama.findByIdAndUpdate( id, cambioRama, { new: true } );
-
-
-        res.json({
-            ok: true,
-            rama:ramaActualizada
-        })
-
+        res.json({ok: true,rama:ramaActualizada})
     } catch (error) {
-
         console.log(error);
-
-        res.status(500).json({
-            ok: false,
-            msg: 'Hable con el administrador'
-        })
+        res.status(500).json({ok: false,msg: 'Hable con el administrador'})
     }
 }
 const deleteRama= async(req,res=response)=>{
-    
     const id  = req.params.id;
-    
     try {
-        
         const rama = await Rama.findById( id );
-    
-        if ( !rama ) {
-            return res.status(404).json({
-                ok: true,
-                msg: 'Rama no encontrada por id',
-            });
-        }
-    
+        if ( !rama ) {return res.status(404).json({ok: true,msg: 'Rama no encontrada por id',});}
         await rama.findByIdAndDelete( id );
-    
-    
-        res.json({
-            ok: true,
-            msg: 'Rama eliminada'
-        });
-    
+        res.json({ok: true,msg: 'Rama eliminada'});
     } catch (error) {
-    
         console.log(error);
-    
-        res.status(500).json({
-            ok: false,
-            msg: 'Hable con el administrador'
-        })
+        res.status(500).json({ok: false,msg: 'Hable con el administrador'})
     }
 }
 

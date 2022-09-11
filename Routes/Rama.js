@@ -16,6 +16,6 @@ router.post("/create-rama",[
 ],createRama);
 router.put("/:id",updateRama);
 router.get("/allRamas",readRamas);
-router.get("/:uid",readRama);
-router.delete("/:uid",deleteRama);
+router.get("/:id",readRama);
+router.delete("/:id",deleteRama);
 module.exports=router;
