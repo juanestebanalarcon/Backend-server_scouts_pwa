@@ -4,4 +4,3 @@ const Server = require('./Model/Server');
 const server = new Server();
 dbConnection();
 server.listen();
-

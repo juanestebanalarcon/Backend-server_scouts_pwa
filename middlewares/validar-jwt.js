@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken");
 
 const validarJWT=(req,next,res=response)=>{
     const token=req.header('TokenAuth');
-
     if(!token){
         return res.status(401).json({ok:false,msg:'Error: token no enviado.'});
     }
@@ -17,7 +16,6 @@ const validarJWT=(req,next,res=response)=>{
     }
     next();
 }
-
 module.exports={
     validarJWT
 }
