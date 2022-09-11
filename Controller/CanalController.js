@@ -2,8 +2,8 @@ const {response}=require('express');
 const Canal = require("../Model/Canal");
 
 const createCanal= async(req,res=response)=>{
-    const uid = req.id;
-    const canal = new Canal({publicacion:uid,...req.body});
+    let uid = req.id;
+    let canal = new Canal({publicacion:uid,...req.body});
 
     try{
        const CanalDB = await canal.save();
@@ -28,7 +28,7 @@ const readCanals= async(req,res=response)=>{
     }
 }
 const readCanal= async(req,res=response)=>{
-    const uid=req.params.id;
+    let uid=req.params.id;
     try{
         const Canal_ = await Canal.findById(uid);
         if(Canal_){
@@ -52,8 +52,8 @@ const readCanal= async(req,res=response)=>{
 }
 const updateCanal = async (req, res = response) => {
 
-    const id  = req.params.id;
-    const uid = req.id;
+    let id  = req.params.id;
+    let uid = req.id;
 
     try {
         
@@ -91,7 +91,7 @@ const updateCanal = async (req, res = response) => {
 }
 const deleteCanal= async(req,res=response)=>{
     
-    const id  = req.params.id;
+    let id  = req.params.id;
     
     try {
         

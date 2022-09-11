@@ -15,7 +15,7 @@ const createPublicacion= async(req,res=response)=>{
 const readPublicacion= async(req,res=response)=>{
     try
     {
-    const {titulo} = req.body;
+    let {titulo} = req.body;
     const publi_ = await Publicaciones.find({titulo:titulo}).limit(5);
     if(admin_){
         res.status(200).json({ok:true,publi_});

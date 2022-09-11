@@ -2,7 +2,7 @@ const {response}=require('express');
 const Rama = require("../Model/Rama");
 
 const createRama= async(req,res=response)=>{
-    const uid = req.id;
+    let uid = req.id;
     const rama = new Rama({Scout:uid,...req.body});
 
     try{
@@ -60,7 +60,7 @@ const updateRama = async (req, res = response) => {
     }
 }
 const deleteRama= async(req,res=response)=>{
-    const id  = req.params.id;
+    let id  = req.params.id;
     try {
         const rama = await Rama.findById( id );
         if ( !rama ) {return res.status(404).json({ok: true,msg: 'Rama no encontrada por id',});}

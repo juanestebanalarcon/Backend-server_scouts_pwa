@@ -21,6 +21,6 @@ router.put("/:id",[
     validarCampos,
 ],updateAdmin);
 router.get("/AllAdmins",readAdmins);
-router.get("/:uid",readAdmin);
-router.delete("/:uid",deleteAdmin);
+router.get("/:id",readAdmin);
+router.delete("/:id",deleteAdmin);
 module.exports=router;

@@ -20,6 +20,6 @@ router.post("/create-evento",[
 ],createEvento);
 router.put("/:id",updateEvento);
 router.get("/allEvents",readEventos);
-router.get("/:uid",readEvento);
-router.delete("/:uid",deleteEvento);
+router.get("/:id",readEvento);
+router.delete("/:id",deleteEvento);
 module.exports=router;

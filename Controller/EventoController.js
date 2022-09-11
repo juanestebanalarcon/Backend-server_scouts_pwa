@@ -2,7 +2,7 @@ const {response}=require('express');
 const Evento = require("../Model/Evento");
 
 const createEvento= async(req,res=response)=>{
-    const uid = req.id;
+    let uid = req.id;
     const evento = new Evento({Scout:uid,...req.body});
     try{
       const EventoDB = await evento.save();
@@ -13,9 +13,8 @@ const createEvento= async(req,res=response)=>{
     }
 }
 const readEventos= async(req,res=response)=>{
-    const uuid = req.params.id
     try{
-        const Eventos_ = await Evento.find({uuid});
+        const Eventos_ = await Evento.find({});
         if(Eventos_){
             res.status(200).json({ok:true,Eventos_});
         }
@@ -27,7 +26,7 @@ const readEventos= async(req,res=response)=>{
     }
 }
 const readEvento= async(req,res=response)=>{
-    const uid=req.params.id;
+    let uid=req.params.id;
     try{
         const Evento_ = await Evento.findById(uid);
         if(Evento_){return res.status(200).json({ok:true,Evento_ });}
@@ -38,8 +37,8 @@ const readEvento= async(req,res=response)=>{
     }
 }
 const updateEvento = async (req, res = response) => {
-    const id  = req.params.id;
-    const uid = req.uid;
+    let id  = req.params.id;
+    let uid = req._id;
     try {
         let evento = await Evento.findById( id );
         if ( !evento ) {return res.status(404).json({ok: true,msg: 'Evento no encontrada por id',});}

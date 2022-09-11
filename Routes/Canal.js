@@ -17,6 +17,6 @@ router.post("/create-canal",[
 ],createCanal);
 router.put("/:id",updateCanal);
 router.get("/allCanals",readCanals);
-router.get("/:uid",readCanal);
-router.delete("/:uid",deleteCanal);
+router.get("/:id",readCanal);
+router.delete("/:id",deleteCanal);
 module.exports=router;

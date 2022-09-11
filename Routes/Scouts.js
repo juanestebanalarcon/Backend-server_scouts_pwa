@@ -26,6 +26,6 @@ router.put("/:id",[
 ],updateScout);
 router.get("/allScouts",readScouts);
 router.get("/activeScouts",readActiveScouts);
-router.get("/:uid",readScout);
+router.get("/:id",readScout);
 router.delete("/:id",deleteScout);
 module.exports=router;

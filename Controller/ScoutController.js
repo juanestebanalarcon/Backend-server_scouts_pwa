@@ -4,7 +4,7 @@ const bcrypt=require('bcryptjs');
 const {generateJWT} = require('../helpers/jwt');
 
 const createScout = async(req,res=response) => {
-    const {nombre,email,password}=req.body;
+    let {nombre,email,password}=req.body;
     try {
         const scout=await Scout.findOne({email});
         if(scout){return res.status(400).json({ok:false,msg:"El Scout ya existe con ese email."});}
@@ -23,7 +23,7 @@ const createScout = async(req,res=response) => {
     }
 }
 const readActiveScouts = async(req,res=response) =>{
-    try{
+    try{    
         let _activeScouts = await Scout.find({esActivo:true});
         if(_activeScouts){return res.status(200).json({ok:true,_activeScouts});}
         return res.status(404).json({ok:false,msg:"Not found"});

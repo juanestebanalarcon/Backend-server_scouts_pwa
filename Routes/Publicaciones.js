@@ -19,6 +19,6 @@ router.post("/create-publicacion",[
 ],createPublicacion);
 router.put("/:id",updatePublicacion);
 router.get("/allPublicaciones",readPublicaciones);
-router.get("/:uid",readPublicacion);
-router.delete("/:uid",deletePublicacion);
+router.get("/:id",readPublicacion);
+router.delete("/:id",deletePublicacion);
 module.exports=router;
