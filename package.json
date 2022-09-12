@@ -4,7 +4,7 @@
   "description": "Backend server for PWA Scouts, PI2 Ascent. MEN Stack",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha index.test.js",
     "dev": "nodemon index.js"
   },
   "repository": {
@@ -19,12 +19,16 @@
   "homepage": "https://github.com/juanestebanalarcon/Backend-server_scouts_pwa#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "chai": "^4.3.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "express-validator": "^6.14.2",
+    "jasmine-node": "^1.16.0",
     "jsonwebtoken": "^8.5.1",
+    "mocha": "^10.0.0",
     "mongoose": "^6.5.2",
-    "nodemon": "^2.0.19"
+    "nodemon": "^2.0.19",
+    "supertest": "^6.2.4"
   }
 }
