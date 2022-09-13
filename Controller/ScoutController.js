@@ -47,10 +47,7 @@ const readScout= async(req,res=response)=>{
     try{
         let scouts_ = await Scout.findById(uid);
         if(scouts_){return res.status(200).json({ok:true,scouts_ });}    
-        return res.status(404).json({
-                ok:false,
-                msg:"Not found"
-            });
+        return res.status(404).json({ok:false,msg:"Not found"});
     }catch(e){
         console.log(e);
         return res.status(500).json({ok:false,msg:'Error interno del servidor'})
