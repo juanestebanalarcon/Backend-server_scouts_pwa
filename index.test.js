@@ -11,13 +11,13 @@ describe("ScoutController unit tests", () => {
          expect(response.body.email).to.equal(SCOUT_TEST3.email);
         });
         it("shouldn't log in the scout - incorrect password",async() => {
-        let response =   await request.post("/api/scouts/log-in-scout").send({email:SCOUT_TEST3.email, password:SCOUT_TEST1.password});
+        let response =   await request.post("/scouts/log-in-scout").send({email:SCOUT_TEST3.email, password:SCOUT_TEST1.password});
         expect(response.status).to.equal(400);
         expect(response.body).to.equal({ok:false,msg:"La password no es válida."});
         assert.equal(response.body.msg, "La password no es válida.");
     });
     it("shouldn't log in the scout - incorrect email",async() => {
-        let response =   await request.post("/api/scouts/log-in-scout").send({email:SCOUT_TEST1.email, password:SCOUT_TEST1.password});
+        let response =   await request.post("/scouts/log-in-scout").send({email:SCOUT_TEST1.email, password:SCOUT_TEST1.password});
         expect(response.status).to.equal(404);
         expect(response.body).to.equal({ok:false,msg:"El correo no existe."});
         assert.equal(response.body.msg, "El correo no existe.");
@@ -30,7 +30,7 @@ describe("ScoutController unit tests", () => {
          expect(response.body.ok).to.equal(true);
         });
         it("shouldn't create a duplicate scout", async() => {
-        let response =   await request.post("/api/scouts/create-scout").send(SCOUT_TEST3);
+        let response =   await request.post("/scouts/create-scout").send(SCOUT_TEST3);
         expect(response.status).to.equal(400);
         expect(response.body).to.equal({ok:false,msg:"El Scout ya existe con ese email."});
         assert.equal(response.body.msg, "El Scout ya existe con ese email.");
@@ -43,7 +43,7 @@ describe("ReadScout", () => {
         expect(response.body.ok).to.equal(true);
         });
         it("shouldn't return a scout", async() => {
-            let response = await request.get("/api/scouts/63210a4e3c2be79f4a06fe6r");
+            let response = await request.get("/scouts/63210a4e3c2be79f4a06fe6r");
             expect(response.status).to.equal(404);
             expect(response.body).to.equal({ok:false,msg:"Not found"});
             assert.equal(response.body.msg, "Not found");
@@ -54,7 +54,8 @@ describe("ReadScout", () => {
             let response =  await request.get("/scouts/allScouts");
             expect(response.status).to.equal(200);
             expect(response.body.ok).to.equal(true);
-        });
+        });  
+    });
     describe("UpdateScout", () => {
         it("should update a scout", async() => {
             let response =  await (await request.put("/scouts/63211e35b3500c3aff1f2b66")).send(SCOUT_TEST2);
@@ -76,16 +77,12 @@ describe("ReadScout", () => {
             expect(response.body.ok).to.equal(true);
         });
         it("shouldn't delete the scout", async() => {
-            let response = await request.put("/api/scouts/63211e35b3500c3af51f2d43");
+            let response = await request.put("/scouts/63211e35b3500c3af51f2d43");
             expect(response.status).to.equal(404);
             expect(response.body).to.equal({ok:false,msg:"No existe scout por ese uid."});
             assert.equal(response.body.msg, "Not found");
     });
 });
-
-
-});
-
 });
 
 describe("AdminController unit tests", () => {
