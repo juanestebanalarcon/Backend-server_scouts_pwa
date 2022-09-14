@@ -5,6 +5,10 @@ const Administrador = Schema({
         type: String,
         required: true,
     },
+    apellido: {
+        type: String,
+        required: true,
+    },
     email: {
         type: String,
         required: true,
