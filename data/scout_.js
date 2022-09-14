@@ -1,4 +1,4 @@
-export const SCOUT_TEST0 ={
+ let SCOUT_TEST0 ={
     nombre: "Prueba1.0",
     apellido:"Test1.0",
     email: "scout1.0@correo.com",
@@ -9,7 +9,7 @@ export const SCOUT_TEST0 ={
     esActivo:true,
     ramaAsociada:"Rama01"
 }
-export const SCOUT_TEST1 ={
+ let SCOUT_TEST1 ={
     nombre: "Prueba1.1",
     apellido:"Test1.1",
     email: "scout1@correo.com",
@@ -20,7 +20,7 @@ export const SCOUT_TEST1 ={
     esActivo:true,
     ramaAsociada:"Rama1"
 };
-export const SCOUT_TEST2 ={
+ let SCOUT_TEST2 ={
     nombre: "Prueba2",
     apellido:"Test2",
     link_ficha_medica:"www.link2.com",
@@ -29,7 +29,7 @@ export const SCOUT_TEST2 ={
     esActivo:true,
     ramaAsociada:"Rama2"
 };
-export const SCOUT_TEST3 ={
+ let SCOUT_TEST3 ={
     nombre: "Prueba1",
     apellido:"Test1",
     email: "scout@correo.com",
@@ -40,7 +40,7 @@ export const SCOUT_TEST3 ={
     esActivo:true,
     ramaAsociada:"Rama"
 }
-export const SCOUT_TEST4 ={
+ let SCOUT_TEST4 ={
     nombre: "Prueba4",
     apellido:"Test4",
     email: "scout4@correo.com",
@@ -51,3 +51,4 @@ export const SCOUT_TEST4 ={
     esActivo:true,
     ramaAsociada:"Rama4"
 }
+module.exports= {SCOUT_TEST0,SCOUT_TEST1,SCOUT_TEST2,SCOUT_TEST3,SCOUT_TEST4}

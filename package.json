@@ -7,7 +7,8 @@
     "test-scoutController":"mocha ./tests/ScoutController.test.js",
     "test-adminController":"mocha ./tests/AdminController.test.js",
     "test-superAdminController":"mocha ./tests/SuperAdminController.test.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "prod": ""
   },
   "repository": {
     "type": "git",
