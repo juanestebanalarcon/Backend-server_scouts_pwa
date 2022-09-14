@@ -58,7 +58,7 @@ describe("ReadScout", () => {
     });
     describe("UpdateScout", () => {
         it("should update a scout", async() => {
-            let response =  await (await request.put("/scouts/63211e35b3500c3aff1f2b66")).send(SCOUT_TEST2);
+            let response =  await  request.put("/scouts/63211e35b3500c3aff1f2b66").send(SCOUT_TEST2);
             expect(response.status).to.equal(200);
             expect(response.body.ok).to.equal(true);
             expect(response.body.scoutUpdate).to.equal(SCOUT_TEST2);
@@ -91,6 +91,5 @@ describe("AdminController unit tests", () => {
 });
 
 describe("SuperAdminController unit tests", () => {
-
 
 });
