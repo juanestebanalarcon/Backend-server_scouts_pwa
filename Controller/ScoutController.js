@@ -58,7 +58,7 @@ const loginScout= async(req,res=response) => {
     try {
      let scoutDB=await Scout.findOne({email});
      if(!scoutDB){
-         res.status(400).json({ok:false,msg:'El correo no existe.'})
+         res.status(404).json({ok:false,msg:'El correo no existe.'})
      }
      let validPassword=bcrypt.compareSync(password,scoutDB.password);
      if(!validPassword){res.status(400).json({ok:false,msg:'La password no es válida.'})}
@@ -80,14 +80,18 @@ const updateScout= async(req,res=response) =>{
     try{
         let uid = req.params.id;
         let scoutDb = Scout.findById(uid);
-        if(!scoutDb){return res.status(404).json({ok:false,msg:"No existe usuario por ese uid."});}
+        if(!scoutDb){return res.status(404).json({ok:false,msg:"No existe scout por ese uid."});}
         let {password,email,...campos} = req.body;
-        if(scoutDb.email===email){delete campos.email;}
-        let existeEmail = await Scout.findOne({email});
-        if(existeEmail){return res.status(400).json({ok:false,msg:"Ya existe scout con ese email"});}
-        campos.email=email;
+        if(email!=""){
+            if(scoutDb.email===email){delete campos.email;}
+            let existeEmail = await Scout.findOne({email});
+            if(existeEmail){return res.status(400).json({ok:false,msg:"Ya existe scout con ese email"});}
+            campos.email=email;
+            const scoutUpdate = await Scout.findByIdAndUpdate(uid,campos,{new:true});
+            res.status(200).json({ok:true,scoutUpdate});
+        }
         const scoutUpdate = await Scout.findByIdAndUpdate(uid,campos,{new:true});
-        res.status(200).json({ok:true,scoutUpdate})
+        res.status(200).json({ok:true,scoutUpdate});
     }catch(e){
         console.log(e);
         return res.status(500).json({ok:false,msg:'Error interno del servidor'})
@@ -99,8 +103,8 @@ const deleteScout = async (req,res=response) =>{
         let uid = req.params.id;
         const scoutDB = Scout.findById(uid);
         if(!scoutDB){return res.status(404).json({ok:false,msg:"No existe scout por ese uid."});}
-            await Scout.findByIdAndDelete(uid);
-            res.status(200).json({ok:true,msg:"Scout eliminado."});
+        await Scout.findByIdAndDelete(uid);
+        res.status(200).json({ok:true,msg:"Scout eliminado."});
     }catch(e){
         console.log(e);
         return res.status(500).json({ok:false,msg:'Error interno del servidor'})
