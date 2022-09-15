@@ -63,7 +63,7 @@ const loginScout= async(req,res=response) => {
      let validPassword=bcrypt.compareSync(password,scoutDB.password);
      if(!validPassword){res.status(400).json({ok:false,msg:'La password no es válida.'})}
      const token= await generateJWT(scoutDB.id,scoutDB.nombre,scoutDB.email);
-     return res.json({ok:true,_id:scoutDB.id,name:scoutDB.nombre,email,token})
+     return res.status(200).json({ok:true,_id:scoutDB.id,name:scoutDB.nombre,email,token})
     } catch (error) {
         console.log(error);
         return res.status(500).json({ok:false,msg:'Error interno del servidor'})

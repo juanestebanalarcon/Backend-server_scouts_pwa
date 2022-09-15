@@ -63,7 +63,7 @@ describe("ReadScout", () => {
 describe("LoginScout", () => {
     it("should log in the scout", async() => {
      let response =  await request.post("/scouts/log-in-scout").send({email:SCOUT_TEST3.email,password:SCOUT_TEST3.password});
-     expect(response.status).to.equal(201);
+     expect(response.status).to.equal(200);
      expect(response.body.ok).to.equal(true);
      expect(response.body.email).to.equal(SCOUT_TEST3.email);
     });
