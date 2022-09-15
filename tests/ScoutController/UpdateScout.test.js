@@ -1,3 +1,4 @@
+const {request,expect,assert} = require("../../config");
 const SCOUT_TEST2 = require("../../data/scout_");
 describe("ScoutController unit tests", () => {
     describe("UpdateScout", () => {

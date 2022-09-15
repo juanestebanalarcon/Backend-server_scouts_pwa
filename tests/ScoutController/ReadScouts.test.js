@@ -1,3 +1,5 @@
+const {request,expect,assert} = require("../../config");
+
 describe("ScoutController unit tests", () => {
     describe("ReadScouts", () => {
         it("should return all scouts", async() => {

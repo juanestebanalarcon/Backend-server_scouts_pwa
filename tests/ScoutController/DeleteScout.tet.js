@@ -1,3 +1,5 @@
+const {request,expect,assert} = require("../../config");
+
 describe("ScoutController unit tests", () => {
     describe("deleteScout", () => {
         it("should delete a scout", async() => {
