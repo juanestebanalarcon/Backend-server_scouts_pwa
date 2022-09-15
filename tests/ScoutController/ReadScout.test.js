@@ -8,10 +8,9 @@ describe("ReadScout", () => {
         expect(response.body.ok).to.equal(true);
         });
         it("shouldn't return a scout", async() => {
-            let response = await request.get("/scouts/63210a4e3c2be79f4a06fe6r");
-            expect(response.status).to.equal(404);
-            expect(response.body).to.equal({ok:false,msg:"Not found"});
-            assert.equal(response.body.msg, "Not found");
+            let response = await request.get("/scouts/63210a4e3c2be79f4a06fe6b");
+        expect(response.status).to.equal(404); 
+        expect(response.body.msg).to.equal('Not found');
         });
     });
 

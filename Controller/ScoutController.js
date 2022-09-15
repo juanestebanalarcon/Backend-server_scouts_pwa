@@ -58,7 +58,7 @@ const loginScout= async(req,res=response) => {
     try {
      let scoutDB=await Scout.findOne({email});
      if(!scoutDB){
-         res.status(404).json({ok:false,msg:'El correo no existe.'})
+          res.status(404).json({ok:false,msg:'El correo no existe.'})
      }
      let validPassword=bcrypt.compareSync(password,scoutDB.password);
      if(!validPassword){res.status(400).json({ok:false,msg:'La password no es válida.'})}
@@ -102,6 +102,7 @@ const deleteScout = async (req,res=response) =>{
     try{
         let uid = req.params.id;
         const scoutDB = Scout.findById(uid);
+        
         if(!scoutDB){return res.status(404).json({ok:false,msg:"No existe scout por ese uid."});}
         await Scout.findByIdAndDelete(uid);
         res.status(200).json({ok:true,msg:"Scout eliminado."});

@@ -10,8 +10,8 @@ describe("ScoutController unit tests", () => {
         it("shouldn't create a duplicate scout", async() => {
         let response =   await request.post("/scouts/create-scout").send(SCOUT_TEST3);
         expect(response.status).to.equal(400);
-        expect(response.body).to.equal({ok:false,msg:"El Scout ya existe con ese email."});
-        assert.equal(response.body.msg, "El Scout ya existe con ese email.");
+        expect(response.body.msg).to.equal('El Scout ya existe con ese email.');
+        
     });
 });
 });
