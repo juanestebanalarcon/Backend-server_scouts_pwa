@@ -1,5 +1,5 @@
 const {request,expect,assert} = require("../../config");
-const {SCOUT_TEST0,SCOUT_TEST1,SCOUT_TEST2,SCOUT_TEST3} = require("../../data/scout_");
+const {SCOUT_TEST1,SCOUT_TEST3} = require("../../data/scout_");
 
 describe("ScoutController unit tests", () => {
 describe("LoginScout", () => {
