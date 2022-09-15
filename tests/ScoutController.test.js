@@ -50,7 +50,7 @@ describe("ReadScout", () => {
 });
     describe("deleteScout", () => {
         it("should delete a scout", async() => {
-            let response =  await (await request.delete("/scouts/632124b4b3500c3aff1f2b67"));
+            let response =  await request.delete("/scouts/632124b4b3500c3aff1f2b67");
             expect(response.status).to.equal(200);
             expect(response.body.ok).to.equal(true);
         });
