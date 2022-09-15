@@ -4,7 +4,7 @@
   "description": "Backend server for PWA Scouts, PI2 Ascent. MEN Stack",
   "main": "index.js",
   "scripts": {
-    "test-scoutController":"mocha ./tests/ScoutController.test.js",
+    "test-loginScout":"mocha ./tests/ScoutController/loginScout.test.js",
     "test-adminController":"mocha ./tests/AdminController.test.js",
     "test-superAdminController":"mocha ./tests/SuperAdminController.test.js",
     "dev": "nodemon index.js",
