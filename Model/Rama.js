@@ -9,10 +9,10 @@ linkImagen: {
     type: String,
     required:true
 },
-Scout: {
-    type: Schema.Types.ObjectId,
+Scout: [{
+    type: Array,
     ref:"Scout",
-    required:true
-},
+    required:false
+}],
 })
 module.exports = model("Rama",Rama)

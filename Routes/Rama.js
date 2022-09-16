@@ -11,7 +11,6 @@ const router = Router();
 router.post("/create-rama",[
     check("nombre","Nombre es obligatorio").not().isEmpty(),
     check("linkImagen","link es obligatorio").not().isEmpty(),
-    check("Scout","Id de Scout es obligatorio").not().isEmpty(),
     validarCampos,
 ],createRama);
 router.put("/:id",updateRama);
