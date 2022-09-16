@@ -126,11 +126,11 @@ const loginAdmin= async(req,res=response) => {
     try {
      const adminDB=await Scout.findOne({email});
      if(!adminDB){
-         res.status(400).json({ok:false,msg:'El correo no existe.'})
+        return res.status(400).json({ok:false,msg:'El correo no existe.'})
      }
      const validPassword=bcrypt.compareSync(password,adminDB.password);
      if(!validPassword){
-        res.status(400).json({ok:false,msg:'La password no es válida.'})
+        return res.status(400).json({ok:false,msg:'La password no es válida.'})
      }
      const token= await generateJWT(adminDB.id,adminDB.nombre,adminDB.email);
      return res.json({ok:true,uid:adminDB.id,name:adminDB.nombre,email,token})
