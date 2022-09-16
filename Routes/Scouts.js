@@ -13,7 +13,7 @@ router.post("/create-scout",[
     check("password","Password es obligatorio").not().isEmpty(),
     check("fecha_nacimiento","fecha nacimiento es obligatorio").not().isEmpty(),
     check("celular","celular es obligatorio").not().isEmpty(),
-    check("rama","rama asociada es obligatorio").not().isEmpty(),
+    check("ramaAsociada","rama asociada es obligatorio").not().isEmpty(),
     validarCampos,
 ],createScout);
 router.post('/log-in-scout',[
