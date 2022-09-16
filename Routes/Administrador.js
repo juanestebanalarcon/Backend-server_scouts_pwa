@@ -8,7 +8,7 @@ router.post("/create-admin",[
     check("nombre","Nombre es obligatorio").not().isEmpty(),
     check("email","Email es obligatorio").isEmail(),
     check("password","Password es obligatorio").not().isEmpty(),
-    check("ramaAsociada","rama asociada es obligatorio").not().isEmpty(),
+    //check("ramaAsociada","rama asociada es obligatorio").not().isEmpty(),
     validarCampos,
 ],createAdmin);
 router.post('/log-in-admin',[

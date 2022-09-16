@@ -1,16 +1,46 @@
 const {response} = require("express");
+const { generateJWT } = require("../Helpers/jwt")
 const Administrador = require("../Model/Administrador");
+const bcrypt = require('bcryptjs');
 
 const createAdmin= async(req,res=response)=>{
     
-    const uid = req.id;
-    const admin_ = new Administrador({ramasAsignadas:uid,...req.body});
-    try{
-     const  adminDB = await admin_.save();
-        res.status(200).json({ok:true,adminDB})
-    }catch(e) {
-        console.log(e);
-        res.status(500).json({ok:false,msg:"Error interno en el servidor."});
+    const { email, password } = req.body;
+
+    try {  
+
+        let administrador = await Administrador.findOne({ email })
+        
+        if( administrador ){
+            return res.status(400).json({
+                ok: false,
+                msg: 'Usuario existente con este email'
+            })
+        }
+
+        administrador = new Administrador( req.body );
+
+        const salt = bcrypt.genSaltSync();
+
+        administrador.password = bcrypt.hashSync( password, salt );
+    
+        await administrador.save();
+
+        const token = await generateJWT( usuario.id, usuario.name )
+    
+        res.status(201).json({
+            ok:true,
+            uid: usuario.id,
+            name: usuario.name,
+            token
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+            ok:false,
+            msg: 'Por favor hable con el administrador'
+        });
     }
     
 }
@@ -124,7 +154,7 @@ const deleteAdmin =async(req,res=response)=>{
 const loginAdmin= async(req,res=response) => {
     const {email,password}=req.body;
     try {
-     const adminDB=await Scout.findOne({email});
+     const adminDB=await Administrador.findOne({email});
      if(!adminDB){
         return res.status(400).json({ok:false,msg:'El correo no existe.'})
      }
