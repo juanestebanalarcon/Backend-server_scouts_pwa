@@ -2,23 +2,12 @@ const {response}=require('express');
 const Rama = require("../Model/Rama");
 
 const createRama= async(req,res=response)=>{
-
-    let uid = req.id;
-
-    const rama = new Rama({Scout:uid,...req.body});
-    
-    const { nombre } = new Rama(req.body);
-
-    let ramaExiste = await Rama.findOne({nombre});
-
-    if(ramaExiste) {
-        return res.status(400).json({ok:false, msg: "La rama ya existe"});
-    }
-
     try{
-        
-
-      const  ramaDB = await rama.save();
+        let ramaExiste = await Rama.findOne({nombre:req.body.nombre});
+        if(ramaExiste) {return res.status(400).json({ok:false, msg: "La rama ya existe"});}
+        let uid = req.id;
+        const rama = new Rama({Scout:uid,...req.body});
+        const  ramaDB = await rama.save();
         res.status(200).json({ok:true,rama:ramaDB})
     }catch(e) {
         console.log(e);
