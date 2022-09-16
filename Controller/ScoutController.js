@@ -4,16 +4,15 @@ const bcrypt=require('bcryptjs');
 const {generateJWT} = require('../helpers/jwt');
 
 const createScout = async(req,res=response) => {
-    let {nombre,email,password}=req.body;
+    let {email,password}=req.body;
     try {
-        const scout=await Scout.findOne({email});
-        if(scout){return res.status(400).json({ok:false,msg:"El Scout ya existe con ese email."});}
-        let dbScout=new Scout(req.body);
-        const salt=bcrypt.genSaltSync();
-        dbScout.password=bcrypt.hashSync(password,salt);
-        const token= await generateJWT(dbScout.id,nombre);
+        let dbScout=await Scout.findOne({email});
+        if(dbScout){return res.status(400).json({ok:false,msg:"El Scout ya existe con ese email."});}
+        dbScout=new Scout(req.body);
+        dbScout.password=bcrypt.hashSync(password,bcrypt.genSaltSync());
+        const token= await generateJWT(dbScout.id,dbScout.nombre);
         await dbScout.save();
-        return res.status(201).json({ok:true,uid:dbScout.id,nombre,email,token});
+        return res.status(201).json({ok:true,uid:dbScout.id,nombre:dbScout.nombre,email,token});
     } catch (error) {       
         console.log(error);
         return res.status(500).json({
