@@ -3,6 +3,7 @@ const {check} = require("express-validator");
 const { validarCampos } = require("../middlewares/validar-campos");
 const {createScout,readScouts,readScout,updateScout,deleteScout,
     loginScout,revalidateToken, readActiveScouts} = require("../Controller/ScoutController");
+const { validarJWT } = require("../middlewares/validar-jwt");
 const router = Router();
 
 router.post("/create-scout",[
@@ -28,4 +29,5 @@ router.get("/allScouts",readScouts);
 router.get("/activeScouts",readActiveScouts);
 router.get("/:id",readScout);
 router.delete("/:id",deleteScout);
+router.get("/revalidateToken",validarJWT,revalidateToken);
 module.exports=router;
