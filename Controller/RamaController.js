@@ -16,6 +16,8 @@ const createRama= async(req,res=response)=>{
     }
 
     try{
+        
+
       const  ramaDB = await rama.save();
         res.status(200).json({ok:true,rama:ramaDB})
     }catch(e) {

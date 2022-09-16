@@ -12,8 +12,7 @@ const createAdmin= async(req,res=response)=>{
         administrador = new Administrador( req.body );
         administrador.password = bcrypt.hashSync( password, bcrypt.genSaltSync() );
         await administrador.save();
-        const token = await generateJWT( administrador.id, administrador.nombre )
-        res.status(201).json({ok:true,uid: administrador.id,name: administrador.name,token});
+        res.status(201).json({ok:true,uid: administrador.id,name: administrador.name});
     } catch (error) {
         res.status(500).json({ok:false,msg: 'Por favor hable con el administrador'});
     }
