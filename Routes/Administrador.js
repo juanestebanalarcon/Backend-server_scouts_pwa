@@ -24,5 +24,5 @@ router.put("/:id",[
 router.get("/AllAdmins",readAdmins);
 router.get("/:id",readAdmin);
 router.delete("/:id",deleteAdmin);
-router.get("/revalidateToken",validarJWT,revalidateToken);
+router.get("/",validarJWT,revalidateToken);
 module.exports=router;

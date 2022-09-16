@@ -13,15 +13,13 @@ const createAdmin= async(req,res=response)=>{
         administrador.password = bcrypt.hashSync( password, bcrypt.genSaltSync() );
         await administrador.save();
         res.status(201).json({ok:true,uid: administrador.id,name: administrador.name});
-    } catch (error) {
-        res.status(500).json({ok:false,msg: 'Por favor hable con el administrador'});
-    }
+    } catch (error) {res.status(500).json({ok:false,msg: 'Por favor hable con el administrador'});}
     
 }
 const revalidateToken= async(req,res) => {
     let {id,nombre,email}=req;
     const token= await generateJWT(id,nombre,email);
-    return res.status(200).json({ok:true,id,nombre,email,token});
+    res.status(200).json({ok:true,token});
 }
 const readAdmin= async(req,res=response)=>{
     let uid=req.params.id;
@@ -35,8 +33,7 @@ const readAdmin= async(req,res=response)=>{
     }
 }
 const readAdmins= async(req,res=response)=>{
-    try
-    {
+    try{
     let {email} = req.body;
     let admin_ = await Administrador.find({email}).limit(10);
     if(admin_){res.status(200).json({ok:true,admin_});}
