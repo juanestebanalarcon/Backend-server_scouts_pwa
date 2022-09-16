@@ -10,8 +10,8 @@ const createScout = async(req,res=response) => {
         if(dbScout){return res.status(400).json({ok:false,msg:"El Scout ya existe con ese email."});}
         dbScout=new Scout(req.body);
         dbScout.password=bcrypt.hashSync(password,bcrypt.genSaltSync());
-        const token= await generateJWT(dbScout.id,dbScout.nombre);
         await dbScout.save();
+        const token= await generateJWT(dbScout.id,dbScout.nombre);
         return res.status(201).json({ok:true,uid:dbScout.id,nombre:dbScout.nombre,email,token});
     } catch (error) {       
         console.log(error);
