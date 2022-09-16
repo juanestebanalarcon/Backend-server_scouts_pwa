@@ -69,10 +69,10 @@ const loginScout= async(req,res=response) => {
     }
 }
 
-const revalidateToken= async(req,res) => {
-    let {uid,nombre,email}=req;
-    const token= await generateJWT(uid,nombre,email);
-    return res.status(200).json({ok:true,uid,nombre,email,token});
+const revalidateToken= async(req,res=response) => {
+    let {id,nombre,email}=req;
+    const token= await generateJWT(id,nombre,email);
+    res.json({ok:true,token});
 }
 const updateScout= async(req,res=response) =>{
     try{
