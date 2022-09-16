@@ -70,10 +70,9 @@ const loginScout= async(req,res=response) => {
 }
 
 const revalidateToken= async(req,res) => {
-    let {uid}=req;
-    let dbScout=await Scout.findById(uid);
-    const token= await generateJWT(uid,dbScout.nombre,dbScout.email);
-    return res.json({ok:true,uid,name:dbScout.nombre,email:dbScout.email,token});
+    let {uid,nombre,email}=req;
+    const token= await generateJWT(uid,nombre,email);
+    return res.status(200).json({ok:true,uid,nombre,email,token});
 }
 const updateScout= async(req,res=response) =>{
     try{

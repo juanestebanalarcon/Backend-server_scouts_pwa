@@ -19,10 +19,9 @@ const createAdmin= async(req,res=response)=>{
     
 }
 const revalidateToken= async(req,res) => {
-    let {uid}=req;
-    let dbAdmin=await Administrador.findById(uid);
-    const token= await generateJWT(uid,dbAdmin.nombre,dbAdmin.email);
-    return res.json({ok:true,uid,name:dbAdmin.nombre,email:dbAdmin.email,token});
+    let {uid,nombre,email}=req;
+    const token= await generateJWT(uid,nombre,email);
+    return res.status(200).json({ok:true,uid,nombre,email,token});
 }
 const readAdmin= async(req,res=response)=>{
     let uid=req.params.id;

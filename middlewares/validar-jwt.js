@@ -3,9 +3,7 @@ const jwt = require("jsonwebtoken");
 
 const validarJWT=(req,res=response,next)=>{
     const token=req.header('TokenAuth');
-    if(!token){
-        return res.status(401).json({ok:false,msg:'Error: token no enviado.'});
-    }
+    if(!token){return res.status(401).json({ok:false,msg:'Error: token no enviado.'});}
     try {
        const {uid,nombre,email}=jwt.verify(token,process.env.SECRET_JWT_SEED);
        req.id=uid;
