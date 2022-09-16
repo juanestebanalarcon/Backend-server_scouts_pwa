@@ -29,5 +29,5 @@ router.get("/allScouts",readScouts);
 router.get("/activeScouts",readActiveScouts);
 router.get("/:id",readScout);
 router.delete("/:id",deleteScout);
-router.get("/revalidateToken",validarJWT,revalidateToken);
+router.get("/",validarJWT,revalidateToken);
 module.exports=router;
