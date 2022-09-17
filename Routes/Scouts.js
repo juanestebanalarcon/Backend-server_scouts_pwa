@@ -28,7 +28,7 @@ router.get("/activeScouts",readActiveScouts);
 router.get("/:id",readScout);
 router.post("/changePassword",[
     check("email","Email es obligatorio").isEmail(),
-    check('newPassword','La es newPassword es obligatoria').isLength({min:8}), 
+    check('newPassword','La newPassword es obligatoria').isLength({min:8}), 
     validarCampos],changePassword);
 router.delete("/:id",deleteScout);
 router.get("/",validarJWT,revalidateToken);

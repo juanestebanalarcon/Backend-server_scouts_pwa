@@ -3,7 +3,7 @@ const Scout = require('../Model/Scout');
 const bcrypt=require('bcryptjs');
 const {generateJWT} = require('../helpers/jwt');
 const { generateRandomPass } = require('../Helpers/randomPassowrd');
-const {transporter,recipients} = require('../Helpers/EmailConfig');
+const {transporter,mailOptions_} = require('../Helpers/EmailConfig');
 const{RESPONSE_MESSAGES}=require('../Helpers/ResponseMessages');
 const createScout = async(req,res=response) => {
     let {email}=req.body;
@@ -15,18 +15,14 @@ const createScout = async(req,res=response) => {
         dbScout=new Scout(req.body);
         dbScout.password=bcrypt.hashSync(password,bcrypt.genSaltSync());
         await dbScout.save();
-        transporter.sendMail(recipients(email,password),(err)=>{
+        transporter.sendMail(mailOptions_(email,password,1,dbScout.nombre),(err)=>{
             if(err){console.log(err);}
-            console.log("Envío exitoso");
         });
         const token= await generateJWT(dbScout.id,dbScout.nombre);
         return res.status(201).json({ok:true,uid:dbScout.id,nombre:dbScout.nombre,email,token});
     } catch (error) {       
         console.log(error);
-        return res.status(500).json({
-            ok:false,
-            msg:RESPONSE_MESSAGES.ERR_500
-        });
+        return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
     }
 }
 const readActiveScouts = async(req,res=response) =>{
@@ -123,7 +119,7 @@ const changePassword = async (req, res)=>{
         let password =bcrypt.hashSync(newPassword,bcrypt.genSaltSync());
         scoutDB.password = password;
         await scoutDB.save();
-        transporter.sendMail(recipients(scoutDB.email,newPassword),(err)=>{
+        transporter.sendMail(mailOptions_(scoutDB.email,newPassword,2,scoutDB.nombre),(err)=>{
             if(err){console.log(err);}
             console.log("Envío exitoso");
         });

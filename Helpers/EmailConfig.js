@@ -1,7 +1,4 @@
 const nodemailer = require('nodemailer');
-const fs = require('fs');
-const { promisify } = require('util');
-const readFile = promisify(fs.readFile);
 
 const transporter = nodemailer.createTransport({
     service:"gmail",
@@ -16,20 +13,29 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-const recipients=(recipient,password)=>{
-    return {
-    from: process.env.MAIL_USERNAME,
-    to: `${recipient}`,
-    subject: `Noreply - contraseña de ${recipient}`,
-    html:`<p style="color:blue;font-size:20px;font-family:Arial;">
-    Hola ${recipient} ésta es tu contraseña nueva: ${password}
-    </p>`
+const mailOptions_=(recipient,password,type,name)=>{
+    if(type==1){
+        return {
+        from: process.env.MAIL_USERNAME,
+        to: `${recipient}`,
+        subject: `Noreply - contraseña de ${name}`,
+        html:`<p style="color:blue;font-size:20px;font-family:Arial;">
+        Hola ${name} esta es tu contraseña genérica: ${password}
+        </p>`
+        }
+    }else if(type ==2){
+        return {
+        from: process.env.MAIL_USERNAME,
+        to: `${recipient}`,
+        subject: `Noreply - contraseña de ${name}`,
+        html:`<p style="color:blue;font-size:20px;font-family:Arial;">
+        Hola ${name} esta es tu contraseña nueva: ${password}
+        </p>`
+        }
     }
-}
+    }
 
-
-// transporter.sendMail(mailOptions,(err)=>console.log(err));
 module.exports = {
     transporter,
-    recipients
+    mailOptions_
 }

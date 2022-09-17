@@ -3,24 +3,23 @@ const { generateJWT } = require("../Helpers/jwt")
 const {generateRandomPass} = require("../Helpers/randomPassowrd");
 const Administrador = require("../Model/Administrador");
 const bcrypt = require('bcryptjs');
-const { recipients, transporter } = require("../Helpers/EmailConfig");
+const { mailOptions_, transporter } = require("../Helpers/EmailConfig");
+const{RESPONSE_MESSAGES}=require('../Helpers/ResponseMessages');
 
 const createAdmin= async(req,res=response)=>{
     let { email } = req.body;
     try {  
         let password = generateRandomPass(10);
         let administrador = await Administrador.findOne({ email })
-        if( administrador ){return res.status(400).json({ok: false,msg: 'Usuario existente con este email'})}
+        if( administrador ){return res.status(400).json({ok: false,msg:RESPONSE_MESSAGES.ERR_ALREADY_EXISTS})}
         administrador = new Administrador( req.body );
         administrador.password = bcrypt.hashSync( password, bcrypt.genSaltSync() );
         await administrador.save();
-        let mailOptions = recipients(email,password);
-        transporter.sendMail(mailOptions,(err)=>{
+        transporter.sendMail(mailOptions_(email,password,1,administrador.nombre),(err)=>{
             if(err){console.log(err);}
-            console.log("Envío exitoso");
         });
         res.status(201).json({ok:true,uid: administrador.id,name: administrador.name});
-    } catch (error) {res.status(500).json({ok:false,msg: 'Por favor hable con el administrador'});}
+    } catch (error) {res.status(500).json({ok:false,msg: RESPONSE_MESSAGES.ERR_500});}
     
 }
 const revalidateToken= async(req,res) => {
@@ -33,10 +32,10 @@ const readAdmin= async(req,res=response)=>{
     try{
         let admin_ = await Administrador.findById(uid);
         if(admin_){return res.status(200).json({ok:true,admin_ });}
-        return res.status(404).json({ok:false,msg:"Not found"});
+        return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_ALREADY_EXISTS});
     }catch(e){
         console.log(e);
-        return res.status(500).json({ok:false,msg:'Error interno del servidor'})
+        return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
     }
 }
 const readAdmins= async(req,res=response)=>{
@@ -44,11 +43,11 @@ const readAdmins= async(req,res=response)=>{
     let {email} = req.body;
     let admin_ = await Administrador.find({email}).limit(10);
     if(admin_){res.status(200).json({ok:true,admin_});}
-    res.status(404).json({ok:false,msg:"Not found"});
+    res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
     }catch(e)
     {
         console.log(e);
-        res.status(500).json({ok:false,msg:"Error interno en el servidor."});
+        res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
     }
 
 }
@@ -57,14 +56,14 @@ const updateAdmin=async(req,res=response)=>{
 
     try {
         let admin__ = await Administrador.findById( id );
-        if ( !admin__ ) {return res.status(404).json({ok: false,msg: 'Administrador no encontrado por id',});}
+        if ( !admin__ ) {return res.status(404).json({ok: false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
         let cambioAdmin = {...req.body}
         let adminUpdate = await Administrador.findByIdAndUpdate( id, cambioAdmin, { new: true } );
         return res.status(200).json({ok: true,adminUpdate})
 
     } catch (error) {
         console.log(error);
-       return res.status(500).json({ok: false,msg: 'Hable con el administrador'})
+       return res.status(500).json({ok: false,msg:RESPONSE_MESSAGES.ERR_500})
     }
 }
 const deleteAdmin =async(req,res=response)=>{
@@ -74,13 +73,12 @@ const deleteAdmin =async(req,res=response)=>{
         
         const admin_ = await Administrador.findById( id );
     
-        if ( !admin_ ) {return res.status(404).json({ok: false,msg: 'Amdinistrador no encontrado por id',});}
+        if ( !admin_ ) {return res.status(404).json({ok: false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
         await admin_.findByIdAndDelete( id );
-        return res.status(200).json({ok: true,msg: 'Administrador eliminado'
-        });
+        return res.status(200).json({ok: true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
     } catch (error) {
         console.log(error);
-       return res.status(500).json({ok: false,msg: 'Hable con el administrador'})
+       return res.status(500).json({ok: false,msg:RESPONSE_MESSAGES.ERR_500})
     }
 
 }
@@ -89,18 +87,34 @@ const loginAdmin= async(req,res=response) => {
     try {
      const adminDB=await Administrador.findOne({email});
      if(!adminDB){
-        return res.status(400).json({ok:false,msg:'El correo no existe.'})
+        return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_EMAIL_NOT_FOUND})
      }
      const validPassword=bcrypt.compare(password,adminDB.password);
-     if(!validPassword){return res.status(400).json({ok:false,msg:'La password no es válida.'})}
+     if(!validPassword){return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_INVALID_PASSWORD})}
      const token= await generateJWT(adminDB.id,adminDB.nombre,adminDB.email);
      return res.json({ok:true,uid:adminDB.id,name:adminDB.nombre,email,token})
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ok:false,msg:'Error interno del servidor'})
+        return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500})
     }
 }
-
+const changePassword = async (req, res)=>{
+    try{
+        let {newPassword,email} = req.body;
+        const adminDB = await Administrador.findOne({email:email});
+        if(!adminDB){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_EMAIL_NOT_FOUND});}
+        let password =bcrypt.hashSync(newPassword,bcrypt.genSaltSync());
+        adminDB.password = password;
+        await adminDB.save();
+        transporter.sendMail(mailOptions_(adminDB.email,newPassword,2,adminDB.nombre),(err)=>{
+            if(err){console.log(err);}
+            console.log("Envío exitoso");
+        });
+        return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
+}catch(e){
+    console.log(e);
+    return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});}
+}
 module.exports={
     loginAdmin,
     createAdmin,
@@ -108,6 +122,7 @@ module.exports={
     readAdmins,
     updateAdmin,
     deleteAdmin,
+    changePassword,
     revalidateToken
 
 }
