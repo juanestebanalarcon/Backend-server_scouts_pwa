@@ -1,13 +1,12 @@
  let SCOUT_TEST0 ={
-    nombre: "Prueba1.0",
-    apellido:"Test1.0",
-    email: "scout1.0@correo.com",
-    password:"12345678Test01",
-    link_ficha_medica:"www.link00.com",
-    fecha_nacimiento: "08-06-1988",
-    celular: "323554909",
+    nombre: "Juan Camilo",
+    apellido:"Marin Escandon",
+    email: "juano132002@gmail.com",
+    link_ficha_medica:"www.link.com",
+    fecha_nacimiento: "13-01-2002",
+    celular: "3153603506",
     esActivo:true,
-    ramaAsociada:"Rama01"
+    ramaAsociada:"Manada"
 }
  let SCOUT_TEST1 ={
     nombre: "Prueba1.1",
@@ -30,15 +29,14 @@
     ramaAsociada:"Rama2"
 };
  let SCOUT_TEST3 ={
-    nombre: "Prueba1",
-    apellido:"Test1",
-    email: "scout@correo.com",
-    password:"12345678Test",
+    nombre: "Prueba_random1",
+    apellido:"Test111",
+    email: "diamagalo@gmail.com",
+    password:"rcytA6F1e3",
     link_ficha_medica:"www.link.com",
     fecha_nacimiento: "08-06-1988",
     celular: "323554989",
     esActivo:true,
-    ramaAsociada:"Rama"
 }
  let SCOUT_TEST4 ={
     nombre: "Prueba4",
@@ -51,4 +49,6 @@
     esActivo:true,
     ramaAsociada:"Rama4"
 }
-module.exports= {SCOUT_TEST0,SCOUT_TEST1,SCOUT_TEST2,SCOUT_TEST3,SCOUT_TEST4}
+let SCOUT_VOID={ 
+}
+module.exports= {SCOUT_TEST0,SCOUT_TEST1,SCOUT_TEST2,SCOUT_TEST3,SCOUT_TEST4,SCOUT_VOID}
