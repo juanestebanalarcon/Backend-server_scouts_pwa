@@ -4,14 +4,14 @@
   "description": "Backend server for PWA Scouts, PI2 Ascent. MEN Stack",
   "main": "index.js",
   "scripts": {
-    "test-loginScout":"mocha ./tests/ScoutController/loginScout.test.js",
-    "test-createScout":"mocha ./tests/ScoutController/CreateScout.test.js",
-    "test-deleteScout":"mocha ./tests/ScoutController/DeleteScout.test.js",
-    "test-readScout":"mocha ./tests/ScoutController/ReadScout.test.js",
-    "test-readScouts":"mocha ./tests/ScoutController/ReadScouts.test.js",
-    "test-updateScout":"mocha ./tests/ScoutController/UpdateScout.test.js",
-    "test-adminController":"mocha ./tests/AdminController.test.js",
-    "test-superAdminController":"mocha ./tests/SuperAdminController.test.js",
+    "test-loginScout": "mocha ./tests/ScoutController/loginScout.test.js",
+    "test-createScout": "mocha ./tests/ScoutController/CreateScout.test.js",
+    "test-deleteScout": "mocha ./tests/ScoutController/DeleteScout.test.js",
+    "test-readScout": "mocha ./tests/ScoutController/ReadScout.test.js",
+    "test-readScouts": "mocha ./tests/ScoutController/ReadScouts.test.js",
+    "test-updateScout": "mocha ./tests/ScoutController/UpdateScout.test.js",
+    "test-adminController": "mocha ./tests/AdminController.test.js",
+    "test-superAdminController": "mocha ./tests/SuperAdminController.test.js",
     "dev": "nodemon index.js",
     "prod": ""
   },
@@ -35,6 +35,7 @@
     "jsonwebtoken": "^8.5.1",
     "mocha": "^10.0.0",
     "mongoose": "^6.5.2",
+    "nodemailer": "^6.7.8",
     "nodemon": "^2.0.19",
     "supertest": "^6.2.4"
   }
