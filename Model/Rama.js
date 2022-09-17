@@ -9,6 +9,14 @@ linkImagen: {
     type: String,
     required:true
 },
+edadMax:{
+    type: Number,
+    required: true
+},
+edadMin:{
+    type: Number,
+    required: true
+},
 Scout: [{
     type: Array,
     ref:"Scout",
