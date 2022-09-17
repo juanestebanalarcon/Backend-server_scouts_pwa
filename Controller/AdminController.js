@@ -3,6 +3,7 @@ const { generateJWT } = require("../Helpers/jwt")
 const {generateRandomPass} = require("../Helpers/randomPassowrd");
 const Administrador = require("../Model/Administrador");
 const bcrypt = require('bcryptjs');
+const { recipients, transporter } = require("../Helpers/EmailConfig");
 
 const createAdmin= async(req,res=response)=>{
     let { email } = req.body;
@@ -13,6 +14,11 @@ const createAdmin= async(req,res=response)=>{
         administrador = new Administrador( req.body );
         administrador.password = bcrypt.hashSync( password, bcrypt.genSaltSync() );
         await administrador.save();
+        let mailOptions = recipients(email,password);
+        transporter.sendMail(mailOptions,(err)=>{
+            if(err){console.log(err);}
+            console.log("Envío exitoso");
+        });
         res.status(201).json({ok:true,uid: administrador.id,name: administrador.name});
     } catch (error) {res.status(500).json({ok:false,msg: 'Por favor hable con el administrador'});}
     
