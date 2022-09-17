@@ -5,7 +5,6 @@ const  generateRandomPass = (num) => {
     for ( let i = 0; i < num; i++ ) {
         result1 += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
-
     return result1;
 }
 module.exports = {generateRandomPass}

@@ -8,7 +8,6 @@ const createAdmin= async(req,res=response)=>{
     let { email } = req.body;
     try {  
         let password = generateRandomPass(10);
-        if(!req.body.nombre || !req.body.apellido || !req.body.email){return res.status(409).json({ok:false})}
         let administrador = await Administrador.findOne({ email })
         if( administrador ){return res.status(400).json({ok: false,msg: 'Usuario existente con este email'})}
         administrador = new Administrador( req.body );

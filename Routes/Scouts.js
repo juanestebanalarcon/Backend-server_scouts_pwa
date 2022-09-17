@@ -10,7 +10,6 @@ router.post("/create-scout",[
     check("nombre","Nombre es obligatorio").not().isEmpty(),
     check("apellido","Nombre es obligatorio").not().isEmpty(),
     check("email","Email es obligatorio").isEmail(),
-    check("password","Password es obligatorio").not().isEmpty(),
     check("fecha_nacimiento","fecha nacimiento es obligatorio").not().isEmpty(),
     check("celular","celular es obligatorio").not().isEmpty(),
     validarCampos,
