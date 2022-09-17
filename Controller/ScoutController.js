@@ -60,7 +60,7 @@ const loginScout= async(req,res=response) => {
     let {email,password}=req.body;
     try {
      let scoutDB=await Scout.findOne({email});
-     if(!scoutDB){res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_EMAIL_NOT_FOUND})}
+     if(!scoutDB){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_EMAIL_NOT_FOUND})}
      let validPassword=bcrypt.compareSync(password,scoutDB.password);
      if(!validPassword){return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_INVALID_PASSWORD})}
      const token= await generateJWT(scoutDB.id,scoutDB.nombre,scoutDB.email);
@@ -121,7 +121,6 @@ const changePassword = async (req, res)=>{
         await scoutDB.save();
         transporter.sendMail(mailOptions_(scoutDB.email,newPassword,2,scoutDB.nombre),(err)=>{
             if(err){console.log(err);}
-            console.log("Envío exitoso");
         });
         return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
 }catch(e){

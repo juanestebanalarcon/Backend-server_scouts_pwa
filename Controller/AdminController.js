@@ -42,12 +42,12 @@ const readAdmins= async(req,res=response)=>{
     try{
     let {email} = req.body;
     let admin_ = await Administrador.find({email}).limit(10);
-    if(admin_){res.status(200).json({ok:true,admin_});}
-    res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
+    if(admin_){return res.status(200).json({ok:true,admin_});}
+    return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
     }catch(e)
     {
         console.log(e);
-        res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
+        return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
     }
 
 }

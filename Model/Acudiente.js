@@ -26,7 +26,11 @@ const AcudienteSchema = Schema({
         type: String,
         required: true,
     },
-    
+    Scout:{
+        type: Schema.Types.ObjectId,
+        ref:"Scout",    
+        required: false,
+    }
 })
 
 module.exports = model('Acudiente', AcudienteSchema)
