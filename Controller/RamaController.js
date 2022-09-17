@@ -9,7 +9,7 @@ const createRama= async(req,res=response)=>{
         let uid = req.id;
         const rama = new Rama({Scout:uid,...req.body});
         const  ramaDB = await rama.save();
-        res.status(200).json({ok:true,rama:ramaDB})
+        res.status(201).json({ok:true,rama:ramaDB})
     }catch(e) {
         console.log(e);
         res.status(500).json({ok:false,msg:"Error interno en el servidor."});

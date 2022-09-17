@@ -17,7 +17,7 @@
     fecha_nacimiento: "08-06-1981",
     celular: "323554981",
     esActivo:true,
-    ramaAsociada:"Rama1"
+    
 };
  let SCOUT_TEST2 ={
     nombre: "Prueba2",
@@ -41,13 +41,12 @@
  let SCOUT_TEST4 ={
     nombre: "Prueba4",
     apellido:"Test4",
-    email: "scout4@correo.com",
     password:"12345678Test4",
     link_ficha_medica:"www.4link.com",
     fecha_nacimiento: "08-06-1984",
     celular: "323554984",
     esActivo:true,
-    ramaAsociada:"Rama4"
+    ramaAsociada:"Manada"
 }
 let SCOUT_VOID={ 
 }

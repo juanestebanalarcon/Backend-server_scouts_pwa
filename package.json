@@ -14,6 +14,7 @@
     "test-loginAdmin": "mocha ./tests/AdministradorController/loginAdmin.test.js",
     "test-superAdminController": "mocha ./tests/SuperAdminController.test.js",
     "test-loginSuperAdmin": "mocha ./tests/SuperAdminController/loginSuperAdmin.test.js",
+    "test-createRama": "mocha ./tests/RamaController/CreateRama.test.js",
     "dev": "nodemon index.js",
     "prod": ""
   },
