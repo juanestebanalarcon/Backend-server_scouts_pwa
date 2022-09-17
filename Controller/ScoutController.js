@@ -64,7 +64,6 @@ const readScout= async(req,res=response)=>{
 const loginScout= async(req,res=response) => {
     let {email,password}=req.body;
     try {
-        console.log(password);
      let scoutDB=await Scout.findOne({email});
      if(!scoutDB){
           res.status(404).json({ok:false,msg:'El correo no existe.'})
