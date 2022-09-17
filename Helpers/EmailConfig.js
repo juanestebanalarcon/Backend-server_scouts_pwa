@@ -21,8 +21,8 @@ const recipients=(recipient,password)=>{
     from: process.env.MAIL_USERNAME,
     to: `${recipient}`,
     subject: `Noreply - contraseña de ${recipient}`,
-    html:`<p styñe="color:blue;font-size:20px;font-family:Arial;">
-    Hola ${recipient} ésta es tu contraseña genérica: ${password}
+    html:`<p style="color:blue;font-size:20px;font-family:Arial;">
+    Hola ${recipient} ésta es tu contraseña nueva: ${password}
     </p>`
     }
 }

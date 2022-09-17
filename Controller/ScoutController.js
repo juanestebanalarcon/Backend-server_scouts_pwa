@@ -15,8 +15,7 @@ const createScout = async(req,res=response) => {
         dbScout=new Scout(req.body);
         dbScout.password=bcrypt.hashSync(password,bcrypt.genSaltSync());
         await dbScout.save();
-        let mailOptions = recipients(email,password);
-        transporter.sendMail(mailOptions,(err)=>{
+        transporter.sendMail(recipients(email,password),(err)=>{
             if(err){console.log(err);}
             console.log("Envío exitoso");
         });
@@ -116,6 +115,23 @@ const deleteScout = async (req,res=response) =>{
         return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500})
     }
 }
+const changePassword = async (req, res)=>{
+    try{
+        let {newPassword,email} = req.body;
+        const scoutDB = await Scout.findOne({email:email});
+        if(!scoutDB){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_EMAIL_NOT_FOUND});}
+        let password =bcrypt.hashSync(newPassword,bcrypt.genSaltSync());
+        scoutDB.password = password;
+        await scoutDB.save();
+        transporter.sendMail(recipients(scoutDB.email,newPassword),(err)=>{
+            if(err){console.log(err);}
+            console.log("Envío exitoso");
+        });
+        return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
+}catch(e){
+    console.log(e);
+    return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});}
+}
 
 module.exports={
     createScout,
@@ -125,5 +141,6 @@ module.exports={
     updateScout,
     deleteScout,
     loginScout,
+    changePassword,
     revalidateToken
 }
