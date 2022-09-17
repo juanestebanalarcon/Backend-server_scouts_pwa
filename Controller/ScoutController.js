@@ -11,6 +11,7 @@ const createScout = async(req,res=response) => {
         if(!req.body.nombre || !req.body.apellido || !req.body.email || !req.body.fecha_nacimiento || !req.body.celular || !req.body.esActivo){return res.status(409).json({ok:false})}
         let dbScout=await Scout.findOne({email});
         if(dbScout){return res.status(400).json({ok:false,msg:"El Scout ya existe con ese email."});}
+        req.body.esActivo = true;
         dbScout=new Scout(req.body);
         dbScout.password=bcrypt.hashSync(password,bcrypt.genSaltSync());
         await dbScout.save();
