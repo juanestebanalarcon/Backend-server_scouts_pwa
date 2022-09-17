@@ -65,11 +65,9 @@ const loginScout= async(req,res=response) => {
     let {email,password}=req.body;
     try {
      let scoutDB=await Scout.findOne({email});
-     if(!scoutDB){
-          res.status(404).json({ok:false,msg:'El correo no existe.'})
-     }
+     if(!scoutDB){res.status(404).json({ok:false,msg:'El correo no existe.'})}
      let validPassword=bcrypt.compare(password,scoutDB.password);
-     if(!validPassword){res.status(400).json({ok:false,msg:'La password no es válida.'})}
+     if(!validPassword){return res.status(400).json({ok:false,msg:'La password no es válida.'})}
      const token= await generateJWT(scoutDB.id,scoutDB.nombre,scoutDB.email);
      return res.status(200).json({ok:true,_id:scoutDB.id,name:scoutDB.nombre,email,token})
     } catch (error) {

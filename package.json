@@ -4,7 +4,7 @@
   "description": "Backend server for PWA Scouts, PI2 Ascent. MEN Stack",
   "main": "index.js",
   "scripts": {
-    "test-loginScout": "mocha ./tests/ScoutController/loginScout.test.js",
+    "test-loginScout": "mocha -t 7000 ./tests/ScoutController/loginScout.test.js",
     "test-createScout": "mocha ./tests/ScoutController/CreateScout.test.js",
     "test-deleteScout": "mocha ./tests/ScoutController/DeleteScout.test.js",
     "test-readScout": "mocha ./tests/ScoutController/ReadScout.test.js",

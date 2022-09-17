@@ -18,7 +18,6 @@ describe("LoginScout", () => {
         let response =   await request.post("/scouts/log-in-scout").send({email:SCOUT_TEST1.email, password:SCOUT_TEST1.password}).timeout(2000);
         expect(response.status).to.equal(404);
         expect(response.body.msg).to.equal('El correo no existe.');
-
 });
 });
 });
