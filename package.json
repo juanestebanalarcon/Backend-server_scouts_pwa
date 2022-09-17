@@ -10,8 +10,10 @@
     "test-readScout": "mocha ./tests/ScoutController/ReadScout.test.js",
     "test-readScouts": "mocha ./tests/ScoutController/ReadScouts.test.js",
     "test-updateScout": "mocha ./tests/ScoutController/UpdateScout.test.js",
-    "test-adminController": "mocha ./tests/AdminController.test.js",
+    "test-adminController": "mocha ./tests/AdministradorController.test.js",
+    "test-loginAdmin": "mocha ./tests/AdministradorController/loginAdmin.test.js",
     "test-superAdminController": "mocha ./tests/SuperAdminController.test.js",
+    "test-loginSuperAdmin": "mocha ./tests/SuperAdminController/loginSuperAdmin.test.js",
     "dev": "nodemon index.js",
     "prod": ""
   },
