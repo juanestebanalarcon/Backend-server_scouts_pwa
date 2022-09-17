@@ -3,7 +3,7 @@ const Rama = require("../Model/Rama");
 
 const createRama= async(req,res=response)=>{
     try{
-        if(!req.body.nombre || !req.body.linkImagen){return res.status(409).json({ok:false})}
+        if(!req.body.nombre){return res.status(409).json({ok:false})}
         let ramaExiste = await Rama.findOne({nombre:req.body.nombre});
         if(ramaExiste) {return res.status(400).json({ok:false, msg: "La rama ya existe"});}
         let uid = req.id;

@@ -5,10 +5,10 @@ nombre: {
     type: String,
     required:true
 },
-linkImagen: {
-    type: String,
-    required:true
-},
+// linkImagen: {
+//     type: String,
+//     required:true
+// },
 edadMax:{
     type: Number,
     required: true
