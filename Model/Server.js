@@ -6,6 +6,7 @@ class Server {
         this.app  = express();
         this.port = process.env.PORT;
         this.ScoutsPath='scouts';
+        this.AcudientesPath='acudientes';
         this.AdminPath='admin';
         this.SuperAdmPath='superAdmin';
         this.RamaPath='rama';
@@ -17,6 +18,7 @@ class Server {
     }
     routes(){
         this.app.use(`${process.env.BASE_URL}/${this.ScoutsPath}`, require('../Routes/Scouts'));
+        this.app.use(`${process.env.BASE_URL}/${this.AcudientesPath}`, require('../Routes/Acudiente'));
         this.app.use(`${process.env.BASE_URL}/${this.AdminPath}`, require('../Routes/Administrador'));
         this.app.use(`${process.env.BASE_URL}/${this.SuperAdmPath}`, require('../Routes/SuperAdmin'));
         this.app.use(`${process.env.BASE_URL}/${this.RamaPath}`, require('../Routes/Rama'));
