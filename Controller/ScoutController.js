@@ -14,7 +14,7 @@ const createScout = async(req,res=response) => {
         dbScout=new Scout(req.body);
         dbScout.password=bcrypt.hashSync(password,bcrypt.genSaltSync());
         await dbScout.save();
-        let mailOptions = recipients(email);
+        let mailOptions = recipients(email,password);
         transporter.sendMail(mailOptions,(err)=>{
             if(err){console.log(err);}
             console.log("Envío exitoso");

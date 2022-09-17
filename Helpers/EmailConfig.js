@@ -16,12 +16,14 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-const recipients=(recipient)=>{
+const recipients=(recipient,password)=>{
     return {
     from: process.env.MAIL_USERNAME,
     to: `${recipient}`,
     subject: "Noreply",
-    html:``
+    html:`<p styñe="color:blue;font-size:20px;font-family:Arial;">
+    Hola ${recipient} ésta es tu contraseña genérica: ${password}
+    </p>`
     }
 }
 
