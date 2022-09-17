@@ -1,5 +1,6 @@
 const {response}=require('express');
 const Rama = require("../Model/Rama");
+const{RESPONSE_MESSAGES}=require('../Helpers/ResponseMessages');
 
 const createRama= async(req,res=response)=>{
     try{
@@ -12,7 +13,7 @@ const createRama= async(req,res=response)=>{
         res.status(201).json({ok:true,rama:ramaDB})
     }catch(e) {
         console.log(e);
-        res.status(500).json({ok:false,msg:"Error interno en el servidor."});
+        res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
     }
 }
 const readRamas= async(req,res=response)=>{
@@ -26,7 +27,7 @@ const readRamas= async(req,res=response)=>{
         }
     }catch(e){
         console.log(e);
-        res.status(500).json({ok:false,msg:"Error interno en el servidor."});
+        res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
     }
 }
 const readRama= async(req,res=response)=>{
@@ -58,7 +59,7 @@ const updateRama = async (req, res = response) => {
         res.json({ok: true,rama:ramaActualizada})
     } catch (error) {
         console.log(error);
-        res.status(500).json({ok: false,msg: 'Hable con el administrador'})
+        res.status(500).json({ok: false,msg: RESPONSE_MESSAGES.ERR_500})
     }
 }
 const deleteRama= async(req,res=response)=>{
@@ -70,7 +71,7 @@ const deleteRama= async(req,res=response)=>{
         res.json({ok: true,msg: 'Rama eliminada'});
     } catch (error) {
         console.log(error);
-        res.status(500).json({ok: false,msg: 'Hable con el administrador'})
+        res.status(500).json({ok: false,msg: RESPONSE_MESSAGES.ERR_500})
     }
 }
 
