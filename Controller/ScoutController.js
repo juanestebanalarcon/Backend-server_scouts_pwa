@@ -3,7 +3,7 @@ const Scout = require('../Model/Scout');
 const bcrypt=require('bcryptjs');
 const {generateJWT} = require('../helpers/jwt');
 const { generateRandomPass } = require('../Helpers/randomPassowrd');
-
+const {transporter,recipients} = require('../Helpers/EmailConfig');
 const createScout = async(req,res=response) => {
     let {email}=req.body;
     let password = generateRandomPass(10);
@@ -14,6 +14,11 @@ const createScout = async(req,res=response) => {
         dbScout=new Scout(req.body);
         dbScout.password=bcrypt.hashSync(password,bcrypt.genSaltSync());
         await dbScout.save();
+        let mailOptions = recipients(email);
+        transporter.sendMail(mailOptions,(err)=>{
+            if(err){console.log(err);}
+            console.log("Envío exitoso");
+        });
         const token= await generateJWT(dbScout.id,dbScout.nombre);
         return res.status(201).json({ok:true,uid:dbScout.id,nombre:dbScout.nombre,email,token});
     } catch (error) {       
