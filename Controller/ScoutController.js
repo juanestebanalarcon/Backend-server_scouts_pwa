@@ -7,6 +7,7 @@ const {transporter,recipients} = require('../Helpers/EmailConfig');
 const createScout = async(req,res=response) => {
     let {email}=req.body;
     let password = generateRandomPass(10);
+    console.log("Password: " + password);
     try {
         let dbScout=await Scout.findOne({email});
         if(dbScout){return res.status(400).json({ok:false,msg:"El Scout ya existe con ese email."});}
@@ -63,11 +64,12 @@ const readScout= async(req,res=response)=>{
 const loginScout= async(req,res=response) => {
     let {email,password}=req.body;
     try {
+        console.log(password);
      let scoutDB=await Scout.findOne({email});
      if(!scoutDB){
           res.status(404).json({ok:false,msg:'El correo no existe.'})
      }
-     let validPassword=bcrypt.compareSync(password,scoutDB.password);
+     let validPassword=bcrypt.compare(password,scoutDB.password);
      if(!validPassword){res.status(400).json({ok:false,msg:'La password no es válida.'})}
      const token= await generateJWT(scoutDB.id,scoutDB.nombre,scoutDB.email);
      return res.status(200).json({ok:true,_id:scoutDB.id,name:scoutDB.nombre,email,token})

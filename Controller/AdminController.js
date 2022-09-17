@@ -9,6 +9,7 @@ const createAdmin= async(req,res=response)=>{
     let { email } = req.body;
     try {  
         let password = generateRandomPass(10);
+        console.log("Password: " + password);
         let administrador = await Administrador.findOne({ email })
         if( administrador ){return res.status(400).json({ok: false,msg: 'Usuario existente con este email'})}
         administrador = new Administrador( req.body );
@@ -91,7 +92,7 @@ const loginAdmin= async(req,res=response) => {
      if(!adminDB){
         return res.status(400).json({ok:false,msg:'El correo no existe.'})
      }
-     const validPassword=bcrypt.compareSync(password,adminDB.password);
+     const validPassword=bcrypt.compare(password,adminDB.password);
      if(!validPassword){return res.status(400).json({ok:false,msg:'La password no es válida.'})}
      const token= await generateJWT(adminDB.id,adminDB.nombre,adminDB.email);
      return res.json({ok:true,uid:adminDB.id,name:adminDB.nombre,email,token})
