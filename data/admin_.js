@@ -15,8 +15,8 @@ let ADMIN_TEST1={
 let ADMIN_TEST2={
     nombre: "admin2",
     apellido: "admin2apellido",
-    email: "admin2@gmail.com",
-    password:"admin2password",
+    email: "admin@ejemplo.com",
+    password:"123456789",
     ramasAsignadas:["Rama001", "Rama002", "Rama003", "Rama004", "Rama005", "Rama006", "Rama007"]
 }
 let ADMIN_TEST3={
