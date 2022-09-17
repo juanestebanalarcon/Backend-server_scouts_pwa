@@ -2,9 +2,11 @@ const {response}=require('express');
 const Scout = require('../Model/Scout');
 const bcrypt=require('bcryptjs');
 const {generateJWT} = require('../helpers/jwt');
+const { generateRandomPass } = require('../Helpers/randomPassowrd');
 
 const createScout = async(req,res=response) => {
-    let {email,password}=req.body;
+    let {email}=req.body;
+    let password = generateRandomPass(10);
     try {
         if(!req.body.nombre || !req.body.apellido || !req.body.email || !req.body.fecha_nacimiento || !req.body.celular || !req.body.esActivo){return res.status(409).json({ok:false})}
         let dbScout=await Scout.findOne({email});
