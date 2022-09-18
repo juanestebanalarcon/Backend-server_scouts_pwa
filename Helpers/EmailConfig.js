@@ -65,7 +65,7 @@ const mailOptions_=(recipient,password,type,name)=>{
         return {
         from: process.env.MAIL_USERNAME,
         to: `${recipient}`,
-        subject: `Confirmación decambio de contraseña para ${name}`,
+        subject: `Confirmación de cambio de contraseña para ${name}`,
         html:`<p style="color:blue;font-size:20px;font-family:Arial;">
         Hola ${name} esta es tu contraseña nueva: ${password}
         </p>`

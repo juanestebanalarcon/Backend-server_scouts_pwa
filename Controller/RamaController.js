@@ -1,12 +1,12 @@
 const {response}=require('express');
 const Rama = require("../Model/Rama");
-const{RESPONSE_MESSAGES}=require('../Helpers/ResponseMessages');
+const RESPONSE_MESSAGES=require('../Helpers/ResponseMessages');
 
 const createRama= async(req,res=response)=>{
     try{
         if(!req.body.nombre){return res.status(409).json({ok:false})}
         let ramaExiste = await Rama.findOne({nombre:req.body.nombre});
-        if(ramaExiste) {return res.status(400).json({ok:false, msg: "La rama ya existe"});}
+        if(ramaExiste) {return res.status(400).json({ok:false, msg: RESPONSE_MESSAGES.ERR_ALREADY_EXISTS});}
         let uid = req.id;
         const rama = new Rama({Scout:uid,...req.body});
         const  ramaDB = await rama.save();
@@ -23,7 +23,7 @@ const readRamas= async(req,res=response)=>{
         if(ramas_){
             res.status(200).json({ok:true,ramas_});
         }else{
-            res.status(404).json({ok:false,msg:"Not found"});
+            res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
         }
     }catch(e){
         console.log(e);
@@ -35,7 +35,7 @@ const readRama= async(req,res=response)=>{
     try{
         const rama_ = await Rama.findById(uid);
         if(rama_){return res.status(200).json({ok:true,rama_ });   }
-            return res.status(404).json({ok:false,msg:"Not found"});
+        return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
     }catch(e){
         console.log(e);
         return res.status(500).json({ok:false,msg:'Error interno del servidor'})
@@ -49,7 +49,7 @@ const updateRama = async (req, res = response) => {
         const rama = await Rama.findById( id );
 
         if ( !rama ) {
-            return res.status(404).json({ok: true,msg: 'Rama no encontrada por id',});
+            return res.status(404).json({ok: true,msg: RESPONSE_MESSAGES.ERR_NOT_FOUND});
         }
         const cambioRama = {
             ...req.body,
@@ -66,7 +66,7 @@ const deleteRama= async(req,res=response)=>{
     let id  = req.params.id;
     try {
         const rama = await Rama.findById( id );
-        if ( !rama ) {return res.status(404).json({ok: true,msg: 'Rama no encontrada por id',});}
+        if ( !rama ) {return res.status(404).json({ok: true,msg: RESPONSE_MESSAGES.ERR_NOT_FOUND});}
         await rama.findByIdAndDelete( id );
         res.json({ok: true,msg: 'Rama eliminada'});
     } catch (error) {
