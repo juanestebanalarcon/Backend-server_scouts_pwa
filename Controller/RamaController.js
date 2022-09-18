@@ -1,6 +1,6 @@
 const {response}=require('express');
 const Rama = require("../Model/Rama");
-const RESPONSE_MESSAGES=require('../Helpers/ResponseMessages');
+const {RESPONSE_MESSAGES}=require('../Helpers/ResponseMessages');
 
 const createRama= async(req,res=response)=>{
     try{
@@ -45,21 +45,13 @@ const updateRama = async (req, res = response) => {
     const id  = req.params.id;
     const _id = req._id;
     try {
-        
         const rama = await Rama.findById( id );
-
-        if ( !rama ) {
-            return res.status(404).json({ok: true,msg: RESPONSE_MESSAGES.ERR_NOT_FOUND});
-        }
-        const cambioRama = {
-            ...req.body,
-            Scout: _id
-        }
-        const ramaActualizada = await Rama.findByIdAndUpdate( id, cambioRama, { new: true } );
-        res.json({ok: true,rama:ramaActualizada})
+        if ( !rama ) {return res.status(404).json({ok: true,msg: RESPONSE_MESSAGES.ERR_NOT_FOUND});}
+        const ramaActualizada = await Rama.findByIdAndUpdate( id, {...req.body,Scout: _id}, { new: true } );
+        return res.json({ok: true,rama:ramaActualizada})
     } catch (error) {
         console.log(error);
-        res.status(500).json({ok: false,msg: RESPONSE_MESSAGES.ERR_500})
+     return res.status(500).json({ok: false,msg: RESPONSE_MESSAGES.ERR_500})
     }
 }
 const deleteRama= async(req,res=response)=>{

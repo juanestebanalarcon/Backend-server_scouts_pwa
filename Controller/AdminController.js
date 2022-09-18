@@ -60,7 +60,6 @@ const updateAdmin=async(req,res=response)=>{
         let cambioAdmin = {...req.body}
         let adminUpdate = await Administrador.findByIdAndUpdate( id, cambioAdmin, { new: true } );
         return res.status(200).json({ok: true,adminUpdate})
-
     } catch (error) {
         console.log(error);
        return res.status(500).json({ok: false,msg:RESPONSE_MESSAGES.ERR_500})
