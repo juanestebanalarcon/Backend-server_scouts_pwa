@@ -10,7 +10,7 @@ const createAcudiente= async(req,res=response)=>{
     let { email } = req.body;
     try {  
         let password = generateRandomPass(10);
-        let acudiente_ = await acudiente_.findOne({ email })
+        let acudiente_ = await Acudiente.findOne({ email })
         if( acudiente_ ){return res.status(400).json({ok: false,msg:RESPONSE_MESSAGES.ERR_ALREADY_EXISTS})}
         acudiente_ = new Acudiente( req.body );
         acudiente_.password = bcrypt.hashSync( password, bcrypt.genSaltSync() );
@@ -18,8 +18,10 @@ const createAcudiente= async(req,res=response)=>{
         transporter.sendMail(mailOptions_(email,password,1,acudiente_.nombre),(err)=>{
             if(err){console.log(err);}
         });
-        res.status(201).json({ok:true,uid: acudiente_.id,name: acudiente_.name});
-    } catch (error) {res.status(500).json({ok:false,msg: RESPONSE_MESSAGES.ERR_500});}
+        return res.status(201).json({ok:true,uid: acudiente_.id,name: acudiente_.name});
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ok:false,msg: RESPONSE_MESSAGES.ERR_500});}
 }
 const revalidateToken= async(req,res) => {
     let {id,nombre,email}=req;

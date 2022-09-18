@@ -18,8 +18,8 @@ const createAdmin= async(req,res=response)=>{
         transporter.sendMail(mailOptions_(email,password,1,administrador.nombre),(err)=>{
             if(err){console.log(err);}
         });
-        res.status(201).json({ok:true,uid: administrador.id,name: administrador.name});
-    } catch (error) {res.status(500).json({ok:false,msg: RESPONSE_MESSAGES.ERR_500});}
+       return res.status(201).json({ok:true,uid: administrador.id,name: administrador.name});
+    } catch (error) {return res.status(500).json({ok:false,msg: RESPONSE_MESSAGES.ERR_500});}
     
 }
 const revalidateToken= async(req,res) => {
