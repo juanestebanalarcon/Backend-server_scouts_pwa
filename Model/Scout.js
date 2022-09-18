@@ -21,7 +21,7 @@ const ScoutSchema = Schema({
     },
     link_ficha_medica: {
         type: String,
-        required: true,
+        required: false,
     },
     fecha_nacimiento: {
         type: String,
