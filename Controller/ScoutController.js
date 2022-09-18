@@ -74,7 +74,7 @@ const loginScout= async(req,res=response) => {
 const revalidateToken= async(req,res=response) => {
     let {id,nombre,email}=req;
     const token= await generateJWT(id,nombre,email);
-    res.json({ok:true,token});
+   return res.status(200).json({ok:true,token});
 }
 const updateScout= async(req,res=response) =>{
     try{
