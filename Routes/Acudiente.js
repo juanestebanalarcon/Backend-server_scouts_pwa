@@ -3,7 +3,7 @@ const {check} = require("express-validator");
 const { validarCampos } = require("../middlewares/validar-campos");
 const { validarJWT } = require("../middlewares/validar-jwt");
 const {createAcudiente,readAcudientes,readAcudiente,deleteAcudiente,
-    loginAcudiente,revalidateToken, changePassword} = require("../Controller/AcudienteController");
+    loginAcudiente,revalidateToken,updateAcudiente,changePassword} = require("../Controller/AcudienteController");
 const router = Router();
 
 router.post("/create-acudiente",[
@@ -25,6 +25,7 @@ router.post("/changePassword",[
     check("email","Email es obligatorio").isEmail(),
     check('newPassword','La newPassword es obligatoria').isLength({min:8}), 
     validarCampos],changePassword);
+router.put("/:id",updateAcudiente);
 router.delete("/:id",deleteAcudiente);
 router.get("/",validarJWT,revalidateToken);
 module.exports=router;

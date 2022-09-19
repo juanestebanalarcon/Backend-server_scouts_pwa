@@ -78,26 +78,16 @@ const revalidateToken= async(req,res=response) => {
 }
 const updateScout= async(req,res=response) =>{
     try{
-        let uid = req.params.id;
-        let scoutDb = Scout.findById(uid);
+        let id = req.params.id;
+        let scoutDb = Scout.findById(id);
         if(!scoutDb){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
-        let {password,email,...campos} = req.body;
-        if(email!=""){
-            if(scoutDb.email===email){delete campos.email;}
-            let existeEmail = await Scout.findOne({email});
-            if(existeEmail){return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_ALREADY_EXISTS});}
-            campos.email=email;
-            const scoutUpdate = await Scout.findByIdAndUpdate(uid,campos,{new:true});
-            res.status(200).json({ok:true,scoutUpdate});
-        }
-        const scoutUpdate = await Scout.findByIdAndUpdate(uid,campos,{new:true});
-        res.status(200).json({ok:true,scoutUpdate});
+        await Scout.updateOne({_id:id}, {...req.body}, { upsert: true });
+        res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
     }catch(e){
         console.log(e);
         return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500})
     }
 }
-
 const deleteScout = async (req,res=response) =>{
     try{
         let uid = req.params.id;

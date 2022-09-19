@@ -24,10 +24,7 @@ router.post('/log-in-superAdmin',[
     validarCampos
 ],loginSuperAdministrador);
 
-router.put("/:id",[
-    check("email","Email es obligatorio").isEmail(),
-    validarCampos,
-],updateSuperAdministrador);
+router.put("/:id",updateSuperAdministrador);
 
 router.get("/allSuperAdmins",readSuperAdministradors);
 

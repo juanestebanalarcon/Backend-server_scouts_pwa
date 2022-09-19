@@ -15,10 +15,7 @@ router.post('/log-in-admin',[
     check('password','La es contraseña es obligatoria').isLength({min:8}),
     validarCampos
 ],loginAdmin);
-router.put("/:id",[
-    check("email","Email es obligatorio").isEmail(),
-    validarCampos,
-],updateAdmin);
+router.put("/:id",updateAdmin);
 router.get("/AllAdmins",readAdmins);
 router.get("/:id",readAdmin);
 router.delete("/:id",deleteAdmin);

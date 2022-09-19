@@ -65,16 +65,11 @@ const revalidateToken= async(req,res=response) => {
 }
 const updateSuperAdministrador= async(req,res=response) =>{
     try{
-        let uid = req.params.id;
-        const SuperAdministradorDb = SuperAdministrador.findById(uid);
+        let id = req.params.id;
+        const SuperAdministradorDb = SuperAdministrador.findById(id);
         if(!SuperAdministradorDb){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
-        const {password,email,...campos} = req.body;
-        if(SuperAdministradorDb.email===email){delete campos.email;}
-        const existeEmail = await SuperAdministrador.findOne({email});
-        if(existeEmail){return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_ALREADY_EXISTS});}
-        campos.email=email;
-        const SuperAdministradorUpdate = await SuperAdministrador.findByIdAndUpdate(uid,campos,{new:true});
-        res.status(200).json({ok:true,SuperAdministradorUpdate})
+        await SuperAdministrador.updateOne({_id:id}, {...req.body}, { upsert: true });
+        res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX})
     }catch(e){
         console.log(e);
         return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500})

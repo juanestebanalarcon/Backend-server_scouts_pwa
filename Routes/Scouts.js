@@ -19,10 +19,7 @@ router.post('/log-in-scout',[
     check('password','La es contraseña es obligatoria').isLength({min:8}),
     validarCampos
 ],loginScout);
-router.put("/:id",[
-    check("email","Email es obligatorio").isEmail(),
-    validarCampos,
-],updateScout);
+router.put("/:id",updateScout);
 router.get("/allScouts",readScouts);
 router.get("/activeScouts",readActiveScouts);
 router.get("/:id",readScout);

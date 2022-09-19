@@ -47,8 +47,8 @@ const updateRama = async (req, res = response) => {
     try {
         const rama = await Rama.findById( id );
         if ( !rama ) {return res.status(404).json({ok: true,msg: RESPONSE_MESSAGES.ERR_NOT_FOUND});}
-        const ramaActualizada = await Rama.findByIdAndUpdate( id, {...req.body,Scout: _id}, { new: true } );
-        return res.json({ok: true,rama:ramaActualizada})
+        await Rama.updateOne( id, {...req.body,Scout: _id}, { upsert: true } );
+        return res.json({ok: true,msg:RESPONSE_MESSAGES.SUCCESS_2XX})
     } catch (error) {
         console.log(error);
      return res.status(500).json({ok: false,msg: RESPONSE_MESSAGES.ERR_500})

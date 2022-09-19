@@ -40,8 +40,7 @@ const readAdmin= async(req,res=response)=>{
 }
 const readAdmins= async(req,res=response)=>{
     try{
-    let {email} = req.body;
-    let admin_ = await Administrador.find({email}).limit(10);
+    let admin_ = await Administrador.find({}).limit(10);
     if(admin_){return res.status(200).json({ok:true,admin_});}
     return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
     }catch(e)
@@ -57,9 +56,8 @@ const updateAdmin=async(req,res=response)=>{
     try {
         let admin__ = await Administrador.findById( id );
         if ( !admin__ ) {return res.status(404).json({ok: false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
-        let cambioAdmin = {...req.body}
-        let adminUpdate = await Administrador.findByIdAndUpdate( id, cambioAdmin, { new: true } );
-        return res.status(200).json({ok: true,adminUpdate})
+        await Administrador.updateOne({_id:id}, {...req.body}, { upsert: true });
+        return res.status(200).json({ok: true,msg:RESPONSE_MESSAGES.SUCCESS_2XX})
     } catch (error) {
         console.log(error);
        return res.status(500).json({ok: false,msg:RESPONSE_MESSAGES.ERR_500})

@@ -51,6 +51,18 @@ const readAcudientes= async(req,res=response)=>{
         return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
     }
 }
+const updateAcudiente= async(req,res=response) =>{
+    try{
+        let id = req.params.id;
+        let acudiente_ = Acudiente.findById(id);
+        if(!acudiente_){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
+        await Acudiente.updateOne({_id:id}, {...req.body}, { upsert: true });
+        res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
+    }catch(e){
+        console.log(e);
+        return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500})
+    }
+}
 const loginAcudiente= async(req,res=response) => {
     let {email,password}=req.body;
     try {
@@ -99,6 +111,7 @@ module.exports={
     createAcudiente,
     readAcudientes,
     readAcudiente,
+    updateAcudiente,
     deleteAcudiente,
     loginAcudiente,
     changePassword,
