@@ -60,7 +60,7 @@ const loginSuperAdministrador= async(req,res=response) => {
 const revalidateToken= async(req,res=response) => {
     const { uid}=req;
     const supAdminDb = await SuperAdministrador.findById(uid);
-    const token= await generateJWT(uid,supAdminDb.nombre,supAdminDb.email,);
+    const token= await generateJWT(uid,supAdminDb.nombre,supAdminDb.email,0);
     return res.status(200).json({ok:true,uid,name:supAdminDB.nombre,email:supAdminDb.email,token});
 }
 const updateSuperAdministrador= async(req,res=response) =>{

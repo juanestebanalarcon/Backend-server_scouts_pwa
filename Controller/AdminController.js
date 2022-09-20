@@ -24,7 +24,7 @@ const createAdmin= async(req,res=response)=>{
 }
 const revalidateToken= async(req,res) => {
     let {id,nombre,email}=req;
-    const token= await generateJWT(id,nombre,email);
+    const token= await generateJWT(id,nombre,email,1);
     res.status(200).json({ok:true,token});
 }
 const readAdmin= async(req,res=response)=>{
@@ -88,7 +88,7 @@ const loginAdmin= async(req,res=response) => {
      }
      const validPassword=bcrypt.compare(password,adminDB.password);
      if(!validPassword){return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_INVALID_PASSWORD})}
-     const token= await generateJWT(adminDB.id,adminDB.nombre,adminDB.email);
+     const token= await generateJWT(adminDB.id,adminDB.nombre,adminDB.email,1);
      return res.json({ok:true,uid:adminDB.id,name:adminDB.nombre,email,token})
     } catch (error) {
         console.log(error);

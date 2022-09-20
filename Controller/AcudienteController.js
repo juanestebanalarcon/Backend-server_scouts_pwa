@@ -25,7 +25,7 @@ const createAcudiente= async(req,res=response)=>{
 }
 const revalidateToken= async(req,res) => {
     let {id,nombre,email}=req;
-    const token= await generateJWT(id,nombre,email);
+    const token= await generateJWT(id,nombre,email,3);
     return res.status(200).json({ok:true,token});
 }
 const readAcudiente= async(req,res=response)=>{
@@ -70,7 +70,7 @@ const loginAcudiente= async(req,res=response) => {
      if(!acudiente_){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_EMAIL_NOT_FOUND})}
      let validPassword=bcrypt.compareSync(password,acudiente_.password);
      if(!validPassword){return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_INVALID_PASSWORD})}
-     const token= await generateJWT(acudiente_.id,acudiente_.nombre,acudiente_.email);
+     const token= await generateJWT(acudiente_.id,acudiente_.nombre,acudiente_.email,3);
      return res.status(200).json({ok:true,_id:acudiente_.id,name:acudiente_.nombre,email,token})
     } catch (error) {
         console.log(error);

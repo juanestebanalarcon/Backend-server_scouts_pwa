@@ -1,9 +1,10 @@
 const { response } = require("express");
 const jwt = require("jsonwebtoken");
+const { RESPONSE_MESSAGES } = require("../Helpers/ResponseMessages");
 
 const validarJWT=(req,res=response,next)=>{
     const token=req.header('x-token');
-    if(!token){return res.status(401).json({ok:false,msg:'Error: token no enviado.'});}
+    if(!token){return res.status(401).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
     try {
        const {id,nombre,email,rol}=jwt.verify(token,process.env.SECRET_JWT_SEED);
        req.id=id;
