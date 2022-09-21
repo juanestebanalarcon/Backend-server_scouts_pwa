@@ -26,6 +26,7 @@ const AcudienteSchema = Schema({
         type: String,
         required: true,
     },
+    link_imagen:{type: String, required: false},
     Scout:{
         type: Schema.Types.ObjectId,
         ref:"Scout",    

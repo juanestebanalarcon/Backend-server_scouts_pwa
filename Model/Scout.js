@@ -31,6 +31,7 @@ const ScoutSchema = Schema({
         type: String,
         required: true,
     },
+    link_imagen:{type: String, required: false},
     esActivo: {
         type: Boolean,
         required: true,
