@@ -63,8 +63,8 @@ const loginScout= async(req,res=response) => {
      if(!scoutDB){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_EMAIL_NOT_FOUND})}
      let validPassword=bcrypt.compareSync(password,scoutDB.password);
      if(!validPassword){return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_INVALID_PASSWORD})}
-     const token= await generateJWT(scoutDB.id,scoutDB.nombre,scoutDB.email,3);
-     return res.status(200).json({ok:true,_id:scoutDB.id,name:scoutDB.nombre,email,rol: 3,token})
+     const token= await generateJWT(scoutDB.id,scoutDB.nombre,scoutDB.email,2);
+     return res.status(200).json({ok:true,_id:scoutDB.id,name:scoutDB.nombre,email,rol: 2,token})
     } catch (error) {
         console.log(error);
         return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500})
