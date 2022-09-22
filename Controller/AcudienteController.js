@@ -23,10 +23,10 @@ const createAcudiente= async(req,res=response)=>{
         console.log(error);
         return res.status(500).json({ok:false,msg: RESPONSE_MESSAGES.ERR_500});}
 }
-const revalidateToken= async(req,res) => {
-    let {id,nombre,email}=req;
-    const token= await generateJWT(id,nombre,email,3);
-    return res.status(200).json({ok:true,token});
+const revalidateToken= async(req,res=response) => {
+    let {id,nombre,email,rol}=req;
+    const token= await generateJWT(id,nombre,email,rol);
+   return res.status(200).json({ok:true,token});
 }
 const readAcudiente= async(req,res=response)=>{
     let id=req.params.id;
