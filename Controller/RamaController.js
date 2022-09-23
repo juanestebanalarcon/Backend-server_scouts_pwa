@@ -1,6 +1,7 @@
 const {response}=require('express');
 const Rama = require("../Model/Rama");
 const {RESPONSE_MESSAGES}=require('../Helpers/ResponseMessages');
+const Scout = require('../Model/Scout');
 
 const createRama= async(req,res=response)=>{
     try{
@@ -67,10 +68,30 @@ const deleteRama= async(req,res=response)=>{
     }
 }
 
+const getScoutsAsignados = async(req, res=response) => {
+    let {nombre}=req.body;
+try{
+    let rama = Rama.findOne({nombre});
+    if(!rama){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
+    let scouts=[],_scout;
+    for(let i=0; i<rama.Scout.length; i++) {
+        _scout = await Scout.findById(rama.Scout[i]);
+        scouts.push(_scout);
+    }
+    return res.status(200).json({ok:true,scouts,msg:RESPONSE_MESSAGES.SUCCESS_2XX,RamaAsociada:nombre});
+
+}
+catch(err){console.log(err);
+return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
+}
+
+}
+
 module.exports={
     createRama,
     readRama,
     readRamas,
     updateRama,
-    deleteRama
+    deleteRama,
+    getScoutsAsignados
 }
