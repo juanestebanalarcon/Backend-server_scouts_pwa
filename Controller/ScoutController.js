@@ -18,11 +18,9 @@ const createScout = async(req,res=response) => {
         await dbScout.save();
         let rama = await Rama.findById(req.body.idRama);
         if(!rama){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
-        rama.Scout = dbScout.id;
-        await rama.save();
-        transporter.sendMail(mailOptions_(email,password,1,dbScout.nombre),(err)=>{
-            if(err){console.log(err);}
-        });
+        rama.Scout.push(dbScout.id);
+        rama.save();
+        transporter.sendMail(mailOptions_(email,password,1,dbScout.nombre),(err)=>{if(err){console.log(err);}});
         const token= await generateJWT(dbScout.id,dbScout.nombre);
         return res.status(201).json({ok:true,uid:dbScout.id,nombre:dbScout.nombre,email,token});
     } catch (error) {       
