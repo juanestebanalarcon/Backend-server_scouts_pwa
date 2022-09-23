@@ -5,6 +5,7 @@ const {generateJWT} = require('../helpers/jwt');
 const { generateRandomPass } = require('../Helpers/randomPassowrd');
 const {transporter,mailOptions_} = require('../Helpers/EmailConfig');
 const{RESPONSE_MESSAGES}=require('../Helpers/ResponseMessages');
+const Rama = require('../Model/Rama');
 const createScout = async(req,res=response) => {
     let {email}=req.body;
     const password = generateRandomPass(10);
@@ -15,6 +16,10 @@ const createScout = async(req,res=response) => {
         dbScout=new Scout(req.body);
         dbScout.password=bcrypt.hashSync(password,bcrypt.genSaltSync());
         await dbScout.save();
+        let rama = await Rama.findById(req.body.idRama);
+        if(!rama){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
+        rama.Scout = dbScout.id;
+        await rama.save();
         transporter.sendMail(mailOptions_(email,password,1,dbScout.nombre),(err)=>{
             if(err){console.log(err);}
         });
@@ -56,6 +61,8 @@ const readScout= async(req,res=response)=>{
         return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500})
     }
 }
+
+
 const loginScout= async(req,res=response) => {
     let {email,password}=req.body;
     try {

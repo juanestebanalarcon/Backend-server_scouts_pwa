@@ -17,10 +17,10 @@ edadMin:{
     type: Number,
     required: true
 },
-Scout: [{
+Scout: {
     type: Array,
     ref:"Scout",
     required:false
-}],
+},
 })
 module.exports = model("Rama",Rama)
