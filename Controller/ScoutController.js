@@ -28,6 +28,25 @@ const createScout = async(req,res=response) => {
         return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
     }
 }
+const changeScoutState = async(req,res=response) => {
+    try{
+        let scout_ = await Scout.findById(req.params.id);
+        if(!scout_){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND}); }
+        scout_.esActivo=req.body.esActivo;
+        scout_.save();
+        return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX,scout_});
+    }catch(err){console.log(err);
+    return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});}
+}
+const readScoutBranch = async(req, res=response)=>{
+    try{
+        let branch = await Rama.findOne({Scout:req.params.id});
+        if(!branch){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND})}
+        return res.status(200).json({ok:true,branch,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
+    }catch(err){
+        console.log(err);
+        return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});}
+}
 const readActiveScouts = async(req,res=response) =>{
     try{    
         let _activeScouts = await Scout.find({esActivo:true});
@@ -93,6 +112,7 @@ const updateScout= async(req,res=response) =>{
         return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500})
     }
 }
+
 const deleteScout = async (req,res=response) =>{
     try{
         let uid = req.params.id;
@@ -128,7 +148,9 @@ module.exports={
     readScouts,
     readScout,
     readActiveScouts,
+    readScoutBranch,
     updateScout,
+    changeScoutState,
     deleteScout,
     loginScout,
     changePassword,

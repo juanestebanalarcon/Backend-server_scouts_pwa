@@ -14,5 +14,5 @@ router.put("/:id",updateRama);
 router.get("/allRamas",readRamas);
 router.get("/:id",readRama);
 router.delete("/:id",deleteRama);
-router.get("/getScoutsAsignados",getScoutsAsignados);
+router.get("/getScoutsAsignados/:id",getScoutsAsignados);
 module.exports=router;
