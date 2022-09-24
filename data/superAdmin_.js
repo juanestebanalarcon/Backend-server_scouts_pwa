@@ -23,9 +23,9 @@ let SUPER_ADMIN_TEST3={
     password:"superAdmin3password"
 }
 let SUPER_ADMIN_TEST4={
-    nombre: "superAdmin4",
-    apellido: "superAdmin4apellido",
-    email: "superAdmin4@example.com",
-    password:"superAdmin4password"
+    nombre: "Diego",
+    apellido: "Caicedo",
+    email: "diego@ejemplo.com",
+    password:"12345678"
 }
 module.exports= {SUPER_ADMIN_TEST0,SUPER_ADMIN_TEST1,SUPER_ADMIN_TEST2,SUPER_ADMIN_TEST3,SUPER_ADMIN_TEST4}

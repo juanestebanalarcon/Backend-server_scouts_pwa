@@ -2,7 +2,7 @@ let ADMIN_TEST0={
     nombre: "admin0",
     apellido: "admin0apellido",
     email: "admin0@example.com",
-    password:"admin0password",
+    password:"holamundo",
     ramasAsignadas:["Rama01", "Rama02", "Rama03", "Rama04", "Rama05", "Rama06", "Rama07"]
 }
 let ADMIN_TEST1={
@@ -20,18 +20,17 @@ let ADMIN_TEST2={
     ramasAsignadas:["Rama001", "Rama002", "Rama003", "Rama004", "Rama005", "Rama006", "Rama007"]
 }
 let ADMIN_TEST3={
-    nombre: "admin3",
-    apellido: "admin3apellido",
-    email: "admin3@example.com",
-    password:"admin3password",
-    ramasAsignadas:["Rama001", "Rama002", "Rama003", "Rama004", "Rama005", "Rama006", "Rama007"]
+    nombre: "Jhon Jairo ",
+    apellido: "Escandon Lopez",
+    email: "jhon@example.com",
+    password:"12345678",
+    ramasAsignadas:["6325408b1a9d28793c3330f2", "63256d78b18b69dcd266ebde"]
 }
 let ADMIN_TEST4={
-    nombre: "admin4",
-    apellido: "admin4apellido",
-    email: "admin4@example.com",
-    password:"admin4password",
-    remasAsignadas:["Rama001", "Rama002", "Rama003", "Rama004", "Rama005", "Rama006", "Rama007"]
+    nombre: "Diana",
+    apellido: "Garcia",
+    password:"12345678",
+    ramasAsignadas:["6325408b1a9d28793c3330f2", "63256d78b18b69dcd266ebde"]
 }
 let ADMIN_TEST5={
     nombre: "admin5",

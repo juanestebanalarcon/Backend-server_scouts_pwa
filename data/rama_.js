@@ -1,5 +1,5 @@
 let RAMA_TEST0={
-    nombre:"RAMA_TEST1",
+    nombre:"Webelos",
     edadMax:7,
     edadMin:5
 }

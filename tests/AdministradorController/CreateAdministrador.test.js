@@ -9,11 +9,18 @@ describe("AdminController unit tests", () => {
          expect(response.body.ok).to.equal(true);
         });
         it("shouldn't create a duplicate admin", async() => {
+        let response =   await request.post("/admin/create-admin").send(ADMIN_TEST1);
+        expect(response.status).to.equal(400);
+    
+    });
+    it("shouldn't create a admin whithout email", async() => {
+        let response =   await request.post("/admin/create-admin").send(ADMIN_TEST4);
+        expect(response.status).to.equal(400);
+    }); 
+    it("shouldn't create a admin whithout branch", async() => {
         let response =   await request.post("/admin/create-admin").send(ADMIN_TEST0);
         expect(response.status).to.equal(400);
-        expect(response.body).to.equal({ok:false,msg:RESPONSE_MESSAGES.ERR_ALREADY_EXISTS});
-        assert.equal(response.body.msg, RESPONSE_MESSAGES.ERR_ALREADY_EXISTS);
-    });
+    }); 
 });
 
 });

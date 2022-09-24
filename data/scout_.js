@@ -1,12 +1,12 @@
  let SCOUT_TEST0 ={
     nombre: "Juan Camilo",
     apellido:"Marin Escandon",
-    email: "juano132002@gmail.com",
+    email: "juano132002@gmail.com",                                                
     link_ficha_medica:"www.link.com",
     fecha_nacimiento: "13-01-2002",
     celular: "3153603506",
     esActivo:true,
-    ramaAsociada:"Manada"
+    idRama:"632a6b5da1b9fed2d2296061"
 }
  let SCOUT_TEST1 ={
     nombre: "Prueba1.1",
@@ -26,17 +26,18 @@
     fecha_nacimiento: "08-06-1982",
     celular: "323554982",
     esActivo:true,
-    ramaAsociada:"Rama2"
+    idRama:"632a6b5da1b9fed2d2296061"
 };
  let SCOUT_TEST3 ={
-    nombre: "Prueba_random1",
-    apellido:"Test111",
-    email: "diamagalo@gmail.com",
-    password:"rcytA6F1e3",
-    link_ficha_medica:"www.link.com",
-    fecha_nacimiento: "08-06-1988",
-    celular: "323554989",
+    nombre: "Luisa",
+    apellido:"Ayala",
+    email: "luisa1@ejemplo.com",
+    password:"12345678",
+    link_ficha_medica:"No tiene aun",
+    fecha_nacimiento: "23-09-2010",
+    celular: "3121545123",
     esActivo:true,
+    idRama:"6325408b1a9d28793c3330f2"
 }
  let SCOUT_TEST4 ={
     nombre: "Prueba4",
@@ -46,7 +47,7 @@
     fecha_nacimiento: "08-06-1984",
     celular: "323554984",
     esActivo:true,
-    ramaAsociada:"Manada"
+    idRama:"632a6b5da1b9fed2d2296061"
 }
 let SCOUT_VOID={ 
 }
