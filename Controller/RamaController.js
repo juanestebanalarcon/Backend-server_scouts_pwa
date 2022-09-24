@@ -56,17 +56,23 @@ const updateRama = async (req, res = response) => {
     }
 }
 const changeScoutBranch = async (req, res=response) => {
-    let currentBranch = Rama.findById(req.params.id);
+    let currentBranch = await Rama.findById(req.params.id);
     if( !currentBranch ) {return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
-    let scoutActual = currentBranch.Scout.indexOf(req.body.idScout);
-    currentBranch.Scout.splice(scoutActual, 1);
-    currentBranch.save();
-    let newBranch = Rama.findById(req.body.idRamaNueva);
+    let oldScout = currentBranch.Scout;
+    try{
+        for(let i = 0; i < oldScout.length; i++) {
+            if(oldScout[i]===req.body.idScout){
+                oldScout.splice(i, 1);
+            }
+        }
+    currentBranch.Scout = oldScout;
+    await currentBranch.save();
+    }catch(e){console.log(e);}
+    let newBranch = await Rama.findById(req.body.idRamaNueva);
     if( !newBranch ) {return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
     newBranch.Scout.push(req.body.idScout);
     newBranch.save();
     return res.status(200).json({ok: true,msg:RESPONSE_MESSAGES.SUCCESS_2XX})
-
 }
 const deleteRama= async(req,res=response)=>{
     let id  = req.params.id;
