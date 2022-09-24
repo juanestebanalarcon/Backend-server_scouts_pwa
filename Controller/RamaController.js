@@ -1,7 +1,6 @@
 const {response}=require('express');
 const Rama = require("../Model/Rama");
 const {RESPONSE_MESSAGES}=require('../Helpers/ResponseMessages');
-const Scout = require('../Model/Scout');
 
 const createRama= async(req,res=response)=>{
     try{

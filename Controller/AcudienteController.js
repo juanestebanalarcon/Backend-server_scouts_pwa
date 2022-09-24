@@ -5,6 +5,7 @@ const bcrypt = require('bcryptjs');
 const { mailOptions_, transporter } = require("../Helpers/EmailConfig");
 const{RESPONSE_MESSAGES}=require('../Helpers/ResponseMessages');
 const Acudiente = require('../Model/Acudiente');
+const Scout = require("../Model/Scout");
 
 const createAcudiente= async(req,res=response)=>{
     let { email } = req.body;
@@ -14,11 +15,14 @@ const createAcudiente= async(req,res=response)=>{
         if( acudiente_ ){return res.status(400).json({ok: false,msg:RESPONSE_MESSAGES.ERR_ALREADY_EXISTS})}
         acudiente_ = new Acudiente( req.body );
         acudiente_.password = bcrypt.hashSync( password, bcrypt.genSaltSync() );
+        let _scout = Scout.findById(req.body.idScout);
+        if(!_scout) {return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
+        acudiente_.Scout.push(_scout.id); 
         await acudiente_.save();
         transporter.sendMail(mailOptions_(email,password,1,acudiente_.nombre),(err)=>{
             if(err){console.log(err);}
         });
-        return res.status(201).json({ok:true,uid: acudiente_.id,name: acudiente_.name});
+        return res.status(201).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
     } catch (error) {
         console.log(error);
         return res.status(500).json({ok:false,msg: RESPONSE_MESSAGES.ERR_500});}
