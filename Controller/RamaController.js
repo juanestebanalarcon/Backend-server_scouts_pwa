@@ -82,7 +82,6 @@ const deleteRama= async(req,res=response)=>{
 }
 
 const getScoutsAsignados = async(req, res=response) => {
-
     try{
         let rama = await Rama.findById(req.params.id).populate('Scout');
         if(!rama){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}

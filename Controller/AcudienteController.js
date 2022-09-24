@@ -43,6 +43,16 @@ const readAcudiente= async(req,res=response)=>{
         return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
     }
 }
+const getScoutsAcudiente = async(req, res=response) => {
+    try{
+        let scouts_ = await Acudiente.findById(req.params.id).populate('Scout');
+        if(!scouts_){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
+        return res.status(200).json({ok:true,scouts_,msg:RESPONSE_MESSAGES.SUCCESS_2XX,scouts_Asociada:scouts_.nombre});
+}
+catch(err){console.log(err);
+return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
+}
+}
 const readAcudientes= async(req,res=response)=>{
     try{
     let {email} = req.body;
@@ -115,6 +125,7 @@ module.exports={
     createAcudiente,
     readAcudientes,
     readAcudiente,
+    getScoutsAcudiente,
     updateAcudiente,
     deleteAcudiente,
     loginAcudiente,
