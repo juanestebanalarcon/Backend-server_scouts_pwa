@@ -15,7 +15,7 @@ const createAcudiente= async(req,res=response)=>{
         if( acudiente_ ){return res.status(400).json({ok: false,msg:RESPONSE_MESSAGES.ERR_ALREADY_EXISTS})}
         acudiente_ = new Acudiente( req.body );
         acudiente_.password = bcrypt.hashSync( password, bcrypt.genSaltSync() );
-        let _scout = Scout.findById(req.body.idScout);
+        let _scout = await Scout.findById(req.body.idScout);
         if(!_scout) {return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
         acudiente_.Scout.push(_scout.id); 
         await acudiente_.save();
