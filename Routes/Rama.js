@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const {check} = require("express-validator");
 const { validarCampos } = require("../middlewares/validar-campos");
-const {createRama,readRama,readRamas,updateRama,deleteRama, getScoutsAsignados} = require("../Controller/RamaController");
+const {createRama,readRama,readRamas,updateRama,deleteRama, getScoutsAsignados, changeScoutBranch} = require("../Controller/RamaController");
 const router = Router();
 
 router.post("/create-rama",[
@@ -13,6 +13,7 @@ router.post("/create-rama",[
 router.put("/:id",updateRama);
 router.get("/allRamas",readRamas);
 router.get("/:id",readRama);
+router.post("/changeScoutBranch/:id",changeScoutBranch);
 router.delete("/:id",deleteRama);
 router.get("/getScoutsAsignados/:id",getScoutsAsignados);
 module.exports=router;

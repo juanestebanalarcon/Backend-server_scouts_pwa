@@ -50,11 +50,24 @@ const updateRama = async (req, res = response) => {
         const rama = await Rama.findById( id );
         if ( !rama ) {return res.status(404).json({ok: true,msg: RESPONSE_MESSAGES.ERR_NOT_FOUND});}
         await Rama.updateOne( id, {...req.body,Scout: _id}, { upsert: true } );
-        return res.json({ok: true,msg:RESPONSE_MESSAGES.SUCCESS_2XX})
+        return res.status(200).json({ok: true,msg:RESPONSE_MESSAGES.SUCCESS_2XX})
     } catch (error) {
         console.log(error);
-     return res.status(500).json({ok: false,msg: RESPONSE_MESSAGES.ERR_500})
+        return res.status(500).json({ok: false,msg: RESPONSE_MESSAGES.ERR_500})
     }
+}
+const changeScoutBranch = async (req, res=response) => {
+    let currentBranch = Rama.findById(req.params.id);
+    if( !currentBranch ) {return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
+    let scoutActual = currentBranch.Scout.indexOf(req.body.idScout);
+    currentBranch.Scout.splice(scoutActual, 1);
+    currentBranch.save();
+    let newBranch = Rama.findById(req.body.idRamaNueva);
+    if( !newBranch ) {return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
+    newBranch.Scout.push(req.body.idScout);
+    newBranch.save();
+    return res.status(200).json({ok: true,msg:RESPONSE_MESSAGES.SUCCESS_2XX})
+
 }
 const deleteRama= async(req,res=response)=>{
     let id  = req.params.id;
@@ -87,6 +100,7 @@ module.exports={
     readRama,
     readRamas,
     updateRama,
+    changeScoutBranch,
     deleteRama,
     getScoutsAsignados
 }
