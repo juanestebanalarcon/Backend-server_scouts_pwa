@@ -18,8 +18,9 @@ const createAdmin= async(req,res=response)=>{
         transporter.sendMail(mailOptions_(email,password,1,administrador.nombre),(err)=>{
             if(err){console.log(err);}
         });
-       return res.status(201).json({ok:true,uid: administrador.id,name: administrador.name});
-    } catch (error) {return res.status(500).json({ok:false,msg: RESPONSE_MESSAGES.ERR_500});}
+       return res.status(201).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
+    } catch (error) {console.log(error);
+        return res.status(500).json({ok:false,msg: RESPONSE_MESSAGES.ERR_500});}
     
 }
 const revalidateToken= async(req,res=response) => {
@@ -28,9 +29,8 @@ const revalidateToken= async(req,res=response) => {
    return res.status(200).json({ok:true,token,uid:id,nombre,email,rol});
 }
 const readAdmin= async(req,res=response)=>{
-    let uid=req.params.id;
     try{
-        let admin_ = await Administrador.findById(uid);
+        let admin_ = await Administrador.findById(req.params.id);
         if(admin_){return res.status(200).json({ok:true,admin_ });}
         return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_ALREADY_EXISTS});
     }catch(e){
@@ -51,12 +51,10 @@ const readAdmins= async(req,res=response)=>{
 
 }
 const updateAdmin=async(req,res=response)=>{
-    const id  = req.params.id;
-
     try {
-        let admin__ = await Administrador.findById( id );
+        let admin__ = await Administrador.findById( req.params.id );
         if ( !admin__ ) {return res.status(404).json({ok: false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
-        await Administrador.updateOne({_id:id}, {...req.body}, { upsert: true });
+        await Administrador.updateOne({_id:req.params.id}, {...req.body}, { upsert: true });
         return res.status(200).json({ok: true,msg:RESPONSE_MESSAGES.SUCCESS_2XX})
     } catch (error) {
         console.log(error);
@@ -64,14 +62,10 @@ const updateAdmin=async(req,res=response)=>{
     }
 }
 const deleteAdmin =async(req,res=response)=>{
-    const id  = req.params.id;
-    
-    try {
-        
-        const admin_ = await Administrador.findById( id );
-    
+   try {   
+        const admin_ = await Administrador.findById(req.params.id);
         if ( !admin_ ) {return res.status(404).json({ok: false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
-        await admin_.findByIdAndDelete( id );
+        await admin_.findByIdAndDelete( req.params.id );
         return res.status(200).json({ok: true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
     } catch (error) {
         console.log(error);

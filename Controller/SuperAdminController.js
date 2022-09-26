@@ -3,9 +3,11 @@ const SuperAdministrador = require('../Model/SuperAdministrador');
 const bcrypt=require('bcryptjs');
 const {generateJWT} = require('../helpers/jwt');
 const { RESPONSE_MESSAGES } = require('../Helpers/ResponseMessages');
+const { generateRandomPass } = require('../Helpers/randomPassowrd');
 
 const createSuperAdministrador = async(req,res=response) => {
-    let {nombre,email,password}=req.body;
+    let {nombre,email}=req.body;
+    let password = generateRandomPass(10);
     try {
         let superAdmn=await SuperAdministrador.findOne({email});
         if(superAdmn){return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_ALREADY_EXISTS});}
@@ -13,8 +15,8 @@ const createSuperAdministrador = async(req,res=response) => {
         dbSuperAdministrador.password=bcrypt.hashSync(password,bcrypt.genSaltSync());
         const token= await generateJWT(dbSuperAdministrador.id,nombre);
         await dbSuperAdministrador.save();
-        return res.status(201).json({ok:true,_id:dbSuperAdministrador.id,nombre,email,token});
-
+        transporter.sendMail(mailOptions_(email,password,1,dbSuperAdministrador.nombre),(err)=>{if(err){console.log(err);}});
+        return res.status(201).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX,token});
     } catch (error) {       
         console.log(error);
         return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
@@ -24,7 +26,7 @@ const readSuperAdministradors= async(req,res=response)=>{
     let {email}=req.body;
     try{
         let SuperAdministradors_ = await SuperAdministrador.find({email});
-        if(SuperAdministradors){return res.status(200).json({ok:true,SuperAdministradors_ });}
+        if(SuperAdministradors){return res.status(200).json({ok:true,SuperAdministradors_,msg:RESPONSE_MESSAGES.SUCCESS_2XX });}
         return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
     }catch(e){
         console.log(e);
@@ -32,10 +34,9 @@ const readSuperAdministradors= async(req,res=response)=>{
     }
 }
 const readSuperAdministrador= async(req,res=response)=>{
-    const _id=req.params.id;
     try{
-        const SuperAdministrador_ = await SuperAdministrador.findById(_id);
-        if(SuperAdministradors){return res.status(200).json({ok:true,SuperAdministrador_ });}
+        const SuperAdministrador_ = await SuperAdministrador.findById(req.params.id);
+        if(SuperAdministradors){return res.status(200).json({ok:true,SuperAdministrador_, msg:RESPONSE_MESSAGES.SUCCESS_2XX });}
         return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
     }catch(e){
         console.log(e);
@@ -64,24 +65,21 @@ const revalidateToken= async(req,res=response) => {
 }
 const updateSuperAdministrador= async(req,res=response) =>{
     try{
-        let id = req.params.id;
-        const SuperAdministradorDb = SuperAdministrador.findById(id);
+        const SuperAdministradorDb = SuperAdministrador.findById(req.params.id);
         if(!SuperAdministradorDb){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
-        await SuperAdministrador.updateOne({_id:id}, {...req.body}, { upsert: true });
+        await SuperAdministrador.updateOne({_id:req.params.id}, {...req.body}, { upsert: true });
         res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX})
     }catch(e){
         console.log(e);
         return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500})
-        
     }
 }
 
 const deleteSuperAdministrador = async (req,res=response) =>{
     try{
-        const uid = req.params.id;
-        const SuperAdministradorDB = SuperAdministrador.findById(uid);
+        const SuperAdministradorDB = SuperAdministrador.findById(req.params.id);
         if(!SuperAdministradorDB){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
-        await SuperAdministrador.findByIdAndDelete(uid);
+        await SuperAdministrador.findByIdAndDelete(req.params.id);
         res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
     }catch(e){
         console.log(e);
@@ -89,7 +87,21 @@ const deleteSuperAdministrador = async (req,res=response) =>{
 
     }
 }
-
+const changePassword = async (req, res)=>{
+    try{
+        let {newPassword,email} = req.body;
+        const superAdmin = await SuperAdministrador.findOne({email:email});
+        if(!superAdmin){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_EMAIL_NOT_FOUND});}
+        superAdmin.password = bcrypt.hashSync(newPassword,bcrypt.genSaltSync());
+        await superAdmin.save();
+        transporter.sendMail(mailOptions_(superAdmin.email,newPassword,2,superAdmin.nombre),(err)=>{
+            if(err){console.log(err);}
+        });
+        return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
+}catch(e){
+    console.log(e);
+    return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});}
+}
 module.exports={
     createSuperAdministrador,
     readSuperAdministradors,
@@ -97,5 +109,6 @@ module.exports={
     updateSuperAdministrador,
     deleteSuperAdministrador,
     loginSuperAdministrador,
+    changePassword,
     revalidateToken
 }
