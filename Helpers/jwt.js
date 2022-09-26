@@ -4,7 +4,7 @@ const generateJWT=(id,nombre,email,rol=1)=>{
     return new Promise((resolve,reject)=>{
         const payload={id,nombre,email,rol};
         jwt.sign(payload,process.env.SECRET_JWT_SEED,{
-            expiresIn:'8h'
+            expiresIn:'24h'
         },(err,token)=>{
             if(err){
                 console.log(err);

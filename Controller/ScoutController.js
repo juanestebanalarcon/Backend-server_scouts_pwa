@@ -106,7 +106,7 @@ const updateScout= async(req,res=response) =>{
         let scoutDb = Scout.findById(id);
         if(!scoutDb){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
         await Scout.updateOne({_id:id}, {...req.body}, { upsert: true });
-        res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
+        return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
     }catch(e){
         console.log(e);
         return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500})
@@ -115,12 +115,18 @@ const updateScout= async(req,res=response) =>{
 
 const deleteScout = async (req,res=response) =>{
     try{
-        let uid = req.params.id;
-        const scoutDB = Scout.findById(uid);
-        
+        const scoutDB = await Scout.findById(req.params.id);
         if(!scoutDB){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
-        await Scout.findByIdAndDelete(uid);
-        res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
+        await Scout.findByIdAndDelete(req.params.id);
+        let rama = await Rama.findById(req.body.idRama);
+        if( !rama ) {return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
+        let oldScout = rama.Scout;
+        try{
+        for(let i = 0; i < oldScout.length; i++) {if(oldScout[i]===req.params.id){oldScout.splice(i, 1);}}
+        rama.Scout = oldScout;
+        await rama.save();
+        }catch(e){console.log(e);}
+        return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
     }catch(e){
         console.log(e);
         return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500})
