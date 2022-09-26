@@ -5,7 +5,8 @@ const {createEvento,
     readEvento,
     readEventos,
     updateEvento,
-    deleteEvento} = require("../Controller/EventoController");
+    deleteEvento,
+    getScoutsAsignadosEvento} = require("../Controller/EventoController");
 const router = Router();
 
 router.post("/create-evento",[
@@ -21,5 +22,6 @@ router.post("/create-evento",[
 router.put("/:id",updateEvento);
 router.get("/allEvents",readEventos);
 router.get("/:id",readEvento);
+router.get("/getScoutsAsignadosEvento/:id",getScoutsAsignadosEvento);
 router.delete("/:id",deleteEvento);
 module.exports=router;

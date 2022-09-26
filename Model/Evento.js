@@ -27,10 +27,11 @@ fechaYHoraFinal: {
 },
 ramaAsignada: {
     type:Array,
+    ref:'Rama',
     required:false
 },
 inscritos:{
-    type: Schema.Types.ObjectId,
+    type: Array,
     ref:"Scout",
     required:true
 }

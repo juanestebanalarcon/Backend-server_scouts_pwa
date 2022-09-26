@@ -6,6 +6,7 @@ const { generateRandomPass } = require('../Helpers/randomPassowrd');
 const {transporter,mailOptions_} = require('../Helpers/EmailConfig');
 const{RESPONSE_MESSAGES}=require('../Helpers/ResponseMessages');
 const Rama = require('../Model/Rama');
+
 const createScout = async(req,res=response) => {
     let {email}=req.body;
     const password = generateRandomPass(10);

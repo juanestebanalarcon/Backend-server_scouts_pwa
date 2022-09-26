@@ -14,7 +14,7 @@ linkImagen: {
     required:true
 },
 publicacion:{
-    type: Schema.Types.ObjectId,
+    type: Array,
     ref:"Publicaciones",
     required:true
 }
