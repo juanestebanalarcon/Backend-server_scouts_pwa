@@ -23,10 +23,9 @@ const createSuperAdministrador = async(req,res=response) => {
     }
 }
 const readSuperAdministradors= async(req,res=response)=>{
-    let {email}=req.body;
     try{
-        let SuperAdministradors_ = await SuperAdministrador.find({email});
-        if(SuperAdministradors){return res.status(200).json({ok:true,SuperAdministradors_,msg:RESPONSE_MESSAGES.SUCCESS_2XX });}
+        let SuperAdministradors_ = await SuperAdministrador.find({});
+        if(SuperAdministradors_){return res.status(200).json({ok:true,SuperAdministradors_,msg:RESPONSE_MESSAGES.SUCCESS_2XX });}
         return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
     }catch(e){
         console.log(e);
