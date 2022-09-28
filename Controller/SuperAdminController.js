@@ -67,7 +67,7 @@ const updateSuperAdministrador= async(req,res=response) =>{
         const SuperAdministradorDb = SuperAdministrador.findById(req.params.id);
         if(!SuperAdministradorDb){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
         await SuperAdministrador.updateOne({_id:req.params.id}, {...req.body}, { upsert: true });
-        res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX})
+        return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX})
     }catch(e){
         console.log(e);
         return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500})
@@ -79,7 +79,7 @@ const deleteSuperAdministrador = async (req,res=response) =>{
         const SuperAdministradorDB = SuperAdministrador.findById(req.params.id);
         if(!SuperAdministradorDB){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
         await SuperAdministrador.findByIdAndDelete(req.params.id);
-        res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
+        return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
     }catch(e){
         console.log(e);
         return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500})
