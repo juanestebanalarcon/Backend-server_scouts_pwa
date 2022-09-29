@@ -77,6 +77,7 @@ const loginAdmin= async(req,res=response) => {
     const {email,password}=req.body;
     try {
      const adminDB=await Administrador.findOne({email});
+     console.log(adminDB);
      if(!adminDB){
         return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_EMAIL_NOT_FOUND})
      }

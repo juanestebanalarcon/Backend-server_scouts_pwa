@@ -20,10 +20,10 @@ const createScout = async(req,res=response) => {
         let rama = await Rama.findById(req.body.idRama);
         if(!rama){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
         rama.Scout.push(dbScout.id);
-        rama.save();
+        await rama.save();
         transporter.sendMail(mailOptions_(email,password,1,dbScout.nombre),(err)=>{if(err){console.log(err);}});
         const token= await generateJWT(dbScout.id,dbScout.nombre);
-        return res.status(201).json({ok:true,uid:dbScout.id,nombre:dbScout.nombre,email,token});
+        return res.status(201).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX,token});
     } catch (error) {       
         console.log(error);
         return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
@@ -104,7 +104,7 @@ const revalidateToken= async(req,res=response) => {
 const updateScout= async(req,res=response) =>{
     try{
         let id = req.params.id;
-        let scoutDb = Scout.findById(id);
+        let scoutDb = await Scout.findById(id);
         if(!scoutDb){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
         await Scout.updateOne({_id:id}, {...req.body}, { upsert: true });
         return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
