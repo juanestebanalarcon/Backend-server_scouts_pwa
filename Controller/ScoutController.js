@@ -1,7 +1,7 @@
 const {response}=require('express');
 const Scout = require('../Model/Scout');
 const bcrypt=require('bcryptjs');
-const {generateJWT} = require('../helpers/jwt');
+const {generateJWT} = require('../Helpers/jwt');
 const { generateRandomPass } = require('../Helpers/randomPassowrd');
 const {transporter,mailOptions_} = require('../Helpers/EmailConfig');
 const{RESPONSE_MESSAGES}=require('../Helpers/ResponseMessages');

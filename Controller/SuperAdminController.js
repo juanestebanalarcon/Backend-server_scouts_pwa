@@ -1,7 +1,7 @@
 const {response}=require('express');
 const SuperAdministrador = require('../Model/SuperAdministrador');
 const bcrypt=require('bcryptjs');
-const {generateJWT} = require('../helpers/jwt');
+const {generateJWT} = require('../Helpers/jwt');
 const { RESPONSE_MESSAGES } = require('../Helpers/ResponseMessages');
 const { generateRandomPass } = require('../Helpers/randomPassowrd');
 
