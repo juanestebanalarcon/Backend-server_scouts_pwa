@@ -44,7 +44,7 @@ const mailOptions_=(recipient,password,type,name)=>{
     <h1 style=" font-family: 'Montserrat';font-style: normal;font-weight: 550;font-size: 1.5em;text-align: center;color: #00395A;margin-top: 0px;margin-bottom: 0px;">¡Hola, ${name}!</h1>
     <hr style="margin: auto;width: 95%;margin-top: 0.5em;margin-bottom: 1em;margin-left: 0px;border: 0;border-top: 1px solid #eee;"/>
     <h3 style="font-family: 'Montserrat';font-style: normal;font-weight: 800;font-size: 1em;text-align: center;color: #00395A;margin-top: 2%;margin-bottom: 2%;
-    ">Se habilitó su correctamente su ususario en <b>CENTINELAPP</b></h3>
+    ">Se habilitó correctamente su usuario en <b>CENTINELAPP</b></h3>
     
     <h2 style="font-family: 'Montserrat';font-style: normal;font-weight: 500;font-size: 0.8em;text-align: center;color: #00395A;margin-top: 0px;margin-bottom: 0px;"><b>Correo:</b> ${recipient}</h2>
     <h2 style="font-family: 'Montserrat';font-style: normal;font-weight: 500;font-size: 0.8em;text-align: center;color: #00395A;margin-top: 0px;margin-bottom: 0px;"><b>Contraseña:</b> ${password}</h2>
