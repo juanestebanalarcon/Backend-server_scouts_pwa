@@ -83,7 +83,7 @@ const loginAdmin= async(req,res=response) => {
      const validPassword=bcrypt.compare(password,adminDB.password);
      if(!validPassword){return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_INVALID_PASSWORD})}
      const token= await generateJWT(adminDB.id,adminDB.nombre,adminDB.email,1);
-     return res.status(200).json({ok:true,uid:adminDB.id,name:adminDB.nombre,email,rol:1,token})
+     return res.status(200).json({ok:true,uid:adminDB.id,nombre:adminDB.nombre,email,rol:1,token})
     } catch (error) {
         console.log(error);
         return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500})

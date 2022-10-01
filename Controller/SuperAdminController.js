@@ -51,7 +51,7 @@ const loginSuperAdministrador= async(req,res=response) => {
      const validPassword=bcrypt.compareSync(password,SuperAdministradorDB.password);
      if(!validPassword){return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_INVALID_PASSWORD});}
      const token= await generateJWT(SuperAdministradorDB.id,SuperAdministradorDB.nombre,SuperAdministradorDB.email,0);
-     return res.status(200).json({ok:true,uid:SuperAdministradorDB.id,name:SuperAdministradorDB.nombre,email,rol:0,token});
+     return res.status(200).json({ok:true,uid:SuperAdministradorDB.id,nombre:SuperAdministradorDB.nombre,email,rol:0,token});
     } catch (error) {
         console.log(error);
         return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
