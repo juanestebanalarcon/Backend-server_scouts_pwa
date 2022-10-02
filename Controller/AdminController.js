@@ -14,7 +14,7 @@ const createAdmin= async(req,res=response)=>{
         let password = generateRandomPass(10);
         let administrador = await Administrador.findOne({ email })
         if( administrador ){logger.error(`CreateAdmin: Already exists an admin account with the specified email`);
-            return res.status(400).json({ok: false,msg:RESPONSE_MESSAGES.ERR_ALREADY_EXISTS})}
+        return res.status(400).json({ok: false,msg:RESPONSE_MESSAGES.ERR_ALREADY_EXISTS})}
         administrador = new Administrador( req.body );
         administrador.password = bcrypt.hashSync( password, bcrypt.genSaltSync() );
         ramasAsignadas.forEach(idRama => {administrador.ramasAsignadas.push(idRama);});
@@ -24,51 +24,68 @@ const createAdmin= async(req,res=response)=>{
             if(err){logger.error(`CreateAdmin: Internal mail server error: ${err}`);}
         });
         logger.info(`CreateAdmin: Sending email to ${email}`);
-       return res.status(201).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
+        return res.status(201).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
     } catch (error) {logger.error(`CreateAdmin: Internal server error: ${error}`);
-        return res.status(500).json({ok:false,msg: RESPONSE_MESSAGES.ERR_500});}
+    return res.status(500).json({ok:false,msg: RESPONSE_MESSAGES.ERR_500});}
     
 }
 const revalidateToken= async(req,res=response) => {
     let {id,nombre,email,rol}=req;
     const token= await generateJWT(id,nombre,email,rol);
-   return res.status(200).json({ok:true,token,uid:id,nombre,email,rol});
+    return res.status(200).json({ok:true,token,uid:id,nombre,email,rol});
 }
 const readAdmin= async(req,res=response)=>{
     try{
+        logger.info("ReadAdmin: started");
         let admin_ = await Administrador.findById(req.params.id);
-        if(admin_){return res.status(200).json({ok:true,admin_ });}
-        return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_ALREADY_EXISTS});
+        logger.info("ReadAdmin: finding admin...");
+        if(admin_){
+            logger.info("ReadAdmin: sending admin found...");
+            return res.status(200).json({ok:true,admin_,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
+        }
+        
+        logger.error(`ReadAdmin: admin not found`);
+        return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
     }catch(e){
-        console.log(e);
+        logger.error(`ReadAdmin: Internal server error: ${e}`);
         return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
     }
 }
 const readAdmins= async(req,res=response)=>{
     try{
-    let admins_ = await Administrador.find();
-    if(admins_){return res.status(200).json({ok:true,admins_});}
-    return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
-    }catch(e)
-    {
-        console.log(e);
-        return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
+        logger.info("ReadAdmins: started");
+        let admins_ = await Administrador.find();
+        logger.info("ReadAdmins: finding admins...");
+        if(admins_){
+            logger.info("ReadAdmins: sending admins found...");
+            return res.status(200).json({ok:true,admins_});}
+            logger.error(`ReadAdmins: admins not found`);
+            return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
+        }catch(e)
+        {
+            logger.error(`ReadAdmins: Internal server error: ${e}`);
+            return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
+        }
     }
-}
-const readAdminBranch = async(req, res=response)=>{
-    try{
-        let admon = await Administrador.findById(req.params.id).populate('ramasAsignadas');
-        if(!admon){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND})}
-        return res.status(200).json({ok:true,admon,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
-    }catch(err){
-        console.log(err);
-        return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});}
+    const readAdminBranch = async(req, res=response)=>{
+        try{
+            logger.info("readAdminBranch: started");
+            let admon = await Administrador.findById(req.params.id).populate('ramasAsignadas');
+            logger.info("readAdminBranch: finding admin populated by associated branch...");
+            if(!admon){
+                logger.error(`readAdminBranch: admin not found`);
+                return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND})}
+                logger.info("ReadAdmins: sending admin populated by associated branch...");        
+                return res.status(200).json({ok:true,admon,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
+            }catch(err){
+                logger.error(`readAdminBranch: Internal server error: ${e}`);
+                return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});}
 }
 const updateAdmin=async(req,res=response)=>{
     try {
         let admin__ = await Administrador.findById( req.params.id );
         if ( !admin__ ) {return res.status(404).json({ok: false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
-        await Administrador.updateOne({_id:req.params.id}, {...req.body}, { upsert: true });
+        await Administrador.updateOne({_id:req.params.id}, {$set:{...req.body}}, { upsert: true });
         return res.status(200).json({ok: true,msg:RESPONSE_MESSAGES.SUCCESS_2XX})
     } catch (error) {
         console.log(error);
