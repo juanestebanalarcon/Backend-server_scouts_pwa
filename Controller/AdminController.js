@@ -5,11 +5,12 @@ const Administrador = require("../Model/Administrador");
 const bcrypt = require('bcryptjs');
 const { mailOptions_, transporter } = require("../Helpers/EmailConfig");
 const{RESPONSE_MESSAGES}=require('../Helpers/ResponseMessages');
-const Rama = require("../Model/Rama");
+const logger = require("../Helpers/LoggerConfig");
 
 const createAdmin= async(req,res=response)=>{
     let { email,ramasAsignadas } = req.body;
     try {  
+        logger.info("CreateAdmin: started");
         let password = generateRandomPass(10);
         let administrador = await Administrador.findOne({ email })
         if( administrador ){return res.status(400).json({ok: false,msg:RESPONSE_MESSAGES.ERR_ALREADY_EXISTS})}
