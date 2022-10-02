@@ -18,9 +18,11 @@ const createAdmin= async(req,res=response)=>{
         administrador.password = bcrypt.hashSync( password, bcrypt.genSaltSync() );
         ramasAsignadas.forEach(idRama => {administrador.ramasAsignadas.push(idRama);});
         await administrador.save();
+        logger.info("CreateAdmin: finished creating admin");
         transporter.sendMail(mailOptions_(email,password,1,administrador.nombre),(err)=>{
             if(err){console.log(err);}
         });
+        logger.info(`CreateAdmin: Sending email to ${email}`);
        return res.status(201).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
     } catch (error) {console.log(error);
         return res.status(500).json({ok:false,msg: RESPONSE_MESSAGES.ERR_500});}
