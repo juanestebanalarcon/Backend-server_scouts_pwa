@@ -7,7 +7,8 @@ nombre: {
 },
 ramaAsignada: {
     type: Array,
-    required:true
+    ref:'Rama',
+    required:false
 },
 linkImagen: {
     type: String,

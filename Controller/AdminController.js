@@ -40,15 +40,14 @@ const readAdmin= async(req,res=response)=>{
 }
 const readAdmins= async(req,res=response)=>{
     try{
-    let admin_ = await Administrador.find({}).limit(10);
-    if(admin_){return res.status(200).json({ok:true,admin_});}
+    let admins_ = await Administrador.find({}).limit(10);
+    if(admins_){return res.status(200).json({ok:true,admins_});}
     return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
     }catch(e)
     {
         console.log(e);
         return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
     }
-
 }
 const updateAdmin=async(req,res=response)=>{
     try {

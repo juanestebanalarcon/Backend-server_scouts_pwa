@@ -3,8 +3,10 @@ const { RESPONSE_MESSAGES } = require("../Helpers/ResponseMessages");
 const Publicaciones = require("../Model/Publicaciones");
 
 const createPublicacion= async(req,res=response)=>{
-    let publi_ = new Publicaciones({...req.body});
     try{
+    let publi_ = Publicaciones.findOne({titulo:req.body.titulo});
+    if(publi_){return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_ALREADY_EXISTS});}
+    publi_ = new Publicaciones(req.body);
      await publi_.save();
      return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX})
     }catch(e) {
@@ -16,9 +18,8 @@ const createPublicacion= async(req,res=response)=>{
 const readPublicacion= async(req,res=response)=>{
     try
     {
-    let {titulo} = req.body;
-    const publi_ = await Publicaciones.find({titulo:titulo});
-    if(publi_){return res.status(200).json({ok:true,publi_});}
+    const publi_ = await Publicaciones.findById(req.params.id);
+    if(publi_){return res.status(200).json({ok:true,publi_,msg:RESPONSE_MESSAGES.SUCCESS_2XX});}
     return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
     }catch(e)
     {
@@ -28,10 +29,9 @@ const readPublicacion= async(req,res=response)=>{
 
 }
 const readPublicaciones= async(req,res=response)=>{
-    let {fecha} = req.body
     try{
-        const publis__ = await Rama.find({fecha});
-        if(publis__){return res.status(200).json({ok:true,publicaciones:publis__});}
+        const publicaciones_ = await Publicaciones.find();
+        if(publicaciones_){return res.status(200).json({ok:true,publicaciones_,msg:RESPONSE_MESSAGES.SUCCESS_2XX});}
         return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
     }catch(e){
         console.log(e);

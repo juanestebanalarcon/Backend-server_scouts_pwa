@@ -33,7 +33,7 @@ ramaAsignada: {
 inscritos:{
     type: Array,
     ref:"Scout",
-    required:true
+    required:false
 }
 })
 module.exports = model("Evento",Evento)

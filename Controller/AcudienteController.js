@@ -33,9 +33,8 @@ const revalidateToken= async(req,res=response) => {
    return res.status(200).json({ok:true,token,uid:id,nombre,email,rol});
 }
 const readAcudiente= async(req,res=response)=>{
-    let id=req.params.id;
     try{
-        let acudiente_ = await Acudiente.findById(id);
+        let acudiente_ = await Acudiente.findById(req.params.id);
         if(acudiente_){return res.status(200).json({ok:true,acudiente_ });}
         return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_ALREADY_EXISTS});
     }catch(e){
@@ -55,9 +54,8 @@ return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
 }
 const readAcudientes= async(req,res=response)=>{
     try{
-    let {email} = req.body;
-    let acudiente_ = await Acudiente.find({email}).limit(10);
-    if(acudiente_){res.status(200).json({ok:true,acudiente_});}
+    let acudientes_ = await Acudiente.find({}).limit(10);
+    if(acudientes_){res.status(200).json({ok:true,acudientes_});}
     return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
     }catch(e)
     {

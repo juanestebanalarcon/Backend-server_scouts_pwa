@@ -12,7 +12,8 @@ const createEvento= async(req,res=response)=>{
         if(req.body.idScout){
             let scout_= await Scout.findById(req.body.idScout);
             if(!scout_) {return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
-            let evento = new Evento({inscritos:scout_.id,...req.body});
+            let evento = new Evento(req.body);
+            evento.inscritos.push(scout_);
             await evento.save();
             return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
         }
@@ -26,7 +27,7 @@ const createEvento= async(req,res=response)=>{
 }
 const readEventos= async(req,res=response)=>{
     try{
-        const Eventos_ = await Evento.find({});
+        const Eventos_ = await Evento.find();
         if(Eventos_){return res.status(200).json({ok:true,Eventos_,msg:RESPONSE_MESSAGES.SUCCESS_2XX});}
         return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
     }catch(e){
@@ -58,7 +59,7 @@ return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
 
 const updateEvento = async (req, res = response) => {
     try {
-        let evento = await Evento.findById( id );
+        let evento = await Evento.findById( req.params.id );
         if ( !evento ) {return res.status(404).json({ok: true,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
         await Evento.updateOne({_id:req.params.id}, {...req.body}, { upsert: true });
         return res.status(200).json({ok: true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
