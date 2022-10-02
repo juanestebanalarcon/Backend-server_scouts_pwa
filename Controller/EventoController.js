@@ -19,6 +19,7 @@ const createEvento= async(req,res=response)=>{
             return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
         }
         let evento = new Evento(req.body);
+        evento.ramaAsignada.push(rama_asociada.id)
         await evento.save();
         return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
     }catch(e) {

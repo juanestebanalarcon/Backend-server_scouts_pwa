@@ -20,6 +20,7 @@ const Administrador = Schema({
     },
     ramasAsignadas:{
         type:Array,
+        ref:"Rama",
         required:false
     }
 })

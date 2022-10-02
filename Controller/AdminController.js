@@ -5,15 +5,17 @@ const Administrador = require("../Model/Administrador");
 const bcrypt = require('bcryptjs');
 const { mailOptions_, transporter } = require("../Helpers/EmailConfig");
 const{RESPONSE_MESSAGES}=require('../Helpers/ResponseMessages');
+const Rama = require("../Model/Rama");
 
 const createAdmin= async(req,res=response)=>{
-    let { email } = req.body;
+    let { email,ramasAsignadas } = req.body;
     try {  
         let password = generateRandomPass(10);
         let administrador = await Administrador.findOne({ email })
         if( administrador ){return res.status(400).json({ok: false,msg:RESPONSE_MESSAGES.ERR_ALREADY_EXISTS})}
         administrador = new Administrador( req.body );
         administrador.password = bcrypt.hashSync( password, bcrypt.genSaltSync() );
+        ramasAsignadas.forEach(idRama => {administrador.ramasAsignadas.push(idRama);});
         await administrador.save();
         transporter.sendMail(mailOptions_(email,password,1,administrador.nombre),(err)=>{
             if(err){console.log(err);}
@@ -48,6 +50,15 @@ const readAdmins= async(req,res=response)=>{
         console.log(e);
         return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
     }
+}
+const readAdminBranch = async(req, res=response)=>{
+    try{
+        let admon = await Administrador.findById(req.params.id).populate('ramasAsignadas');
+        if(!admon){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND})}
+        return res.status(200).json({ok:true,admon,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
+    }catch(err){
+        console.log(err);
+        return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});}
 }
 const updateAdmin=async(req,res=response)=>{
     try {
@@ -110,6 +121,7 @@ module.exports={
     createAdmin,
     readAdmin,
     readAdmins,
+    readAdminBranch,
     updateAdmin,
     deleteAdmin,
     changePassword,

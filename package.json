@@ -41,6 +41,7 @@
     "mongoose": "^6.5.2",
     "nodemailer": "^6.7.8",
     "nodemon": "^2.0.19",
-    "supertest": "^6.2.4"
+    "supertest": "^6.2.4",
+    "winston": "^3.8.2"
   }
 }
