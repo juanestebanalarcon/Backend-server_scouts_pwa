@@ -40,7 +40,7 @@ const readAdmin= async(req,res=response)=>{
 }
 const readAdmins= async(req,res=response)=>{
     try{
-    let admins_ = await Administrador.find({}).limit(10);
+    let admins_ = await Administrador.find();
     if(admins_){return res.status(200).json({ok:true,admins_});}
     return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
     }catch(e)

@@ -60,7 +60,7 @@ const readActiveScouts = async(req,res=response) =>{
 }
 const readScouts= async(req,res=response)=>{
     try{
-        let scouts_ = await Scout.find({});
+        let scouts_ = await Scout.find();
         if(scouts_){return res.status(200).json({ok:true,scouts_ });}
         return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
     }catch(e){
