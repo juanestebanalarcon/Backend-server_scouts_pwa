@@ -18,8 +18,8 @@ const createPublicacion= async(req,res=response)=>{
 const readPublicacion= async(req,res=response)=>{
     try
     {
-    const publi_ = await Publicaciones.findById(req.params.id);
-    if(publi_){return res.status(200).json({ok:true,publi_,msg:RESPONSE_MESSAGES.SUCCESS_2XX});}
+    const publicacion_ = await Publicaciones.findById(req.params.id);
+    if(publicacion_){return res.status(200).json({ok:true,publicacion_,msg:RESPONSE_MESSAGES.SUCCESS_2XX});}
     return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
     }catch(e)
     {
@@ -39,13 +39,10 @@ const readPublicaciones= async(req,res=response)=>{
     }
 }
 const updatePublicacion= async(req,res=response)=>{
-    let id  = req.params.id;
     try {
-        let publi__ = await Publicaciones.findById( id );
-        if ( !publi__ ) {
-            return res.status(404).json({ok: true,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
-        }
-        await Publicaciones.updateOne({_id:id}, {...req.body}, { upsert: true });
+        let publicacion_ = await Publicaciones.findById( req.params.id );
+        if ( !publicacion_ ) {return res.status(404).json({ok: true,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
+        await Publicaciones.updateOne({_id:req.params.id}, {...req.body}, { upsert: true });
        return res.status(200).json({ok: true,msg:RESPONSE_MESSAGES.SUCCESS_2XX})
     } catch (error) {
         console.log(error);
@@ -53,11 +50,10 @@ const updatePublicacion= async(req,res=response)=>{
     }
 }
 const deletePublicacion = async(req,res=response)=>{
-    const id  = req.params.id;
     try {
-        const publi_ = await Publicaciones.findById( id );
+        const publi_ = await Publicaciones.findById( req.params.id );
         if ( !publi_ ) {return res.status(404).json({ok: false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
-        await publi_.findByIdAndDelete( id );
+        await publi_.findByIdAndDelete( req.params.id );
         res.status(200).json({ok: true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
     } catch (error) {
         console.log(error);

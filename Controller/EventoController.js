@@ -13,7 +13,8 @@ const createEvento= async(req,res=response)=>{
             let scout_= await Scout.findById(req.body.idScout);
             if(!scout_) {return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
             let evento = new Evento(req.body);
-            evento.inscritos.push(scout_);
+            evento.ramaAsignada.push(rama_asociada.id)
+            evento.inscritos.push(scout_.id);
             await evento.save();
             return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
         }
