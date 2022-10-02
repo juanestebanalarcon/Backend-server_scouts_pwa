@@ -55,7 +55,7 @@ return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
 const readAcudientes= async(req,res=response)=>{
     try{
     let acudientes_ = await Acudiente.find();
-    if(acudientes_){res.status(200).json({ok:true,acudientes_});}
+    if(acudientes_){return res.status(200).json({ok:true,acudientes_});}
     return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
     }catch(e)
     {

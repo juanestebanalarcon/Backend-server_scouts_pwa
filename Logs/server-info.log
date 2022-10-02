@@ -1,2 +1,7 @@
 2/10/2022, 3:59:36 p. m. [[32minfo[39m] : CreateAdmin: started 
 2/10/2022, 4:06:50 p. m. [[32minfo[39m] : CreateAdmin: started 
+2/10/2022, 4:22:34 p. m. [[32minfo[39m] : CreateAdmin: started 
+2/10/2022, 4:22:34 p. m. [[31merror[39m] : CreateAdmin: Already exists an admin account with the specified email 
+2/10/2022, 4:34:54 p. m. [[32minfo[39m] : CreateAdmin: started 
+2/10/2022, 4:34:54 p. m. [[32minfo[39m] : CreateAdmin: finished creating admin 
+2/10/2022, 4:34:54 p. m. [[32minfo[39m] : CreateAdmin: Sending email to diana_ma.garcia@uao.edu.co 

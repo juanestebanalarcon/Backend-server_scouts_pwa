@@ -13,18 +13,19 @@ const createAdmin= async(req,res=response)=>{
         logger.info("CreateAdmin: started");
         let password = generateRandomPass(10);
         let administrador = await Administrador.findOne({ email })
-        if( administrador ){return res.status(400).json({ok: false,msg:RESPONSE_MESSAGES.ERR_ALREADY_EXISTS})}
+        if( administrador ){logger.error(`CreateAdmin: Already exists an admin account with the specified email`);
+            return res.status(400).json({ok: false,msg:RESPONSE_MESSAGES.ERR_ALREADY_EXISTS})}
         administrador = new Administrador( req.body );
         administrador.password = bcrypt.hashSync( password, bcrypt.genSaltSync() );
         ramasAsignadas.forEach(idRama => {administrador.ramasAsignadas.push(idRama);});
         await administrador.save();
         logger.info("CreateAdmin: finished creating admin");
         transporter.sendMail(mailOptions_(email,password,1,administrador.nombre),(err)=>{
-            if(err){console.log(err);}
+            if(err){logger.error(`CreateAdmin: Internal mail server error: ${err}`);}
         });
         logger.info(`CreateAdmin: Sending email to ${email}`);
        return res.status(201).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
-    } catch (error) {console.log(error);
+    } catch (error) {logger.error(`CreateAdmin: Internal server error: ${error}`);
         return res.status(500).json({ok:false,msg: RESPONSE_MESSAGES.ERR_500});}
     
 }
