@@ -18,7 +18,7 @@ const format_ = printf( ({ level, message, timestamp}) => {
       ),
       exitOnError:false,
       transports:[
-          new transports.Console({level:'info'}),
+          new transports.Console(),
           new transports.File({filename:`${__dirname}/../Logs/server-info.log`,level:'info'}),
           new transports.File({filename:`${__dirname}/../Logs/server-exceptions.log`,level:'error'}),
       ],

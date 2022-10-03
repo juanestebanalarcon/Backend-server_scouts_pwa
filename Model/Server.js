@@ -1,5 +1,6 @@
 const cors = require('cors');
 const express = require('express');
+const logger = require('../Helpers/LoggerConfig');
 
 class Server {
     constructor(){
@@ -26,11 +27,8 @@ class Server {
         this.app.use(`${process.env.BASE_URL}/${this.EventoPath}`, require('../Routes/Evento'));
         this.app.use(`${process.env.BASE_URL}/${this.PublicacionesPath}`, require('../Routes/Publicaciones'));
     }
-    listen() {
-        this.app.listen( this.port, () => {
-            console.log('Servidor corriendo en puerto', this.port );
-        });
-    }
+    listen() {this.app.listen( this.port, () => {logger.info(`Server running on port ${this.port} `);});}
+    
     middlewares(){
     this.app.use( cors() );
     this.app.use( express.json() );

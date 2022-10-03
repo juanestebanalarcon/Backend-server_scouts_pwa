@@ -5,3 +5,18 @@
 2/10/2022, 4:34:54 p. m. [[32minfo[39m] : CreateAdmin: started 
 2/10/2022, 4:34:54 p. m. [[32minfo[39m] : CreateAdmin: finished creating admin 
 2/10/2022, 4:34:54 p. m. [[32minfo[39m] : CreateAdmin: Sending email to diana_ma.garcia@uao.edu.co 
+2/10/2022, 9:55:06 p. m. [[32minfo[39m] : Connecting to Mongo database 
+2/10/2022, 9:55:06 p. m. [[32minfo[39m] : Server running on port 9000  
+2/10/2022, 9:56:10 p. m. [[32minfo[39m] : Connected to Mongo database 
+2/10/2022, 9:56:10 p. m. [[32minfo[39m] : Server running on port 9000  
+2/10/2022, 10:12:58 p. m. [[32minfo[39m] : Connected to Mongo database 
+2/10/2022, 10:12:58 p. m. [[32minfo[39m] : Server running on port 9000  
+2/10/2022, 10:16:18 p. m. [[32minfo[39m] : Connected to Mongo database 
+2/10/2022, 10:16:18 p. m. [[32minfo[39m] : Server running on port 9000  
+2/10/2022, 10:16:22 p. m. [[32minfo[39m] : loginAdmin: started 
+2/10/2022, 10:16:22 p. m. [[32minfo[39m] : loginAdmin: finding admin for email 
+2/10/2022, 10:16:22 p. m. [[31merror[39m] : loginAdmin: admin email not found 
+2/10/2022, 10:17:45 p. m. [[32minfo[39m] : Connected to Mongo database 
+2/10/2022, 10:17:45 p. m. [[32minfo[39m] : Server running on port 9000  
+3/10/2022, 12:09:45 a. m. [[32minfo[39m] : Connected to Mongo database 
+3/10/2022, 12:09:45 a. m. [[32minfo[39m] : Server running on port 9000  
