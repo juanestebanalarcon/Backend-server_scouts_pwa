@@ -2,6 +2,7 @@ const {response}=require('express');
 const { RESPONSE_MESSAGES } = require('../Helpers/ResponseMessages');
 const Canal = require("../Model/Canal");
 const Publicaciones = require("../Model/Publicaciones");
+const logger = require('../Helpers/LoggerConfig');
 
 const createCanal= async(req,res=response)=>{
     
@@ -15,8 +16,8 @@ const createCanal= async(req,res=response)=>{
         await canal_.save();
     return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX})
 }catch(e) {
-        console.log(e);
-        return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
+    logger.error(`CreateCanal: Internal server error: ${e}`);
+    return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
     }
 }
 const readCanals= async(req,res=response)=>{
@@ -25,7 +26,7 @@ const readCanals= async(req,res=response)=>{
         if(Canals_){return res.status(200).json({ok:true,Canals_});}
         return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
     }catch(e){
-        console.log(e);
+        logger.error(`readCanals: Internal server error: ${e}`);
         res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
     }
 }
@@ -35,7 +36,7 @@ const readCanal= async(req,res=response)=>{
         if(Canal_){return res.status(200).json({ok:true,Canal_ });}
         return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
     }catch(e){
-        console.log(e);
+        logger.error(`readCanal: Internal server error: ${e}`);
         return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500})
     }
 }
@@ -43,10 +44,10 @@ const updateCanal = async (req, res = response) => {
     try {
         const canal = await Canal.findById( req.params.id );
         if ( !canal ) {return res.status(404).json({ok: true,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
-        await Canal.updateOne({_id:req.params.id}, {...req.body}, { upsert: true });
+        await Canal.updateOne({_id:req.params.id},{$set:{...req.body}}, { upsert: true });
         return res.status(200).json({ok: true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
     } catch (error) {
-        console.log(error);
+        logger.error(`updateCanal: Internal server error: ${e}`);
         return res.status(500).json({ok: false,msg:RESPONSE_MESSAGES.ERR_500});
     }
 }
@@ -56,8 +57,8 @@ const deleteCanal= async(req,res=response)=>{
         if ( !canal ) {return res.status(404).json({ok: true,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
         await canal.findByIdAndDelete( req.params.id );
         return res.status(200).json({ok: true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
-    } catch (error) {
-        console.log(error);
+    } catch (e) {
+        logger.error(`deleteCanal: Internal server error: ${e}`);
         return res.status(500).json({ok: false,msg:RESPONSE_MESSAGES.ERR_500});
     }
 }

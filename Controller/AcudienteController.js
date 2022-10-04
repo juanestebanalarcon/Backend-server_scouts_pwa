@@ -24,7 +24,7 @@ const createAcudiente= async(req,res=response)=>{
         });
         return res.status(201).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
     } catch (error) {
-        console.log(error);
+        logger.error(`CreateAcudiente: Internal server error: ${error}`);
         return res.status(500).json({ok:false,msg: RESPONSE_MESSAGES.ERR_500});}
 }
 const revalidateToken= async(req,res=response) => {
@@ -38,7 +38,7 @@ const readAcudiente= async(req,res=response)=>{
         if(acudiente_){return res.status(200).json({ok:true,acudiente_ });}
         return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_ALREADY_EXISTS});
     }catch(e){
-        console.log(e);
+        logger.error(`readAcudiente: Internal server error: ${e}`);
         return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
     }
 }
@@ -48,7 +48,7 @@ const getScoutsAcudiente = async(req, res=response) => {
         if(!scouts_){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
         return res.status(200).json({ok:true,scouts_,msg:RESPONSE_MESSAGES.SUCCESS_2XX,scouts_Asociada:scouts_.nombre});
 }
-catch(err){console.log(err);
+catch(err){logger.error(`getScoutsAcudiente: Internal server error: ${err}`);
 return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
 }
 }
@@ -59,7 +59,7 @@ const readAcudientes= async(req,res=response)=>{
     return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
     }catch(e)
     {
-        console.log(e);
+        logger.error(`readAcudientes: Internal server error: ${e}`);
         return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
     }
 }
@@ -70,7 +70,7 @@ const updateAcudiente= async(req,res=response) =>{
         await Acudiente.updateOne({_id:req.params.id}, {$set:{...req.body}}, { upsert: true });
         return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
     }catch(e){
-        console.log(e);
+        logger.error(`updateAcudiente: Internal server error: ${e}`);
         return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500})
     }
 }
@@ -84,7 +84,7 @@ const loginAcudiente= async(req,res=response) => {
      const token= await generateJWT(acudiente_.id,acudiente_.nombre,acudiente_.email,3);
      return res.status(200).json({ok:true,_id:acudiente_.id,nombre:acudiente_.nombre,email,rol: 3,token})
     } catch (error) {
-        console.log(error);
+        logger.error(`loginAcudiente: Internal server error: ${error}`);
         return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500})
     }
 }
@@ -95,7 +95,7 @@ const deleteAcudiente = async (req,res=response) =>{
         await Acudiente.findByIdAndDelete(req.params.id);
         return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
     }catch(e){
-        console.log(e);
+        logger.error(`deleteAcudiente: Internal server error: ${e}`);
         return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500})
     }
 }
@@ -108,11 +108,11 @@ const changePassword = async (req, res)=>{
         acudiente_.password = password;
         await acudiente_.save();
         transporter.sendMail(mailOptions_(acudiente_.email,newPassword,2,acudiente_.nombre),(err)=>{
-            if(err){console.log(err);}
-        });
+            if(err){{logger.error(`changePasswordAcudiente: Internal mail server error: ${err}`);}
+        }});
         return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
 }catch(e){
-    console.log(e);
+    logger.error(`changePasswordAcudiente: Internal server error: ${e}`);
     return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});}
 }
 
