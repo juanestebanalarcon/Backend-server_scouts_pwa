@@ -20,3 +20,19 @@
 2/10/2022, 10:17:45 p. m. [[32minfo[39m] : Server running on port 9000  
 3/10/2022, 12:09:45 a. m. [[32minfo[39m] : Connected to Mongo database 
 3/10/2022, 12:09:45 a. m. [[32minfo[39m] : Server running on port 9000  
+3/10/2022, 12:12:18 p. m. [[32minfo[39m] : Connected to Mongo database 
+3/10/2022, 12:12:18 p. m. [[32minfo[39m] : Server running on port 9000  
+3/10/2022, 12:20:35 p. m. [[32minfo[39m] : CreateAdmin: started 
+3/10/2022, 12:20:36 p. m. [[32minfo[39m] : CreateAdmin: create admin finished 
+3/10/2022, 12:20:36 p. m. [[32minfo[39m] : CreateAdmin: Sending email to diana_ma.garcia@uao.edu.co 
+3/10/2022, 12:20:37 p. m. [[31merror[39m] : CreateAdmin: Internal mail server error: Error: invalid_grant: Token has been expired or revoked. 
+3/10/2022, 4:47:13 p. m. [[32minfo[39m] : Connected to Mongo database 
+3/10/2022, 4:47:13 p. m. [[32minfo[39m] : Server running on port 9000  
+3/10/2022, 4:48:10 p. m. [[32minfo[39m] : Connected to Mongo database 
+3/10/2022, 4:48:10 p. m. [[32minfo[39m] : Server running on port 9000  
+3/10/2022, 4:48:15 p. m. [[32minfo[39m] : deleteScout: started 
+3/10/2022, 4:48:15 p. m. [[32minfo[39m] : deleteScout: deleting scout found 
+3/10/2022, 4:48:15 p. m. [[32minfo[39m] : deleteScout: finding branch associated with scout found 
+3/10/2022, 4:48:15 p. m. [[32minfo[39m] : deleteScout: finding branch associated with scout found 
+3/10/2022, 4:49:03 p. m. [[32minfo[39m] : Connected to Mongo database 
+3/10/2022, 4:49:03 p. m. [[32minfo[39m] : Server running on port 9000  

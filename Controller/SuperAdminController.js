@@ -34,18 +34,23 @@ const readSuperAdministradors= async(req,res=response)=>{
         if(SuperAdministradors_){
             logger.info("ReadSuperAdmins: sending superAdmins found...");
             return res.status(200).json({ok:true,SuperAdministradors_,msg:RESPONSE_MESSAGES.SUCCESS_2XX });}
-        logger.error(`ReadSuperAdmins: SuperAdmins not found`);
-        return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
-    }catch(e){
-        logger.error(`ReadSuperAdmins: Internal server error: ${e}`);
-        return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
+            logger.error(`ReadSuperAdmins: SuperAdmins not found`);
+            return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
+        }catch(e){
+            logger.error(`ReadSuperAdmins: Internal server error: ${e}`);
+            return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
+        }
     }
-}
-const readSuperAdministrador= async(req,res=response)=>{
-    try{
-        const SuperAdministrador_ = await SuperAdministrador.findById(req.params.id);
-        if(SuperAdministrador_){return res.status(200).json({ok:true,SuperAdministrador_, msg:RESPONSE_MESSAGES.SUCCESS_2XX });}
-        return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
+    const readSuperAdministrador= async(req,res=response)=>{
+        try{
+            logger.info("readSuperAdmin: started");
+            const SuperAdministrador_ = await SuperAdministrador.findById(req.params.id);
+            logger.info("ReadSuperAdmin: finding superAdmin...");
+            if(SuperAdministrador_){
+                logger.info("ReadSuperAdmin: sending superAdmin found...");
+                return res.status(200).json({ok:true,SuperAdministrador_, msg:RESPONSE_MESSAGES.SUCCESS_2XX });}
+            logger.error(`ReadSuperAdmin: SuperAdmin not found`);
+            return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
     }catch(e){
         logger.error(`ReadSuperAdmin: Internal server error: ${e}`);
         return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
