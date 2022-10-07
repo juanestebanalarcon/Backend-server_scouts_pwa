@@ -13,7 +13,7 @@ router.post("/create-rama",[
 router.put("/:id",updateRama);
 router.get("/allRamas",readRamas);
 router.get("/:id",readRama);
-router.post("/changeScoutBranch/:id",changeScoutBranch);
+router.put("/changeScoutBranch/:id",changeScoutBranch);
 router.delete("/:id",deleteRama);
 router.get("/getScoutsAsignados/:id",getScoutsAsignados);
 module.exports=router;
