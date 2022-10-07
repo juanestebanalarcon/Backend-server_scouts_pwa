@@ -151,7 +151,7 @@ const changeAdminBranch = async (req, res=response) => {
         await admin.save();
         }catch(e){console.log(e);}
         return res.status(200).json({ok: true,msg:RESPONSE_MESSAGES.SUCCESS_2XX})
-    }catch(err){logger.error(`changePasswordAdmin: Internal server error: ${err}`);
+    }catch(err){logger.error(`changeAdminBranch: Internal server error: ${err}`);
     return res.status(500).json({ok: false,msg: RESPONSE_MESSAGES.ERR_500})}
 }
 module.exports={

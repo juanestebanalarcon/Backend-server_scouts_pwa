@@ -115,6 +115,7 @@ const changePassword = async (req, res)=>{
     return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});}
 }
 
+
 module.exports={
     createAcudiente,
     readAcudientes,
