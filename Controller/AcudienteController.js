@@ -8,16 +8,16 @@ const Acudiente = require('../Model/Acudiente');
 const Scout = require("../Model/Scout");
 
 const createAcudiente= async(req,res=response)=>{
-    let { email } = req.body;
+    let { email,Scouts } = req.body;
     try {  
+        let scouts_ = [];
         let password = generateRandomPass(10);
         let acudiente_ = await Acudiente.findOne({ email })
         if( acudiente_ ){return res.status(400).json({ok: false,msg:RESPONSE_MESSAGES.ERR_ALREADY_EXISTS})}
         acudiente_ = new Acudiente( req.body );
         acudiente_.password = bcrypt.hashSync( password, bcrypt.genSaltSync() );
-        let _scout = await Scout.findById(req.body.idScout);
-        if(!_scout) {return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
-        acudiente_.Scout.push(_scout.id); 
+        Scouts.forEach(scout =>{scouts_.unshift(scout);});
+        acudiente_.Scout=scouts_; 
         await acudiente_.save();
         transporter.sendMail(mailOptions_(email,password,1,acudiente_.nombre),(err)=>{
             if(err){console.log(err);}

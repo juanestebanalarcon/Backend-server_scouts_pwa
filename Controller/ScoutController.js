@@ -122,10 +122,10 @@ const deleteScout = async (req,res=response) =>{
         if(!scoutDB){
             logger.error("deleteScout: scout not found");
             return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
-            logger.info("deleteScout: deleting scout found");
-            await Scout.findByIdAndDelete(req.params.id);
-            logger.info("deleteScout: finding branch associated with scout found");
-            let rama = await Rama.findOne({Scout:scoutDB.id});
+        logger.info("deleteScout: deleting scout found");
+        await Scout.findByIdAndDelete(req.params.id);
+        logger.info("deleteScout: finding branch associated with scout found");
+        let rama = await Rama.findOne({Scout:scoutDB.id});
             if( !rama ) {
                 logger.info("deleteScout: associated branch not found");
                 return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
@@ -152,8 +152,7 @@ const changePassword = async (req, res)=>{
         let {newPassword,email} = req.body;
         const scoutDB = await Scout.findOne({email:email});
         if(!scoutDB){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_EMAIL_NOT_FOUND});}
-        let password =bcrypt.hashSync(newPassword,bcrypt.genSaltSync());
-        scoutDB.password = password;
+        scoutDB.password = bcrypt.hashSync(newPassword,bcrypt.genSaltSync());
         await scoutDB.save();
         transporter.sendMail(mailOptions_(scoutDB.email,newPassword,2,scoutDB.nombre),(err)=>{
             if(err){{logger.error(`changePasswordScout: Internal mail server error: ${err}`);}

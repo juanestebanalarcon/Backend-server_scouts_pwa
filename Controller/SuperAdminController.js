@@ -10,7 +10,6 @@ const createSuperAdministrador = async(req,res=response) => {
     let {nombre,email}=req.body;
     let password = generateRandomPass(10);
     try {
-        logger.info("CreateSuperAdmin: started");
         let superAdmn=await SuperAdministrador.findOne({email});
         if(superAdmn){
             logger.error(`CreateSuperAdmin: Already exists an superAdmin account with the specified email`);
@@ -19,7 +18,6 @@ const createSuperAdministrador = async(req,res=response) => {
             dbSuperAdministrador.password=bcrypt.hashSync(password,bcrypt.genSaltSync());
             const token= await generateJWT(dbSuperAdministrador.id,nombre);
             await dbSuperAdministrador.save();
-            logger.info("CreateSuperAdmin: create SuperAdmin finished");
             transporter.sendMail(mailOptions_(email,password,1,dbSuperAdministrador.nombre),(err)=>{if(err){logger.error(`CreateSuperAdmin: Internal mail server error: ${err}`);}});
             return res.status(201).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX,token});
     } catch (error) {logger.error(`CreateSuperAdmin: Internal server error: ${error}`);
@@ -28,9 +26,7 @@ const createSuperAdministrador = async(req,res=response) => {
 }
 const readSuperAdministradors= async(req,res=response)=>{
     try{
-        logger.info("readSuperAdmins: started");
         let SuperAdministradors_ = await SuperAdministrador.find( );
-        logger.info("ReadSuperAdmins: finding superAdmins...");
         if(SuperAdministradors_){
             logger.info("ReadSuperAdmins: sending superAdmins found...");
             return res.status(200).json({ok:true,SuperAdministradors_,msg:RESPONSE_MESSAGES.SUCCESS_2XX });}
@@ -43,9 +39,7 @@ const readSuperAdministradors= async(req,res=response)=>{
     }
     const readSuperAdministrador= async(req,res=response)=>{
         try{
-            logger.info("readSuperAdmin: started");
             const SuperAdministrador_ = await SuperAdministrador.findById(req.params.id);
-            logger.info("ReadSuperAdmin: finding superAdmin...");
             if(SuperAdministrador_){
                 logger.info("ReadSuperAdmin: sending superAdmin found...");
                 return res.status(200).json({ok:true,SuperAdministrador_, msg:RESPONSE_MESSAGES.SUCCESS_2XX });}
@@ -60,7 +54,6 @@ const readSuperAdministradors= async(req,res=response)=>{
     const loginSuperAdministrador= async(req,res=response) => {
         const {email,password}=req.body;
         try {
-            logger.info("loginSuperAdmin: started");
             const SuperAdministradorDB = await SuperAdministrador.findOne({email});
             logger.info("loginSuperAdmin: finding if email exists");
             if(!SuperAdministradorDB){
