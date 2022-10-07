@@ -117,31 +117,24 @@ const updateScout= async(req,res=response) =>{
 
 const deleteScout = async (req,res=response) =>{
     try{
-        logger.info("deleteScout: started");
         const scoutDB = await Scout.findById(req.params.id);
         if(!scoutDB){
-            logger.error("deleteScout: scout not found");
             return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
-        logger.info("deleteScout: deleting scout found");
-        await Scout.findByIdAndDelete(req.params.id);
-        logger.info("deleteScout: finding branch associated with scout found");
-        let rama = await Rama.findOne({Scout:scoutDB.id});
+            let rama = await Rama.findOne({Scout:scoutDB.id});
             if( !rama ) {
                 logger.info("deleteScout: associated branch not found");
                 return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
-            logger.info("deleteScout: deleting branch associated with scout found");
             let acudiente__ = await Acudiente.findOne({Scout:scoutDB.id});
             let oldScout = rama.Scout,oldAcudiente_=acudiente__.Scout;
             try{
                 for(let i = 0; i < oldScout.length; i++) {if(oldScout[i]===req.params.id){oldScout.splice(i, 1);}}
                 rama.Scout = oldScout;
                 await rama.save();
-                logger.info("deleteScout: finding acudiente associated with scout found");
                 for(let i = 0; i < oldAcudiente_.length; i++) {if(oldAcudiente_[i]===req.params.id){oldAcudiente_.splice(i, 1);}}
                 acudiente__.Scout = oldAcudiente_;
                 await acudiente__.save();
-                logger.info("deleteScout: deleting Scout associated with acudiente found");
-                }catch(e){logger.error(`deleteScout: Internal server error: ${e}`);}
+                await Scout.findByIdAndDelete(req.params.id);
+            }catch(e){logger.error(`deleteScout: Internal server error: ${e}`);}
             return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
         }catch(e){logger.error(`deleteScout: Internal server error: ${e}`);}
         return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500})

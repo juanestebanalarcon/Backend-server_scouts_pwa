@@ -77,11 +77,8 @@ const readAdminBranch = async(req, res=response)=>{
 const updateAdmin=async(req,res=response)=>{
     try {
         let admin__ = await Administrador.findById( req.params.id );
-        logger.info("updateAdmin: finding admin to update...");
         if ( !admin__ ) {
-            logger.error(`updateAdmin: admin not found`);
             return res.status(404).json({ok: false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
-        logger.info("updateAdmin: updating admin found...");
         await Administrador.updateOne({_id:req.params.id}, {$set:{...req.body}}, { upsert: true });
         return res.status(200).json({ok: true,msg:RESPONSE_MESSAGES.SUCCESS_2XX})
         } catch (e) {
@@ -93,10 +90,8 @@ const deleteAdmin =async(req,res=response)=>{
     try {   
         const admin_ = await Administrador.findById(req.params.id);
         if ( !admin_ ) {
-            logger.error(`deleteAdmin: admin not found`);
             return res.status(404).json({ok: false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
-        logger.info("deleteAdmin: deleting admin found...");
-        await admin_.findByIdAndDelete( req.params.id );
+        await Administrador.findByIdAndDelete( req.params.id );
         return res.status(200).json({ok: true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
     } catch (e) {
         logger.error(`deleteAdmin: Internal server error: ${e}`);
