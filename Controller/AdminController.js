@@ -143,13 +143,8 @@ const changeAdminBranch = async (req, res=response) => {
     try{
         let admin = await Administrador.findById(req.params.id);
         if(!admin) {return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
-        let oldAdmin = admin.ramasAsignadas;
-        try{
-        for(let i = 0; i < oldAdmin.length; i++) {if(oldAdmin[i]===req.body.idRamaActual){oldAdmin.splice(i, 1);}}
-        oldAdmin.unshift(req.body.idRamaNueva);
-        admin.ramasAsignadas = oldAdmin;
+        admin.ramasAsignadas=req.body.RamasNuevas;
         await admin.save();
-        }catch(e){console.log(e);}
         return res.status(200).json({ok: true,msg:RESPONSE_MESSAGES.SUCCESS_2XX})
     }catch(err){logger.error(`changeAdminBranch: Internal server error: ${err}`);
     return res.status(500).json({ok: false,msg: RESPONSE_MESSAGES.ERR_500})}
