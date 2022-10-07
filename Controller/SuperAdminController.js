@@ -75,9 +75,9 @@ const revalidateToken= async(req,res=response) => {
 }
 const updateSuperAdministrador= async(req,res=response) =>{
     try{
-        const SuperAdministradorDb = SuperAdministrador.findById(req.params.id);
+        const SuperAdministradorDb = await SuperAdministrador.findById(req.params.id);
         if(!SuperAdministradorDb){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
-        await SuperAdministrador.updateOne({_id:req.params.id}, {...req.body}, { upsert: true });
+        await SuperAdministrador.updateOne({_id:req.params.id},{$set:{...req.body}}, { upsert: true });
        return  res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX})
     }catch(e){
         logger.error(`updateSuperAdmin: Internal server error: ${e}`);

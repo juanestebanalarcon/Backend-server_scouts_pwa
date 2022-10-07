@@ -128,8 +128,7 @@ const changePassword = async (req, res)=>{
         if(!adminDB){
             logger.error("changePasswordAdmin: error admin email not found");
             return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_EMAIL_NOT_FOUND});}
-        let password =bcrypt.hashSync(newPassword,bcrypt.genSaltSync());
-        adminDB.password = password;
+        adminDB.password =bcrypt.hashSync(newPassword,bcrypt.genSaltSync());
         await adminDB.save();
         logger.info("changePasswordAdmin: saving admin password...");
         transporter.sendMail(mailOptions_(adminDB.email,newPassword,2,adminDB.nombre),(err)=>{

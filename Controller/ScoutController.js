@@ -105,7 +105,7 @@ const revalidateToken= async(req,res=response) => {
 }
 const updateScout= async(req,res=response) =>{
     try{
-        let scoutDb = Scout.findById(req.params.id);
+        let scoutDb = await Scout.findById(req.params.id);
         if(!scoutDb){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
         await Scout.updateOne({_id:req.params.id}, {$set:{...req.body}}, { upsert: true });
         return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});

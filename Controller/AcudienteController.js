@@ -104,8 +104,7 @@ const changePassword = async (req, res)=>{
         let {newPassword,email} = req.body;
         const acudiente_ = await Acudiente.findOne({email:email});
         if(!acudiente_){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_EMAIL_NOT_FOUND});}
-        let password =bcrypt.hashSync(newPassword,bcrypt.genSaltSync());
-        acudiente_.password = password;
+        acudiente_.password =bcrypt.hashSync(newPassword,bcrypt.genSaltSync());
         await acudiente_.save();
         transporter.sendMail(mailOptions_(acudiente_.email,newPassword,2,acudiente_.nombre),(err)=>{
             if(err){{logger.error(`changePasswordAcudiente: Internal mail server error: ${err}`);}
