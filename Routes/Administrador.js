@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const {check} = require("express-validator");
 const { validarCampos } = require("../middlewares/validar-campos");
-const {createAdmin,readAdmin,readAdmins,updateAdmin,deleteAdmin,loginAdmin,revalidateToken, changePassword, readAdminBranch} = require("../Controller/AdminController");
+const {createAdmin,readAdmin,readAdmins,updateAdmin,deleteAdmin,loginAdmin,revalidateToken, changePassword, readAdminBranch, changeAdminBranch} = require("../Controller/AdminController");
 const { validarJWT } = require("../middlewares/validar-jwt");
 const router = Router();
 
@@ -19,6 +19,7 @@ router.put("/:id",updateAdmin);
 router.get("/AllAdmins",readAdmins);
 router.get("/getAdminBranch/:id",readAdminBranch);
 router.get("/:id",readAdmin);
+router.put("/changeAdminBranch/:id",changeAdminBranch);
 router.delete("/:id",deleteAdmin);
 router.post("/changePassword",[
     check("email","Email es obligatorio").isEmail(),

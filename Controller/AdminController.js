@@ -6,6 +6,7 @@ const bcrypt = require('bcryptjs');
 const { mailOptions_, transporter } = require("../Helpers/EmailConfig");
 const{RESPONSE_MESSAGES}=require('../Helpers/ResponseMessages');
 const logger = require("../Helpers/LoggerConfig");
+const Rama = require("../Model/Rama");
 
 const createAdmin= async(req,res=response)=>{
     let { email,ramasAsignadas } = req.body;
@@ -138,6 +139,21 @@ const changePassword = async (req, res)=>{
     logger.error(`changePasswordAdmin: Internal server error: ${e}`);
     return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});}
 }
+const changeAdminBranch = async (req, res=response) => {
+    try{
+        let admin = await Administrador.findById(req.params.id);
+        if(!admin) {return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
+        let oldAdmin = admin.ramasAsignadas;
+        try{
+        for(let i = 0; i < oldAdmin.length; i++) {if(oldAdmin[i]===req.body.idRamaActual){oldAdmin.splice(i, 1);}}
+        oldAdmin.unshift(req.body.idRamaNueva);
+        admin.ramasAsignadas = oldAdmin;
+        await admin.save();
+        }catch(e){console.log(e);}
+        return res.status(200).json({ok: true,msg:RESPONSE_MESSAGES.SUCCESS_2XX})
+    }catch(err){logger.error(`changePasswordAdmin: Internal server error: ${err}`);
+    return res.status(500).json({ok: false,msg: RESPONSE_MESSAGES.ERR_500})}
+}
 module.exports={
     loginAdmin,
     createAdmin,
@@ -147,6 +163,7 @@ module.exports={
     updateAdmin,
     deleteAdmin,
     changePassword,
+    changeAdminBranch,
     revalidateToken
 
 }
