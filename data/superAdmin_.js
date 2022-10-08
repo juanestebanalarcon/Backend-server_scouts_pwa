@@ -5,9 +5,9 @@ let SUPER_ADMIN_TEST0={
     password:"superAdmin0password"
 }
 let SUPER_ADMIN_TEST1={
-    nombre: "Diego",
+    nombre: "Camilo",
     apellido: "Caicedo",
-    email: "diego@ejemplo.com",
+    email: "camilo@ejemplo.com",
     password:"12345678"
 }
 let SUPER_ADMIN_TEST2={
@@ -23,9 +23,9 @@ let SUPER_ADMIN_TEST3={
     password:"superAdmin3password"
 }
 let SUPER_ADMIN_TEST4={
-    nombre: "Diogo",
-    apellido: "Jota",
-    email: "diego@ejemplo.com",
-    password:"12345678"
+    nombre: "Juan Camilo",
+    apellido: "Marin Escandon",
+    email: "jk_maes@hotmail.com",
+    password:"usfRRMKps2"
 }
 module.exports= {SUPER_ADMIN_TEST0,SUPER_ADMIN_TEST1,SUPER_ADMIN_TEST2,SUPER_ADMIN_TEST3,SUPER_ADMIN_TEST4}

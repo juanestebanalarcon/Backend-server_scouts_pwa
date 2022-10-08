@@ -29,8 +29,9 @@ let ADMIN_TEST3={
 let ADMIN_TEST4={
     nombre: "Diana",
     apellido: "Garcia",
+    email: "diana@ejemplo.com",
     password:"12345678",
-    ramasAsignadas:["6325408b1a9d28793c3330f2", "63256d78b18b69dcd266ebde"]
+    ramasAsignadas:[ ]
 }
 let ADMIN_TEST5={
     nombre: "admin5",

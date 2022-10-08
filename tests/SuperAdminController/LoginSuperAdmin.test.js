@@ -18,7 +18,7 @@ describe("LoginSuperAdmin", () => {
     });
     it("shouldn't log in the SuperAdmin - incorrect email",async() => {
         let response =   await request.post("/superAdmin/log-in-superAdmin").send({email:SUPER_ADMIN_TEST3.email, password:SUPER_ADMIN_TEST3.password});
-        expect(response.status).to.equal(400);
+        expect(response.status).to.equal(404);
         expect(response.body.msg).to.equal(RESPONSE_MESSAGES.ERR_EMAIL_NOT_FOUND);
     });
 });
