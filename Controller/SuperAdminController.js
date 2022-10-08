@@ -56,10 +56,7 @@ const readSuperAdministradors= async(req,res=response)=>{
         const {email,password}=req.body;
         try {
             const SuperAdministradorDB = await SuperAdministrador.findOne({email});
-            logger.info("loginSuperAdmin: finding if email exists");
-            if(!SuperAdministradorDB){
-            logger.error(`loginSuperAdmin: SuperAdmin email not found`);
-            return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_EMAIL_NOT_FOUND});}
+            if(!SuperAdministradorDB){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_EMAIL_NOT_FOUND});}
             const validPassword=bcrypt.compareSync(password,SuperAdministradorDB.password);
             if(!validPassword){return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_INVALID_PASSWORD});}
             const token= await generateJWT(SuperAdministradorDB.id,SuperAdministradorDB.nombre,SuperAdministradorDB.email,0);

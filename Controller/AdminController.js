@@ -6,7 +6,6 @@ const bcrypt = require('bcryptjs');
 const { mailOptions_, transporter } = require("../Helpers/EmailConfig");
 const{RESPONSE_MESSAGES}=require('../Helpers/ResponseMessages');
 const logger = require("../Helpers/LoggerConfig");
-const Rama = require("../Model/Rama");
 
 const createAdmin= async(req,res=response)=>{
     let { email,ramasAsignadas } = req.body;
