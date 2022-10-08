@@ -5,6 +5,7 @@ const {generateJWT} = require('../Helpers/jwt');
 const { RESPONSE_MESSAGES } = require('../Helpers/ResponseMessages');
 const { generateRandomPass } = require('../Helpers/randomPassowrd');
 const logger = require('../Helpers/LoggerConfig');
+const { transporter, mailOptions_ } = require('../Helpers/EmailConfig');
 
 const createSuperAdministrador = async(req,res=response) => {
     let {nombre,email}=req.body;
