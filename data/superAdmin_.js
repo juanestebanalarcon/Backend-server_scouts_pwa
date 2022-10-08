@@ -5,10 +5,10 @@ let SUPER_ADMIN_TEST0={
     password:"superAdmin0password"
 }
 let SUPER_ADMIN_TEST1={
-    nombre: "superAdmin1",
-    apellido: "superAdmin1apellido",
-    email: "superAdmin1@example.com",
-    password:"superAdmin1password"
+    nombre: "Diego",
+    apellido: "Caicedo",
+    email: "diego@ejemplo.com",
+    password:"12345678"
 }
 let SUPER_ADMIN_TEST2={
     nombre: "superAdmin2",
@@ -23,8 +23,8 @@ let SUPER_ADMIN_TEST3={
     password:"superAdmin3password"
 }
 let SUPER_ADMIN_TEST4={
-    nombre: "Diego",
-    apellido: "Caicedo",
+    nombre: "Diogo",
+    apellido: "Jota",
     email: "diego@ejemplo.com",
     password:"12345678"
 }
