@@ -8,17 +8,15 @@ const{RESPONSE_MESSAGES}=require('../Helpers/ResponseMessages');
 const logger = require("../Helpers/LoggerConfig");
 
 const createAdmin= async(req,res=response)=>{
-    let { email,ramasAsignadas } = req.body;
+    let { email} = req.body;
     try {  
-        let ramas_asignadas = [];
         let password = generateRandomPass(10);
         let administrador = await Administrador.findOne({ email })
         if( administrador ){logger.error(`CreateAdmin: Already exists an admin account with the specified email`);
         return res.status(400).json({ok: false,msg:RESPONSE_MESSAGES.ERR_ALREADY_EXISTS})}
         administrador = new Administrador( req.body );
         administrador.password = bcrypt.hashSync( password, bcrypt.genSaltSync() );
-        ramasAsignadas.forEach(idRama => {ramas_asignadas.unshift(idRama);});
-        administrador.ramasAsignadas = ramas_asignadas;
+        administrador.ramasAsignadas = req.body.ramasAsignadas;
         await administrador.save();
         transporter.sendMail(mailOptions_(email,password,1,administrador.nombre),(err)=>{
             if(err){logger.error(`CreateAdmin: Internal mail server error: ${err}`);}

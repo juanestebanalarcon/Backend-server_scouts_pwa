@@ -7,18 +7,8 @@ const logger = require('../Helpers/LoggerConfig');
 
 const createEvento= async(req,res=response)=>{
     try{
-
         let rama_asociada = await Rama.findById(req.body.idRama);
         if(!rama_asociada ) {return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
-        if(req.body.idScout){
-            let scout_= await Scout.findById(req.body.idScout);
-            if(!scout_) {return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
-            let evento = new Evento(req.body);
-            evento.ramaAsignada.push(rama_asociada.id)
-            evento.inscritos.push(scout_.id);
-            await evento.save();
-            return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
-        }
         let evento = new Evento(req.body);
         evento.ramaAsignada.push(rama_asociada.id)
         await evento.save();
@@ -28,6 +18,33 @@ const createEvento= async(req,res=response)=>{
         return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
     }
 }
+const addScoutToEvent= async(req,res=response)=>{
+    try{
+            let event_ = await Evento.findById(req.params.id);
+            if(!event_) {return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
+            let scout_= await Scout.findById(req.body.idScout);
+            if(!scout_) {return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
+            event_.inscritos.push(scout_.id);
+            await event_.save();
+            return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
+    }catch(e) {
+        logger.error(`createEvento: Internal server error: ${e}`);
+        return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
+    }
+}
+const addScoutsToEvent= async(req,res=response)=>{
+    try{
+            let event_ = await Evento.findById(req.params.id);
+            if(!event_) {return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
+            event_.inscritos=req.body.inscritos;
+            await event_.save();
+            return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
+    }catch(e) {
+        logger.error(`createEvento: Internal server error: ${e}`);
+        return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
+    }
+}
+
 const readEventos= async(req,res=response)=>{
     try{
         const Eventos_ = await Evento.find();
@@ -85,6 +102,8 @@ const deleteEvento= async(req,res=response)=>{
 
 module.exports={
     createEvento,
+    addScoutToEvent,
+    addScoutsToEvent,
     readEvento,
     readEventos,
     getScoutsAsignadosEvento,
