@@ -89,8 +89,7 @@ const updateAdmin=async(req,res=response)=>{
 const deleteAdmin =async(req,res=response)=>{
     try {   
         const admin_ = await Administrador.findById(req.params.id);
-        if ( !admin_ ) {
-            return res.status(404).json({ok: false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
+        if ( !admin_ ) {return res.status(404).json({ok: false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
         await Administrador.findByIdAndDelete( req.params.id );
         return res.status(200).json({ok: true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
     } catch (e) {

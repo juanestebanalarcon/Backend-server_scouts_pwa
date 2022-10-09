@@ -30,6 +30,20 @@ const readPublicacion= async(req,res=response)=>{
     }
 
 }
+const readPublicacionesByBranch= async(req,res=response)=>{
+    try
+    {
+    const publicaciones_ = await Publicaciones.find(req.body.idRama);
+    if(publicaciones_){return res.status(200).json({ok:true,publicaciones_,msg:RESPONSE_MESSAGES.SUCCESS_2XX});}
+    return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
+    }catch(e)
+    {
+        logger.error(`readPublicacion: Internal server error: ${e}`);
+        return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
+    }
+
+}
+
 const readPublicaciones= async(req,res=response)=>{
     try{
         const publicaciones_ = await Publicaciones.find();
@@ -67,6 +81,7 @@ module.exports={
    createPublicacion,
    readPublicacion,
    readPublicaciones,
+   readPublicacionesByBranch,
    updatePublicacion,
    deletePublicacion
 

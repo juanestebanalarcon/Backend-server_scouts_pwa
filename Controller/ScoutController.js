@@ -118,12 +118,11 @@ const updateScout= async(req,res=response) =>{
 const deleteScout = async (req,res=response) =>{
     try{
         const scoutDB = await Scout.findById(req.params.id);
-        if(!scoutDB){
+        if(!scoutDB){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
+        let rama = await Rama.findOne({Scout:scoutDB.id});
+        if( !rama ) {
+            logger.info("deleteScout: associated branch not found");
             return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
-            let rama = await Rama.findOne({Scout:scoutDB.id});
-            if( !rama ) {
-                logger.info("deleteScout: associated branch not found");
-                return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
             let acudiente__ = await Acudiente.findOne({Scout:scoutDB.id});
             let oldScout = rama.Scout,oldAcudiente_=acudiente__.Scout;
             try{
