@@ -101,9 +101,10 @@ const deleteAcudiente = async (req,res=response) =>{
 }
 const changePassword = async (req, res)=>{
     try{
-        let {newPassword,email} = req.body;
+        let {newPassword,currentPassword,email} = req.body;
         const acudiente_ = await Acudiente.findOne({email:email});
         if(!acudiente_){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_EMAIL_NOT_FOUND});}
+        if(!bcrypt.compareSync(currentPassword,acudiente_.password)){return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_INVALID_PASSWORD})}
         acudiente_.password =bcrypt.hashSync(newPassword,bcrypt.genSaltSync());
         await acudiente_.save();
         transporter.sendMail(mailOptions_(acudiente_.email,newPassword,2,acudiente_.nombre),(err)=>{

@@ -97,9 +97,10 @@ const deleteSuperAdministrador = async (req,res=response) =>{
 }
 const changePassword = async (req, res)=>{
     try{
-        let {newPassword,email} = req.body;
+        let {newPassword,currentPassword,email} = req.body;
         const superAdmin = await SuperAdministrador.findOne({email:email});
         if(!superAdmin){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_EMAIL_NOT_FOUND});}
+        if(!bcrypt.compareSync(currentPassword,superAdmin.password)){return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_INVALID_PASSWORD})}
         superAdmin.password = bcrypt.hashSync(newPassword,bcrypt.genSaltSync());
         await superAdmin.save();
         transporter.sendMail(mailOptions_(superAdmin.email,newPassword,2,superAdmin.nombre),(err)=>{

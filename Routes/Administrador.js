@@ -23,7 +23,7 @@ router.put("/changeAdminBranch/:id",changeAdminBranch);
 router.delete("/:id",deleteAdmin);
 router.post("/changePassword",[
     check("email","Email es obligatorio").isEmail(),
-    check('newPassword','La newPassword es obligatoria').isLength({min:8}), 
+    check("newPassword",'La newPassword es obligatoria').isLength({min:8}), 
     validarCampos],changePassword);
 router.get("/",validarJWT,revalidateToken);
 module.exports=router;

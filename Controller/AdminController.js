@@ -107,10 +107,8 @@ const loginAdmin= async(req,res=response) => {
             logger.error("loginAdmin: admin email not found");
             return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_EMAIL_NOT_FOUND})
         }
-        const validPassword=bcrypt.compare(password,adminDB.password);
-        if(!validPassword){
-            logger.error("loginAdmin: admin password is incorrect");
-            return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_INVALID_PASSWORD})}
+        const validPassword=bcrypt.compareSync(password,adminDB.password);
+        if(!validPassword){return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_INVALID_PASSWORD});}
         logger.info("loginAdmin: building admin token");
         const token= await generateJWT(adminDB.id,adminDB.nombre,adminDB.email,1);
         logger.info("loginAdmin: sending admin login info");
@@ -122,17 +120,14 @@ const loginAdmin= async(req,res=response) => {
     }
 const changePassword = async (req, res)=>{
     try{
-        let {newPassword,email} = req.body;
+        let {newPassword,currentPassword,email} = req.body;
         const adminDB = await Administrador.findOne({email:email});
-        if(!adminDB){
-            logger.error("changePasswordAdmin: error admin email not found");
-            return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_EMAIL_NOT_FOUND});}
+        if(!adminDB){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_EMAIL_NOT_FOUND});}
+        if(!bcrypt.compareSync(currentPassword,adminDB.password)){return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_INVALID_PASSWORD})}
         adminDB.password =bcrypt.hashSync(newPassword,bcrypt.genSaltSync());
         await adminDB.save();
         transporter.sendMail(mailOptions_(adminDB.email,newPassword,2,adminDB.nombre),(err)=>{
-        if(err){logger.error(`changePasswordAdmin: Error occurred while sending password recovery email: ${err}`);}
-        logger.info(`changePasswordAdmin: sending password recovery email...`);
-        });
+        if(err){logger.error(`changePasswordAdmin: Error occurred while sending password recovery email: ${err}`);}});
         return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
     }catch(e){
     logger.error(`changePasswordAdmin: Internal server error: ${e}`);

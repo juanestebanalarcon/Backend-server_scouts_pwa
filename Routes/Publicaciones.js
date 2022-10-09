@@ -13,8 +13,6 @@ router.post("/create-publicacion",[
     check("descripcion","Nombre es obligatorio").not().isEmpty(),
     check("autor","Nombre es obligatorio").not().isEmpty(),
     check("fecha","fecha es obligatorio").not().isEmpty(),
-    check("linkImagen","link es obligatorio").not().isEmpty(),
-    check("inscritos","Id de Scout es obligatorio").not().isEmpty(),
     validarCampos,
 ],createPublicacion);
 router.put("/:id",updatePublicacion);

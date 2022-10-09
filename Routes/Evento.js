@@ -15,8 +15,6 @@ router.post("/create-evento",[
     check("autor","Nombre es obligatorio").not().isEmpty(),
     check("fechaYHoraInicio","fecha y hora inicio es obligatorio").not().isEmpty(),
     check("fechaYHoraFinal","fecha y hora inicio es obligatorio").not().isEmpty(),
-    check("linkImagen","link es obligatorio").not().isEmpty(),
-    check("inscritos","Id de Scout es obligatorio").not().isEmpty(),
     validarCampos,
 ],createEvento);
 router.put("/:id",updateEvento);

@@ -17,6 +17,11 @@ autor: {
     type: String,
     required:true
 },
+ramaAsignada: {
+    type:Array,
+    ref:'Rama',
+    required:false
+},
 fecha: {
     type: Date,
     required:true
