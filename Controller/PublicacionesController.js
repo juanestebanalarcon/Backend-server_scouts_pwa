@@ -33,7 +33,7 @@ const readPublicacion= async(req,res=response)=>{
 const readPublicacionesByBranch= async(req,res=response)=>{
     try
     {
-    const publicaciones_ = await Publicaciones.find({ramaAsignada:req.body.idRama});
+    const publicaciones_ = await Publicaciones.find({ramaAsignada:req.params.idRama});
     if(publicaciones_.length>0){return res.status(200).json({ok:true,publicaciones_,msg:RESPONSE_MESSAGES.SUCCESS_2XX});}
     return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
     }catch(e)

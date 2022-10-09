@@ -18,7 +18,7 @@ router.post("/create-publicacion",[
 ],createPublicacion);
 router.put("/:id",updatePublicacion);
 router.get("/allPublicaciones",readPublicaciones);
-router.get("/byBranch",readPublicacionesByBranch);
+router.get("/byBranch/:idRama",readPublicacionesByBranch);
 router.get("/:id",readPublicacion);
 router.delete("/:id",deletePublicacion);
 module.exports=router;
