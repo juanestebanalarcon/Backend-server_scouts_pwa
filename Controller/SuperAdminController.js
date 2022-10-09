@@ -61,7 +61,7 @@ const readSuperAdministradors= async(req,res=response)=>{
             if(!validPassword){return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_INVALID_PASSWORD});}
             const token= await generateJWT(SuperAdministradorDB.id,SuperAdministradorDB.nombre,SuperAdministradorDB.email,0);
             return res.status(200).json({ok:true,uid:SuperAdministradorDB.id,nombre:SuperAdministradorDB.nombre,email,rol:0,token});
-    } catch (error) {
+    } catch(e) {
         logger.error(`loginSuperAdmin: Internal server error: ${e}`);
         return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
     }
