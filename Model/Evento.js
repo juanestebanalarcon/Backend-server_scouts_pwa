@@ -29,7 +29,7 @@ fechaYHoraFinal: {
 },
 ramaAsignada: {
     type:Array,
-    ref:'Rama',
+    ref:"Rama",
     required:false
 },
 inscritos:{

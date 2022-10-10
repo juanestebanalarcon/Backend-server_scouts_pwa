@@ -8,7 +8,10 @@ const {createEvento,
     deleteEvento,
     getScoutsAsignadosEvento,
     addScoutToEvent,
-    addScoutsToEvent} = require("../Controller/EventoController");
+    addScoutsToEvent,
+    readEventosByBranch,
+    readlastTowEventosByBranch,
+    readEventosOfWeek} = require("../Controller/EventoController");
 const router = Router();
 
 router.post("/create-evento",[
@@ -19,11 +22,14 @@ router.post("/create-evento",[
     check("fechaYHoraFinal","fecha y hora inicio es obligatorio").not().isEmpty(),
     validarCampos,
 ],createEvento);
-router.put("/:id",updateEvento);
+router.put("/updateEvento/:id",updateEvento);
 router.put("/addScout/:id",addScoutToEvent);
-router.put("/addScouts/:id",addScoutsToEvent);
+router.get("/readEvento/:id",readEvento);
 router.get("/allEvents",readEventos);
-router.get("/:id",readEvento);
+router.put("/addScouts/:id",addScoutsToEvent);
+router.get("/getEventByBranch",readEventosByBranch);
+router.get("/getEventsOfWeek",readEventosOfWeek);
+router.get("/getlastTwoEventByBranch",readlastTowEventosByBranch);
 router.get("/getScoutsAsignadosEvento/:id",getScoutsAsignadosEvento);
-router.delete("/:id",deleteEvento);
+router.delete("/deleteEvento/:id",deleteEvento);
 module.exports=router;

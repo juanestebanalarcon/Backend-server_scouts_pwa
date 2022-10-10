@@ -47,12 +47,42 @@ const addScoutsToEvent= async(req,res=response)=>{
 
 const readEventos= async(req,res=response)=>{
     try{
-        const Eventos_ = await Evento.find();
+        const Eventos_ = await Evento.find({});
         if(Eventos_){return res.status(200).json({ok:true,Eventos_,msg:RESPONSE_MESSAGES.SUCCESS_2XX});}
         return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
     }catch(e){
         logger.error(`readEventos: Internal server error: ${e}`);
-        res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
+        return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
+    }
+}
+const readEventosOfWeek= async(req,res=response)=>{
+    try{
+        const Eventos_ = await Evento.find({fechaYHoraInicio:{$gte:req.body.startDate,$lte:req.body.startDate+8}});
+        if(Eventos_.length>0){return res.status(200).json({ok:true,Eventos_,msg:RESPONSE_MESSAGES.SUCCESS_2XX});}
+        return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
+    }catch(e){
+        logger.error(`readEventosOfWeek: Internal server error: ${e}`);
+        return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
+    }
+}
+const readEventosByBranch= async(req,res=response)=>{
+    try{
+        const Eventos_ = await Evento.find({ramaAsignada:req.body.idRama});
+        if(Eventos_){return res.status(200).json({ok:true,Eventos_,msg:RESPONSE_MESSAGES.SUCCESS_2XX});}
+        return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
+    }catch(e){
+        logger.error(`readEventos: Internal server error: ${e}`);
+        return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
+    }
+}
+const readlastTowEventosByBranch= async(req,res=response)=>{
+    try{
+        const Eventos_ = await Evento.find({ramaAsignada:req.body.idRama}).limit(2);
+        if(Eventos_){return res.status(200).json({ok:true,Eventos_,msg:RESPONSE_MESSAGES.SUCCESS_2XX});}
+        return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
+    }catch(e){
+        logger.error(`readEventos: Internal server error: ${e}`);
+        return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
     }
 }
 const readEvento= async(req,res=response)=>{
@@ -71,8 +101,8 @@ const getScoutsAsignadosEvento = async(req, res=response) => {
         if(!evento_){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
         return res.status(200).json({ok:true,evento_,msg:RESPONSE_MESSAGES.SUCCESS_2XX,Evento:evento_.titulo});
 }
-catch(e){ logger.error(`getScoutAsignadosEvento: Internal server error: ${e}`);
-return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
+    catch(e){ logger.error(`getScoutAsignadosEvento: Internal server error: ${e}`);
+              return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
 }
 
 }
@@ -105,7 +135,10 @@ module.exports={
     addScoutToEvent,
     addScoutsToEvent,
     readEvento,
+    readlastTowEventosByBranch,
+    readEventosByBranch,
     readEventos,
+    readEventosOfWeek,
     getScoutsAsignadosEvento,
     updateEvento,
     deleteEvento
