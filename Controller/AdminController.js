@@ -8,10 +8,9 @@ const{RESPONSE_MESSAGES}=require('../Helpers/ResponseMessages');
 const logger = require("../Helpers/LoggerConfig");
 
 const createAdmin= async(req,res=response)=>{
-    let { email} = req.body;
     try {  
         let password = generateRandomPass(10);
-        let administrador = await Administrador.findOne({ email })
+        let administrador = await Administrador.findOne({ email:req.body.email })
         if( administrador ){logger.error(`CreateAdmin: Already exists an admin account with the specified email`);
         return res.status(400).json({ok: false,msg:RESPONSE_MESSAGES.ERR_ALREADY_EXISTS})}
         administrador = new Administrador( req.body );
