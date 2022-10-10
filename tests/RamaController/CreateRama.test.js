@@ -1,5 +1,5 @@
 const {request,expect,assert} = require("../../config");
-const {RAMA_TEST0} = require("../../data/rama_");
+const {RAMA_TEST0,RAMA_TEST1,RAMA_TEST2} = require("../../data/rama_");
 const { RESPONSE_MESSAGES } = require("../../Helpers/ResponseMessages");
 
 describe("RamaController unit tests", () => {
@@ -16,5 +16,15 @@ describe("RamaController unit tests", () => {
             expect(response.body.msg).to.equal(RESPONSE_MESSAGES.ERR_ALREADY_EXISTS);
             
         });
+        it("shouldn't create a branch whitout data", async() => {
+            let response =   await request.post("/rama/create-rama").send(RAMA_TEST1);
+            expect(response.status).to.equal(400);
+            
+        });
+        // it("shouldn't create a branch whitout data", async() => {
+        //     let response =   await request.post("/rama/create-rama").send(RAMA_TEST2);
+        //     expect(response.status).to.equal(400);
+            
+        // });
 });
 });
