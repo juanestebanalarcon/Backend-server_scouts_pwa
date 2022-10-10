@@ -8,7 +8,6 @@ const{RESPONSE_MESSAGES}=require('../Helpers/ResponseMessages');
 const logger = require("../Helpers/LoggerConfig");
 const Rama = require('../Model/Rama');
 const Acudiente = require('../Model/Acudiente');
-const { info } = require('../Helpers/LoggerConfig');
 
 const createScout = async(req,res=response) => {
     let {email}=req.body;
