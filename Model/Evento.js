@@ -1,4 +1,6 @@
 const { Schema, model } = require('mongoose');
+const mongoose = require('mongoose');
+const DateOnly = require('mongoose-dateonly')(mongoose);
 
 const Evento = Schema({
 titulo: {
@@ -18,11 +20,11 @@ autor: {
     required:true
 },
 fechaYHoraInicio: {
-    type: Date,
+    type: DateOnly,
     required:true
 },
 fechaYHoraFinal: {
-    type: Date,
+    type: DateOnly,
     required:true
 },
 ramaAsignada: {

@@ -66,8 +66,18 @@ const readAdminBranch = async(req, res=response)=>{
             if(!admon){
                 logger.error(`readAdminBranch: admin not found`);
                 return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND})}
-            logger.info("ReadAdmins: sending admin populated by associated branch...");        
             return res.status(200).json({ok:true,admon,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
+            }catch(e){
+                logger.error(`readAdminBranch: Internal server error: ${e}`);
+                return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});}
+            }
+const readAdminBranchScouts = async(req, res=response)=>{
+        try{
+            let admonByBranchScout = await Administrador.findOne({_id:req.params.id}).populate({path:"ramasAsignadas",populate:{path:"Scout"}});
+            if(!admonByBranchScout){
+                logger.error(`readAdminBranch: admin not found`);
+                return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND})}
+            return res.status(200).json({ok:true,admonByBranchScout,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
             }catch(e){
                 logger.error(`readAdminBranch: Internal server error: ${e}`);
                 return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});}
@@ -146,6 +156,7 @@ module.exports={
     readAdmin,
     readAdmins,
     readAdminBranch,
+    readAdminBranchScouts,
     updateAdmin,
     deleteAdmin,
     changePassword,
