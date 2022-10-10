@@ -26,9 +26,7 @@ router.get("/scoutBranch/:id",readScoutBranch);
 router.post("/changeState/:id",changeScoutState);
 router.get("/:id",readScout);
 router.post("/changePassword",[
-    check("email","Email es obligatorio").isEmail(),
-    check('newPassword','La newPassword es obligatoria').isLength({min:8}), 
-    validarCampos],changePassword);
+    check("email","Email es obligatorio").isEmail(),validarCampos],changePassword);
 router.delete("/:id",deleteScout);
 router.get("/",validarJWT,revalidateToken);
 module.exports=router;

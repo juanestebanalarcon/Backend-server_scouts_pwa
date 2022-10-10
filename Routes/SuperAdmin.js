@@ -34,8 +34,5 @@ router.delete("/:id",deleteSuperAdministrador);
 
 router.get("/",validarJWT,revalidateToken);
 
-router.post("/changePassword",[
-    check("email","Email es obligatorio").isEmail(),
-    check('newPassword','La newPassword es obligatoria').isLength({min:8}), 
-    validarCampos],changePassword);
+router.post("/changePassword",[check("email","Email es obligatorio").isEmail(),validarCampos],changePassword);
 module.exports=router;

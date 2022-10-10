@@ -21,10 +21,7 @@ router.post('/log-in-acudiente',[
 ],loginAcudiente);
 router.put("/:id",updateAcudiente);
 router.get("/allAcudientes",readAcudientes);
-router.post("/changePassword",[
-    check("email","Email es obligatorio").isEmail(),
-    check('newPassword','La newPassword es obligatoria').isLength({min:8}), 
-    validarCampos],changePassword);
+router.post("/changePassword",[check("email","Email es obligatorio").isEmail(),validarCampos],changePassword);
 router.get("/:id",readAcudiente);
 router.get("/getScouts/:id",getScoutsAcudiente);
 router.delete("/:id",deleteAcudiente);
