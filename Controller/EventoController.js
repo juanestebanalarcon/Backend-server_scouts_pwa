@@ -59,8 +59,8 @@ const readEventos= async(req,res=response)=>{
 }
 const readEventosOfWeek= async(req,res=response)=>{
     try{
-        let {startDate} = req.body;
-        const Eventos_ = await Evento.find({fechaYHoraInicio:{$gte:new DateOnly(startDate),$lte:new DateOnly(startDate)}});
+        let {startDate,finaltDate} = req.body;
+        const Eventos_ = await Evento.find({fechaYHoraInicio:new DateOnly(startDate),fechaYHoraFinal:new DateOnly(finaltDate)});
         if(Eventos_.length>0){return res.status(200).json({ok:true,Eventos_,msg:RESPONSE_MESSAGES.SUCCESS_2XX});}
         return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
     }catch(e){
