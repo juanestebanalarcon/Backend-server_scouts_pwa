@@ -29,7 +29,7 @@ router.get("/allEvents",readEventos);
 router.put("/addScouts/:id",addScoutsToEvent);
 router.get("/getEventByBranch/:idRama",readEventosByBranch);
 router.get("/getEventsOfWeek",readEventosOfWeek);
-router.get("/getlastTwoEventByBranch",readlastTowEventosByBranch);
+router.get("/getlastTwoEventByBranch/:idRama",readlastTowEventosByBranch);
 router.get("/getScoutsAsignadosEvento/:id",getScoutsAsignadosEvento);
 router.delete("/deleteEvento/:id",deleteEvento);
 module.exports=router;
