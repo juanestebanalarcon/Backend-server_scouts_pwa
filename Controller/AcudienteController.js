@@ -6,6 +6,7 @@ const { mailOptions_, transporter } = require("../Helpers/EmailConfig");
 const{RESPONSE_MESSAGES}=require('../Helpers/ResponseMessages');
 const Acudiente = require('../Model/Acudiente');
 const Scout = require("../Model/Scout");
+const Rama = require("../Model/Rama");
 
 const createAcudiente= async(req,res=response)=>{
     let { email,Scouts } = req.body;
@@ -99,6 +100,21 @@ const deleteAcudiente = async (req,res=response) =>{
         return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500})
     }
 }
+const getScoutBranch = async(req,res=response)=>{
+    try{
+        let scoutBranch = await Acudiente.findById(req.params.id),ScoutsBranch=[],dictSoutsByBranch={},branch_;
+        if(!scoutBranch){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
+        scoutBranch.Scout.forEach(async(scout)=>{
+            try{
+             branch_ = await Rama.findOne({Scout:scout}).populate("Scout");
+             dictSoutsByBranch["_idScout"] = branch_.Scout.id;
+             dictSoutsByBranch["_idRama"] = branch_.id; 
+            ScoutsBranch.unshift(branch_);
+        }catch(e){logger.error(`getScoutBranch: Internal server error: ${e}`);}
+        });
+        return res.status(200).json({ok: true,msg:RESPONSE_MESSAGES.SUCCESS_2XX,ScoutsBranch});
+    }catch(e){logger.error(`getScoutBranch: Internal server error: ${e}`);}
+}
 const changePassword = async (req, res)=>{
     try{
         let {newPassword,currentPassword,email} = req.body;
@@ -122,6 +138,7 @@ module.exports={
     readAcudientes,
     readAcudiente,
     getScoutsAcudiente,
+    getScoutBranch,
     updateAcudiente,
     deleteAcudiente,
     loginAcudiente,
