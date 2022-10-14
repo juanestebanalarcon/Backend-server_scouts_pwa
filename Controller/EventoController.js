@@ -4,8 +4,6 @@ const Evento = require("../Model/Evento");
 const Rama = require('../Model/Rama');
 const Scout = require('../Model/Scout');
 const logger = require('../Helpers/LoggerConfig');
-const mongoose = require('mongoose');
-const DateOnly = require('mongoose-dateonly')(mongoose);
 
 const createEvento= async(req,res=response)=>{
     try{
