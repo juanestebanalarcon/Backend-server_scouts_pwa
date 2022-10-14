@@ -24,7 +24,7 @@ router.post("/create-evento",[
 ],createEvento);
 router.put("/updateEvento/:id",updateEvento);
 router.put("/addScout/:id",addScoutToEvent);
-router.get("/readEvento/:id",readEvento);
+router.get("/:id",readEvento);
 router.get("/allEvents",readEventos);
 router.put("/addScouts/:id",addScoutsToEvent);
 router.get("/getEventByBranch/:idRama",readEventosByBranch);
