@@ -46,7 +46,7 @@ const readPublicacionesByBranch= async(req,res=response)=>{
 
 const readPublicaciones= async(req,res=response)=>{
     try{
-        const publicaciones_ = await Publicaciones.find({}).populate({path:"ramaAsignada",populate:{path:"Scout"}});
+        const publicaciones_ = await Publicaciones.find().populate({path:"ramaAsignada",populate:{path:"Scout"}});
         if(publicaciones_.length>0){return res.status(200).json({ok:true,publicaciones_,msg:RESPONSE_MESSAGES.SUCCESS_2XX});}
         return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
     }catch(e){
@@ -56,7 +56,7 @@ const readPublicaciones= async(req,res=response)=>{
 }
 const readlastTwoPublicaciones= async(req,res=response)=>{
     try{
-        const publicaciones_ = await Publicaciones.find({}).limit(2).populate({path:"ramaAsignada",populate:{path:"Scout"}});
+        const publicaciones_ = await Publicaciones.find().limit(2).populate({path:"ramaAsignada",populate:{path:"Scout"}});
         if(publicaciones_.length>0){return res.status(200).json({ok:true,publicaciones_,msg:RESPONSE_MESSAGES.SUCCESS_2XX});}
         return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
     }catch(e){

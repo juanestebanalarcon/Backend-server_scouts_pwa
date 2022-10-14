@@ -4,6 +4,7 @@ const {generateRandomPass} = require("../Helpers/randomPassowrd");
 const bcrypt = require('bcryptjs');
 const { mailOptions_, transporter } = require("../Helpers/EmailConfig");
 const{RESPONSE_MESSAGES}=require('../Helpers/ResponseMessages');
+const logger = require('../Helpers/LoggerConfig');
 const Acudiente = require('../Model/Acudiente');
 const Scout = require("../Model/Scout");
 const Rama = require("../Model/Rama");
@@ -106,10 +107,10 @@ const getScoutBranch = async(req,res=response)=>{
         if(!scoutBranch){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
         scoutBranch.Scout.forEach(async(scout)=>{
             try{
-             branch_ = await Rama.findOne({Scout:scout}).populate("Scout");
-             dictSoutsByBranch["_idScout"] = branch_.Scout.id;
-             dictSoutsByBranch["_idRama"] = branch_.id; 
-            ScoutsBranch.unshift(branch_);
+            branch_ = await Rama.findOne({Scout:scout}).populate("Scout");
+            dictSoutsByBranch["_idScout"] = branch_.Scout.id;
+            dictSoutsByBranch["_idRama"] = branch_.id; 
+            ScoutsBranch.unshift(dictSoutsByBranch);
         }catch(e){logger.error(`getScoutBranch: Internal server error: ${e}`);}
         });
         return res.status(200).json({ok: true,msg:RESPONSE_MESSAGES.SUCCESS_2XX,ScoutsBranch});
