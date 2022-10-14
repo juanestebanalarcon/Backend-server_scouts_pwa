@@ -14,6 +14,7 @@ const {createEvento,
     readEventosOfWeek} = require("../Controller/EventoController");
 const router = Router();
 
+router.get("/getEventsOfWeek",readEventosOfWeek);
 router.post("/create-evento",[
     check("titulo","Nombre es obligatorio").not().isEmpty(),
     check("descripcion","Nombre es obligatorio").not().isEmpty(),
@@ -24,11 +25,10 @@ router.post("/create-evento",[
 ],createEvento);
 router.put("/updateEvento/:id",updateEvento);
 router.put("/addScout/:id",addScoutToEvent);
-router.get("/:id",readEvento);
 router.get("/allEvents",readEventos);
+router.get("/:id",readEvento);
 router.put("/addScouts/:id",addScoutsToEvent);
 router.get("/getEventByBranch/:idRama",readEventosByBranch);
-router.get("/getEventsOfWeek",readEventosOfWeek);
 router.get("/getlastTwoEventByBranch/:idRama",readlastTowEventosByBranch);
 router.get("/getScoutsAsignadosEvento/:id",getScoutsAsignadosEvento);
 router.delete("/deleteEvento/:id",deleteEvento);
