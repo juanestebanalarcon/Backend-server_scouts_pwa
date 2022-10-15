@@ -8,7 +8,6 @@ const{RESPONSE_MESSAGES}=require('../Helpers/ResponseMessages');
 const logger = require("../Helpers/LoggerConfig");
 
 const createAdmin= async(req,res=response)=>{
-    let {email}=req.body.email;
     try {  
         let password = generateRandomPass(10);
         let administrador = await Administrador.findOne({ email:req.body.email })
