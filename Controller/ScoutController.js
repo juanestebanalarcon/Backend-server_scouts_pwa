@@ -125,6 +125,16 @@ const deleteScout = async (req,res=response) =>{
             logger.info("deleteScout: associated branch not found");
             return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
             let acudiente__ = await Acudiente.findOne({Scout:scoutDB.id});
+            if(!acudiente__){
+                let oldScout = rama.Scout    
+                try{
+                    for(let i = 0; i < oldScout.length; i++) {if(oldScout[i]===req.params.id){oldScout.splice(i, 1);}}
+                    rama.Scout = oldScout;
+                    await rama.save();
+                    await Scout.findByIdAndDelete(req.params.id);
+                    return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
+                }catch(e){logger.error(`deleteScout: Internal server error: ${e}`);}
+            }
             let oldScout = rama.Scout,oldAcudiente_=acudiente__.Scout;
             try{
                 for(let i = 0; i < oldScout.length; i++) {if(oldScout[i]===req.params.id){oldScout.splice(i, 1);}}
