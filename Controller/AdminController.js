@@ -16,10 +16,14 @@ const createAdmin= async(req,res=response)=>{
         administrador = new Administrador( req.body );
         administrador.password = bcrypt.hashSync( password, bcrypt.genSaltSync() );
         administrador.ramasAsignadas = req.body.ramasAsignadas;
+        administrador.link_imagen = req.body.link_imagen;
+        
         await administrador.save();
-        transporter.sendMail(mailOptions_(email,password,1,administrador.nombre),(err)=>{
-            if(err){logger.error(`CreateAdmin: Internal mail server error: ${err}`);}
-        });
+        console.log(administrador.link_imagen)
+        console.log(administrador.email)
+        // transporter.sendMail(mailOptions_(email,password,1,administrador.nombre),(err)=>{
+        //     if(err){logger.error(`CreateAdmin: Internal mail server error: ${err}`);}
+        // });
         logger.info(`CreateAdmin: Sending email to ${email}`);
         return res.status(201).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
     } catch (error) {logger.error(`CreateAdmin: Internal server error: ${error}`);
