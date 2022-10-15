@@ -121,29 +121,30 @@ const deleteScout = async (req,res=response) =>{
         const scoutDB = await Scout.findById(req.params.id);
         if(!scoutDB){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
         let rama = await Rama.findOne({Scout:scoutDB.id});
-        if( !rama ) {
-            logger.info("deleteScout: associated branch not found");
-            return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
-            let acudiente__ = await Acudiente.findOne({Scout:scoutDB.id});
-            if(!acudiente__){
-                let oldScout = rama.Scout    
+        if( !rama ) {return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
+        let acudiente__ = await Acudiente.findOne({Scout:scoutDB.id});
+        if(!acudiente__){
                 try{
-                    for(let i = 0; i < oldScout.length; i++) {if(oldScout[i]===req.params.id){oldScout.splice(i, 1);}}
-                    rama.Scout = oldScout;
+                    let ramaOldScout = rama.Scout;
+                    ramaOldScout.forEach((scout)=>{if(scout===req.params.id){rama.Scout.splice(scout, 1);}
+                    });
+                    rama.Scout = ramaOldScout;
                     await rama.save();
                     await Scout.findByIdAndDelete(req.params.id);
                     return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
                 }catch(e){logger.error(`deleteScout: Internal server error: ${e}`);}
             }
-            let oldScout = rama.Scout,oldAcudiente_=acudiente__.Scout;
             try{
-                for(let i = 0; i < oldScout.length; i++) {if(oldScout[i]===req.params.id){oldScout.splice(i, 1);}}
-                rama.Scout = oldScout;
+                let oldAcudiente_=acudiente__.Scout;
+                let ramaOldScout = rama.Scout;
+                ramaOldScout.forEach((scout)=>{if(scout===req.params.id){ramaOldScout.splice(scout, 1);}});
+                rama.Scout = ramaOldScout;
                 await rama.save();
-                for(let i = 0; i < oldAcudiente_.length; i++) {if(oldAcudiente_[i]===req.params.id){oldAcudiente_.splice(i, 1);}}
+                oldAcudiente_.forEach((scout)=>{if(scout===req.params.id){oldAcudiente_.splice(scout, 1);}});
                 acudiente__.Scout = oldAcudiente_;
                 await acudiente__.save();
                 await Scout.findByIdAndDelete(req.params.id);
+                return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
             }catch(e){logger.error(`deleteScout: Internal server error: ${e}`);}
             return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
         }catch(e){logger.error(`deleteScout: Internal server error: ${e}`);}
