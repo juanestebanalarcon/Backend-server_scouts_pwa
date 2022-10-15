@@ -23,7 +23,7 @@ router.post("/create-evento",[
     check("fechaYHoraFinal","fecha y hora inicio es obligatorio").not().isEmpty(),
     validarCampos,
 ],createEvento);
-router.put("/updateEvento/:id",updateEvento);
+router.put("/:id",updateEvento);
 router.put("/addScout/:id",addScoutToEvent);
 router.get("/allEvents",readEventos);
 router.get("/:id",readEvento);
@@ -31,5 +31,5 @@ router.put("/addScouts/:id",addScoutsToEvent);
 router.get("/getEventByBranch/:idRama",readEventosByBranch);
 router.get("/getlastTwoEventByBranch/:idRama",readlastTowEventosByBranch);
 router.get("/getScoutsAsignadosEvento/:id",getScoutsAsignadosEvento);
-router.delete("/deleteEvento/:id",deleteEvento);
+router.delete("/:id",deleteEvento);
 module.exports=router;
