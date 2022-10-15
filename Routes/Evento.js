@@ -14,7 +14,7 @@ const {createEvento,
     readEventosOfWeek} = require("../Controller/EventoController");
 const router = Router();
 
-router.get("/getEventsOfWeek",readEventosOfWeek);
+router.get("/getEventsOfWeek/:startDate",readEventosOfWeek);
 router.post("/create-evento",[
     check("titulo","Nombre es obligatorio").not().isEmpty(),
     check("descripcion","Nombre es obligatorio").not().isEmpty(),
