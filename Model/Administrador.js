@@ -23,6 +23,9 @@ const Administrador = Schema({
         ref:"Rama",
         required:false
     }, 
-    link_imagen:{type: String, required: false},
+    link_imagen:{
+        type: String, 
+        required: false
+    },
 })
 module.exports = model("Administrador",Administrador)
