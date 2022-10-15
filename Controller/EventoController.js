@@ -67,7 +67,7 @@ const readEventosOfWeek= async(req,res=response)=>{
 }
 const readEventosByBranch= async(req,res=response)=>{
     try{
-        const Eventos_ = await Evento.find({ramaAsignada:req.params.idRama,fechaYHoraInicio:{$gte:req.body.startDate}});
+        const Eventos_ = await Evento.find({ramaAsignada:req.params.idRama,fechaYHoraInicio:{$gte:req.params.startDate}});
         if(Eventos_){return res.status(200).json({ok:true,Eventos_,msg:RESPONSE_MESSAGES.SUCCESS_2XX});}
         return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
     }catch(e){

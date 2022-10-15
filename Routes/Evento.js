@@ -28,7 +28,7 @@ router.put("/addScout/:id",addScoutToEvent);
 router.get("/allEvents",readEventos);
 router.get("/:id",readEvento);
 router.put("/addScouts/:id",addScoutsToEvent);
-router.get("/getEventByBranch/:idRama",readEventosByBranch);
+router.get("/getEventByBranch/:idRama/:startDate",readEventosByBranch);
 router.get("/getlastTwoEventByBranch/:idRama",readlastTowEventosByBranch);
 router.get("/getScoutsAsignadosEvento/:id",getScoutsAsignadosEvento);
 router.delete("/:id",deleteEvento);
