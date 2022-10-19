@@ -25,8 +25,8 @@ const createScout = async(req,res=response) => {
         rama.Scout.push(dbScout.id);
         await rama.save();
         transporter.sendMail(mailOptions_(email,password,1,dbScout.nombre),(err)=>{if(err){console.log(err);}});
-        const token= await generateJWT(dbScout.id,dbScout.nombre);
-        return res.status(201).json({ok:true,uid:dbScout.id,nombre:dbScout.nombre,email,token});
+        const token= await generateJWT(dbScout.id,dbScout.nombre,dbScout.apellido,dbScout.email,2);
+        return res.status(201).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX,token});
     } catch (e) {       
         logger.error(`createScout: Internal server error: ${e}`);
         return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
@@ -91,8 +91,8 @@ const loginScout= async(req,res=response) => {
      if(!scoutDB){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_EMAIL_NOT_FOUND})}
      let validPassword=bcrypt.compareSync(password,scoutDB.password);
      if(!validPassword){return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_INVALID_PASSWORD})}
-     const token= await generateJWT(scoutDB.id,scoutDB.nombre,scoutDB.email,2);
-     return res.status(200).json({ok:true,_id:scoutDB.id,nombre:scoutDB.nombre,email,rol: 2,token})
+     const token= await generateJWT(scoutDB.id,scoutDB.nombre,scoutDB.apellido,scoutDB.email,2);
+     return res.status(200).json({ok:true,_id:scoutDB.id,nombre:scoutDB.nombre,apellido:scoutDB.apellido,email,rol: 2,token})
     } catch (error) {
         logger.error(`loginScout: Internal server error: ${error}`);
         return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500})
@@ -100,8 +100,8 @@ const loginScout= async(req,res=response) => {
 }
 
 const revalidateToken= async(req,res=response) => {
-    let {id,nombre,email,rol}=req;
-    const token= await generateJWT(id,nombre,email,rol);
+    let {id,nombre,apellido,email,rol}=req;
+    const token= await generateJWT(id,nombre,apellido,email,rol);
    return res.status(200).json({ok:true,token,uid:id,nombre,email,rol});
 }
 const updateScout= async(req,res=response) =>{

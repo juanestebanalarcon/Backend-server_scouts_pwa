@@ -17,7 +17,7 @@ const createSuperAdministrador = async(req,res=response) => {
             return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_ALREADY_EXISTS});}
             let dbSuperAdministrador=new SuperAdministrador(req.body);
             dbSuperAdministrador.password=bcrypt.hashSync(password,bcrypt.genSaltSync());
-            const token= await generateJWT(dbSuperAdministrador.id,nombre);
+            const token= await generateJWT(dbSuperAdministrador.id,nombre,dbSuperAdministrador.apellido,email,0);
             await dbSuperAdministrador.save();
             transporter.sendMail(mailOptions_(email,password,1,dbSuperAdministrador.nombre),(err)=>{if(err){logger.error(`CreateSuperAdmin: Internal mail server error: ${err}`);}});
             return res.status(201).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX,token});
@@ -59,16 +59,16 @@ const readSuperAdministradors= async(req,res=response)=>{
             if(!SuperAdministradorDB){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_EMAIL_NOT_FOUND});}
             const validPassword=bcrypt.compareSync(password,SuperAdministradorDB.password);
             if(!validPassword){return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_INVALID_PASSWORD});}
-            const token= await generateJWT(SuperAdministradorDB.id,SuperAdministradorDB.nombre,SuperAdministradorDB.email,0);
-            return res.status(200).json({ok:true,uid:SuperAdministradorDB.id,nombre:SuperAdministradorDB.nombre,email,rol:0,token});
+            const token= await generateJWT(SuperAdministradorDB.id,SuperAdministradorDB.nombre,SuperAdministradorDB.apellido,SuperAdministradorDB.email,0);
+            return res.status(200).json({ok:true,_id:SuperAdministradorDB.id,nombre:SuperAdministradorDB.nombre,apellido:SuperAdministradorDB.apellido,email,rol:0,token});
     } catch(e) {
         logger.error(`loginSuperAdmin: Internal server error: ${e}`);
         return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
     }
 }
 const revalidateToken= async(req,res=response) => {
-    let {id,nombre,email,rol}=req;
-    const token= await generateJWT(id,nombre,email,rol);
+    let {id,nombre,apellido,email,rol}=req;
+    const token= await generateJWT(id,nombre,apellido,email,rol);
    return res.status(200).json({ok:true,token,uid:id,nombre,email,rol});
 }
 const updateSuperAdministrador= async(req,res=response) =>{

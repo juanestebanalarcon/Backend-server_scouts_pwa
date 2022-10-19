@@ -21,15 +21,16 @@ const createAdmin= async(req,res=response)=>{
             if(err){logger.error(`CreateAdmin: Internal mail server error: ${err}`);}
         });
         logger.info(`CreateAdmin: Sending email to ${req.body.email}`);
-        return res.status(201).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
+        const token= await generateJWT(adminDB.id,adminDB.nombre,adminDB.apellido,adminDB.email,1);
+        return res.status(201).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX,token});
     } catch (error) {logger.error(`CreateAdmin: Internal server error: ${error}`);
     return res.status(500).json({ok:false,msg: RESPONSE_MESSAGES.ERR_500});}
     
 }
 const revalidateToken= async(req,res=response) => {
-    let {id,nombre,email,rol}=req;
-    const token= await generateJWT(id,nombre,email,rol);
-    return res.status(200).json({ok:true,token,uid:id,nombre,email,rol});
+    let {id,nombre,apellido,email,rol}=req;
+    const token= await generateJWT(id,nombre,apellido,email,rol);
+   return res.status(200).json({ok:true,token,uid:id,nombre,email,rol});
 }
 const readAdmin= async(req,res=response)=>{
     try{
@@ -116,9 +117,9 @@ const loginAdmin= async(req,res=response) => {
         const validPassword=bcrypt.compareSync(password,adminDB.password);
         if(!validPassword){return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_INVALID_PASSWORD});}
         logger.info("loginAdmin: building admin token");
-        const token= await generateJWT(adminDB.id,adminDB.nombre,adminDB.email,1);
+        const token= await generateJWT(adminDB.id,adminDB.nombre,adminDB.apellido,adminDB.email,1);
         logger.info("loginAdmin: sending admin login info");
-        return res.status(200).json({ok:true,uid:adminDB.id,nombre:adminDB.nombre,email,rol:1,token})
+        return res.status(200).json({ok:true,_id:adminDB.id,nombre:adminDB.nombre,apellido:adminDB.apellido,email,rol:1,token})
         } catch (e) {
             logger.error(`loginAdmin: Internal server error: ${e}`);
             return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500})

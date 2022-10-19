@@ -24,14 +24,15 @@ const createAcudiente= async(req,res=response)=>{
         transporter.sendMail(mailOptions_(email,password,1,acudiente_.nombre),(err)=>{
             if(err){console.log(err);}
         });
-        return res.status(201).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
+        const token= await generateJWT(acudiente_.id,acudiente_.nombre,acudiente_.apellido,acudiente_.email,3);
+        return res.status(201).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX,token});
     } catch (error) {
         logger.error(`CreateAcudiente: Internal server error: ${error}`);
         return res.status(500).json({ok:false,msg: RESPONSE_MESSAGES.ERR_500});}
 }
 const revalidateToken= async(req,res=response) => {
-    let {id,nombre,email,rol}=req;
-    const token= await generateJWT(id,nombre,email,rol);
+    let {id,nombre,apellido,email,rol}=req;
+    const token= await generateJWT(id,nombre,apellido,email,rol);
    return res.status(200).json({ok:true,token,uid:id,nombre,email,rol});
 }
 const readAcudiente= async(req,res=response)=>{
