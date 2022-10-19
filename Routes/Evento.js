@@ -9,7 +9,6 @@ const {createEvento,
     getScoutsAsignadosEvento,
     addScoutToEvent,
     addScoutsToEvent,
-    readEventosByBranch,
     readlastTowEventosByBranch,
     readEventosOfWeek,
     readAllEventosByBranch,
@@ -20,11 +19,11 @@ const router = Router();
 router.get("/getEventsOfWeek/:startDate",readEventosOfWeek);
 router.get("/:id",readEvento);
 router.post("/create-evento",[
-    check("titulo","Nombre es obligatorio").not().isEmpty(),
-    check("descripcion","Nombre es obligatorio").not().isEmpty(),
-    check("autor","Nombre es obligatorio").not().isEmpty(),
+    check("titulo","Título es obligatorio").not().isEmpty(),
+    check("descripcion","Descripción es obligatorio").not().isEmpty(),
+    check("autor","Autor es obligatorio").not().isEmpty(),
     check("fechaYHoraInicio","fecha y hora inicio es obligatorio").not().isEmpty(),
-    check("fechaYHoraFinal","fecha y hora inicio es obligatorio").not().isEmpty(),
+    check("fechaYHoraFinal","fecha y hora final es obligatorio").not().isEmpty(),
     validarCampos,
 ],createEvento);
 router.put("/:id",updateEvento);
