@@ -14,8 +14,9 @@ linkImagen: {
     required:true
 },
 autor: {
-    type: String,
-    required:true
+    id:{type:String},
+    nombre:{type:String},
+    apellido:{type:String},
 },
 fechaYHoraInicio: {
     type: Date,
