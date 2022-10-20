@@ -22,7 +22,7 @@ const addScoutToEvent= async(req,res=response)=>{
     try{
             let event_ = await Evento.findById(req.params.id);
             if(!event_) {return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
-            let scout_= await Scout.findById(req.body.idScout);
+            let scout_= await Scout.findById(req.params.idScout);
             if(!scout_) {return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
             event_.inscritos.push(scout_.id);
             await event_.save();

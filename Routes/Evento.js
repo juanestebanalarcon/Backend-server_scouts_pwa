@@ -26,7 +26,7 @@ router.post("/create-evento",[
     validarCampos,
 ],createEvento);
 router.put("/:id",updateEvento);
-router.put("/addScout/:id",addScoutToEvent);
+router.put("/addScout/:id/:idScout",addScoutToEvent);
 router.put("/addScouts/:id",addScoutsToEvent);
 router.get("/getEventByBranchAndDate/:idRama/:startDate",readEventosByBranchAndDate);
 router.get("/getEventByDate/:startDate",readEventosByDate);
