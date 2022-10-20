@@ -17,7 +17,6 @@ const {createEvento,
 const router = Router();
 
 router.get("/getEventsOfWeek/:startDate",readEventosOfWeek);
-router.get("/:id",readEvento);
 router.post("/create-evento",[
     check("titulo","Título es obligatorio").not().isEmpty(),
     check("descripcion","Descripción es obligatorio").not().isEmpty(),
@@ -28,12 +27,13 @@ router.post("/create-evento",[
 ],createEvento);
 router.put("/:id",updateEvento);
 router.put("/addScout/:id",addScoutToEvent);
-router.get("/allEvents",readEventos);
 router.put("/addScouts/:id",addScoutsToEvent);
 router.get("/getEventByBranchAndDate/:idRama/:startDate",readEventosByBranchAndDate);
 router.get("/getEventByDate/:startDate",readEventosByDate);
+router.get("/allEvents",readEventos);
 router.get("/getlastTwoEventByBranch/:idRama",readlastTowEventosByBranch);
 router.get("/getAllEventByBranch/:idRama",readAllEventosByBranch);
 router.get("/getScoutsAsignadosEvento/:id",getScoutsAsignadosEvento);
 router.delete("/:id",deleteEvento);
+router.get("/:id",readEvento);
 module.exports=router;
