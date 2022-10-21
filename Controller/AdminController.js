@@ -74,10 +74,12 @@ const readAdminBranch = async(req, res=response)=>{
 const readAdminBranchScouts = async(req, res=response)=>{
         try{
             let admonByBranchScout = await Administrador.findOne({_id:req.params.id}).populate({path:"ramasAsignadas",populate:{path:"Scout"}});
+            let ScoutsBranchAdmin =[];
             if(!admonByBranchScout){
                 logger.error(`readAdminBranch: admin not found`);
-                return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND})}
-            return res.status(200).json({ok:true,admonByBranchScout,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
+                return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
+            admonByBranchScout.ramasAsignadas.forEach((rama)=>{rama.Scout.forEach((scout)=>{ScoutsBranchAdmin.push(scout);});});
+            return res.status(200).json({ok:true,ScoutsBranchAdmin,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
             }catch(e){
                 logger.error(`readAdminBranch: Internal server error: ${e}`);
                 return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});}
