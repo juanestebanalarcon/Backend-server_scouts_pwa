@@ -2,7 +2,7 @@ const { Router, response } = require("express");
 const {check} = require("express-validator");
 const { validarCampos } = require("../middlewares/validar-campos");
 const {createScout,readScouts,readScout,updateScout,deleteScout,
-    loginScout,revalidateToken, readActiveScouts, changePassword, changeScoutState, readScoutBranch} = require("../Controller/ScoutController");
+    loginScout,revalidateToken, readActiveScouts, changePassword, changeScoutState, readScoutBranch, readScoutsWithoutAcudiente} = require("../Controller/ScoutController");
 const { validarJWT } = require("../middlewares/validar-jwt");
 const router = Router();
 
@@ -22,6 +22,7 @@ router.post('/log-in-scout',[
 router.put("/:id",updateScout);
 router.get("/allScouts",readScouts);
 router.get("/activeScouts",readActiveScouts);
+router.get("/aloneScouts",readScoutsWithoutAcudiente);
 router.get("/scoutBranch/:id",readScoutBranch);
 router.post("/changeState/:id",changeScoutState);
 router.get("/:id",readScout);

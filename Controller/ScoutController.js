@@ -72,10 +72,30 @@ const readScouts= async(req,res=response)=>{
     }
 }
 const readScout= async(req,res=response)=>{
-    let uid=req.params.id;
     try{
-        let scouts_ = await Scout.findById(uid);
+        let scouts_ = await Scout.findById(req.params.id);
         if(scouts_){return res.status(200).json({ok:true,scouts_ });}    
+        return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
+    }catch(e){
+        logger.error(`readScout: Internal server error: ${e}`);
+        return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500})
+    }
+}
+
+const readScoutsWithoutAcudiente= async(req,res=response)=>{
+    try{
+        let scouts_ = await Scout.find(),scoutsWithoutAcudiente=[];
+        let acudiente = await Acudiente.find();
+        if(scouts_){
+            scouts_.forEach((scout)=>{
+            acudiente.forEach((acudiente)=>{
+                acudiente.Scout.forEach((scout_)=>{
+                    if(scout_!==scout._id){scoutsWithoutAcudiente.push(scout);}
+                })
+            });
+            });
+            return res.status(200).json({ok:true,scoutsWithoutAcudiente });
+        }    
         return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
     }catch(e){
         logger.error(`readScout: Internal server error: ${e}`);
@@ -174,6 +194,7 @@ module.exports={
     readScout,
     readActiveScouts,
     readScoutBranch,
+    readScoutsWithoutAcudiente,
     updateScout,
     changeScoutState,
     deleteScout,
