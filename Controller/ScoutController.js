@@ -155,17 +155,17 @@ const deleteScout = async (req,res=response) =>{
                     return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
                 }catch(e){logger.error(`deleteScout: Internal server error: ${e}`);}
             }
-            try{
-                let oldAcudiente_=acudiente__.Scout;
-                let ramaOldScout = rama.Scout;
-                ramaOldScout.forEach((scout)=>{if(scout===req.params.id){ramaOldScout.splice(scout, 1);}});
-                rama.Scout = ramaOldScout;
-                await rama.save();
-                oldAcudiente_.forEach((scout)=>{if(scout===req.params.id){oldAcudiente_.splice(scout, 1);}});
-                acudiente__.Scout = oldAcudiente_;
-                await acudiente__.save();
-                await Scout.findByIdAndDelete(req.params.id);
-                return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
+        try{
+            let oldAcudiente_=acudiente__.Scout;
+            let ramaOldScout = rama.Scout;
+            ramaOldScout.forEach((scout)=>{if(scout===req.params.id){ramaOldScout.splice(scout, 1);}});
+            rama.Scout = ramaOldScout;
+            await rama.save();
+            oldAcudiente_.forEach((scout)=>{if(scout===req.params.id){oldAcudiente_.splice(scout, 1);}});
+            acudiente__.Scout = oldAcudiente_;
+            await acudiente__.save();
+            await Scout.findByIdAndDelete(req.params.id);
+            return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
             }catch(e){logger.error(`deleteScout: Internal server error: ${e}`);}
             return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
         }catch(e){logger.error(`deleteScout: Internal server error: ${e}`);}
