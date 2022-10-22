@@ -98,7 +98,7 @@ const mailOptions_ = (recipient, password, type, name) => {
         <hr style="margin: auto;width: 95%;margin-top: 0.5em;margin-bottom: 1em;margin-left: 0px;border: 0;border-top: 1px solid #eee;"/>
         <h3 style="font-family: 'Montserrat';font-style: normal;font-weight: 800;font-size: 2em;text-align: center;color: #00395A;margin-top: 2%;margin-bottom: 2%;">Tu contraseña en <b>CENTINELAPP</b> se actualizo con exito</h3>
     
-        <h2 style="font-family: 'Montserrat';font-style: normal;font-weight: 500;font-size: 1.5em;text-align: center;color: #00395A;margin-top: 0px;margin-bottom: 0px;">Su nueva contraseña es: ${password}</h2>
+   
 
 
 

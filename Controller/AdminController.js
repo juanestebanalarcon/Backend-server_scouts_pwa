@@ -21,7 +21,7 @@ const createAdmin= async(req,res=response)=>{
             if(err){logger.error(`CreateAdmin: Internal mail server error: ${err}`);}
         });
         logger.info(`CreateAdmin: Sending email to ${req.body.email}`);
-        const token= await generateJWT(adminDB.id,adminDB.nombre,adminDB.apellido,adminDB.email,1);
+        const token= await generateJWT(administrador.id,administrador.nombre,administrador.apellido,administrador.email,1);
         return res.status(201).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX,token});
     } catch (error) {logger.error(`CreateAdmin: Internal server error: ${error}`);
     return res.status(500).json({ok:false,msg: RESPONSE_MESSAGES.ERR_500});}
