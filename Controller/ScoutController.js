@@ -165,7 +165,6 @@ const deleteScout = async (req,res=response) =>{
             acudiente__.Scout = oldAcudiente_;
             await acudiente__.save();
             await Scout.findByIdAndDelete(req.params.id);
-            return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
             }catch(e){logger.error(`deleteScout: Internal server error: ${e}`);}
             return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
         }catch(e){logger.error(`deleteScout: Internal server error: ${e}`);}
