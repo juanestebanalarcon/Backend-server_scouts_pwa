@@ -128,6 +128,7 @@ const updateScout= async(req,res=response) =>{
     try{
         let scoutDb = await Scout.findById(req.params.id);
         if(!scoutDb){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
+        if(req.body.email){return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_ALREADY_EXISTS});}
         await Scout.updateOne({_id:req.params.id}, {$set:{...req.body}}, { upsert: true });
         return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
     }catch(e){
