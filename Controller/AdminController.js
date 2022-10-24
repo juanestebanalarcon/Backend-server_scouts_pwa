@@ -17,9 +17,7 @@ const createAdmin= async(req,res=response)=>{
         administrador.ramasAsignadas = req.body.ramasAsignadas;
         administrador.password = bcrypt.hashSync( password, bcrypt.genSaltSync() );
         await administrador.save();
-        transporter.sendMail(mailOptions_(req.body.email,password,1,administrador.nombre),(err)=>{
-            if(err){logger.error(`CreateAdmin: Internal mail server error: ${err}`);}
-        });
+        transporter.sendMail(mailOptions_(req.body.email,password,1,administrador.nombre),(err)=>{if(err){logger.error(`CreateAdmin: Internal mail server error: ${err}`);}});
         logger.info(`CreateAdmin: Sending email to ${req.body.email}`);
         const token= await generateJWT(administrador.id,administrador.nombre,administrador.apellido,administrador.email,1);
         return res.status(201).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX,token});

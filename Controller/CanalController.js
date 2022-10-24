@@ -27,7 +27,7 @@ const readCanals= async(req,res=response)=>{
         return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
     }catch(e){
         logger.error(`readCanals: Internal server error: ${e}`);
-        res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
+        return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
     }
 }
 const readCanal= async(req,res=response)=>{
