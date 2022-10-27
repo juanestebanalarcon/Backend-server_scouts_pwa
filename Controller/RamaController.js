@@ -6,13 +6,11 @@ const logger = require('../Helpers/LoggerConfig');
 
 const createRama= async(req,res=response)=>{
     try{
-        if(!req.body.nombre){return res.status(409).json({ok:false})}
         let ramaExiste = await Rama.findOne({nombre:req.body.nombre});
         if(ramaExiste) {return res.status(400).json({ok:false, msg: RESPONSE_MESSAGES.ERR_ALREADY_EXISTS});}
-        let uid = req.id;
-        const rama = new Rama({Scout:uid,...req.body});
-        const  ramaDB = await rama.save();
-        return res.status(201).json({ok:true,rama:ramaDB})
+        let rama = new Rama({Scout:req.body.id,...req.body});
+        await rama.save();
+        return res.status(201).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX})
     }catch(e) {
         logger.error(`createRama: Internal server error: ${e}`);
         return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
