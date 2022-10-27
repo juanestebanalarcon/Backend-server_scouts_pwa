@@ -35,6 +35,7 @@ inscritos:{
     type: Array,
     ref:"Scout",
     required:false
-}
+},
+isGeneral: {Type: Boolean,required:false}
 })
 module.exports = model("Evento",Evento)

@@ -8,7 +8,15 @@ const createPublicacion= async(req,res=response)=>{
     try{
         let publi_ = await Publicaciones.findOne({titulo:req.body.titulo});
         if(publi_){return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_ALREADY_EXISTS});}
+        if(req.body.isGeneral!=undefined){
+            let publi = new Publicaciones(req.body);
+            await publi.save();
+            return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
+        }
+        let rama_asociada = await Rama.findById(req.body.idRama);
+        if(!rama_asociada ) {return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
         publi_ = new Publicaciones(req.body);
+        publi_.ramaAsignada.push(rama_asociada.id)
         await publi_.save();
         return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX})
     }catch(e) {

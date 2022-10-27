@@ -7,6 +7,12 @@ const logger = require('../Helpers/LoggerConfig');
 
 const createEvento= async(req,res=response)=>{
     try{
+        
+        if(req.body.isGeneral!=undefined){
+            let evento = new Evento(req.body);
+            await evento.save();
+            return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
+        }
         let rama_asociada = await Rama.findById(req.body.idRama);
         if(!rama_asociada ) {return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
         let evento = new Evento(req.body);
