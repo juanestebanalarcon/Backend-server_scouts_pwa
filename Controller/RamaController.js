@@ -8,7 +8,8 @@ const createRama= async(req,res=response)=>{
     try{
         let ramaExiste = await Rama.findOne({nombre:req.body.nombre});
         if(ramaExiste) {return res.status(400).json({ok:false, msg: RESPONSE_MESSAGES.ERR_ALREADY_EXISTS});}
-        let rama = new Rama({Scout:req.body.id,...req.body});
+        let rama = new Rama(req.body);
+        rama.Scout.unshift(req.body.id);
         await rama.save();
         return res.status(201).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX})
     }catch(e) {
