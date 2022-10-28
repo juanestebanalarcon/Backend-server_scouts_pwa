@@ -10,13 +10,12 @@ const Rama = require('../Model/Rama');
 const Acudiente = require('../Model/Acudiente');
 
 const createScout = async(req,res=response) => {
-    let {email}=req.body;
-    const password = generateRandomPass(10);
     try {
-        let dbScout=await Scout.findOne({email});
+        let password = generateRandomPass(10);
+        let dbScout=await Scout.findOne({email:req.body.email});
         if(dbScout){return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_ALREADY_EXISTS});}
-        req.body.esActivo = true;
         dbScout=new Scout(req.body);
+        dbScout.esActivo = true;
         dbScout.password=bcrypt.hashSync(password,bcrypt.genSaltSync());
         if(dbScout.link_imagen==undefined){dbScout.link_imagen="";}
         let linkImagen=dbScout.link_imagen.split('upload/');
