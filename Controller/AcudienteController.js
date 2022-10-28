@@ -71,6 +71,13 @@ const updateAcudiente= async(req,res=response) =>{
     try{
         let acudiente_ = await Acudiente.findById(req.params.id);
         if(!acudiente_){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
+        if(req.body.Scout!=undefined){
+            let acudienteUpdate = new Acudiente(req.body);
+            acudiente_.Scout = acudienteUpdate.Scout;
+            await acudiente_.save();
+            return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
+
+        }
         await Acudiente.updateOne({_id:req.params.id}, {$set:{...req.body}}, { upsert: true });
         return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
     }catch(e){
