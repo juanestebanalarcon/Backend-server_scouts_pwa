@@ -73,8 +73,15 @@ const updateAcudiente= async(req,res=response) =>{
         if(!acudiente_){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
         if(req.body.Scout!=undefined){
             let acudienteUpdate = new Acudiente(req.body);
-            acudiente_ = acudienteUpdate;
-            acudiente_.Scout = acudienteUpdate.Scout;
+            acudiente_.nombre = acudienteUpdate.nombre;
+            acudienteUpdate.password = " ";
+            acudienteUpdate.email = " ";
+            acudienteUpdate.Scout = req.body.Scout;
+            acudiente_.Scout.forEach((scout)=>{acudienteUpdate.Scout.push(scout);});
+            acudiente_.apellido = acudienteUpdate.apellido;
+            acudiente_.fecha_nacimiento = acudienteUpdate.fecha_nacimiento;
+            acudiente_.celular = acudienteUpdate.celular;
+            acudiente_.Scout = Array.from(new Set(acudienteUpdate.Scout));
             await acudiente_.save();
             return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
 
