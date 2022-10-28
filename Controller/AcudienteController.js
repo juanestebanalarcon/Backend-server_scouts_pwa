@@ -10,15 +10,14 @@ const Scout = require("../Model/Scout");
 const Rama = require("../Model/Rama");
 
 const createAcudiente= async(req,res=response)=>{
-    let { email,Scouts } = req.body;
     try {  
         let scouts_ = [];
         let password = generateRandomPass(10);
-        let acudiente_ = await Acudiente.findOne({ email })
+        let acudiente_ = await Acudiente.findOne({ email:req.body.email })
         if( acudiente_ ){return res.status(400).json({ok: false,msg:RESPONSE_MESSAGES.ERR_ALREADY_EXISTS})}
         acudiente_ = new Acudiente( req.body );
         acudiente_.password = bcrypt.hashSync( password, bcrypt.genSaltSync() );
-        Scouts.forEach(scout =>{scouts_.unshift(scout);});
+        req.body.Scouts.forEach(scout =>{scouts_.unshift(scout);});
         acudiente_.Scout=scouts_; 
         await acudiente_.save();
         transporter.sendMail(mailOptions_(email,password,1,acudiente_.nombre),(err)=>{
