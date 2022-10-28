@@ -8,7 +8,8 @@ const {createPublicacion,
     deletePublicacion,
     readPublicacionesByBranch,
     readlastTwoPublicaciones,
-    readlastTwoPublicacionesByBranch} = require("../Controller/PublicacionesController");
+    readlastTwoPublicacionesByBranch,
+    readGeneralPublicaciones} = require("../Controller/PublicacionesController");
 const router = Router();
 
 router.post("/create-publicacion",[
@@ -21,6 +22,7 @@ router.post("/create-publicacion",[
 router.put("/:id",updatePublicacion);
 router.get("/allPublicaciones",readPublicaciones);
 router.get("/lastTwoPubli",readlastTwoPublicaciones);
+router.get("/allGeneralPosts",readGeneralPublicaciones);
 router.get("/lastTwoPubliByBranch/:idRama",readlastTwoPublicacionesByBranch);
 router.get("/byBranch/:idRama",readPublicacionesByBranch);
 router.get("/:id",readPublicacion);
