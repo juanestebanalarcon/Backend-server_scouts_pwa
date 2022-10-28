@@ -21,7 +21,7 @@ const createAcudiente= async(req,res=response)=>{
         acudiente_.Scout=scouts_; 
         await acudiente_.save();
         transporter.sendMail(mailOptions_(email,password,1,acudiente_.nombre),(err)=>{
-            if(err){console.log(err);}
+            if(err){logger.error(`createAcudiente: Internal mail server error: ${err}`);}
         });
         const token= await generateJWT(acudiente_.id,acudiente_.nombre,acudiente_.apellido,acudiente_.email,3);
         return res.status(201).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX,token});
@@ -69,7 +69,6 @@ const updateAcudiente= async(req,res=response) =>{
     try{
         let acudiente_ = await Acudiente.findById(req.params.id);
         if(!acudiente_){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
-        //if(req.body.email){return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_ALREADY_EXISTS});}
         await Acudiente.updateOne({_id:req.params.id}, {$set:{...req.body}}, { upsert: true });
         return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
     }catch(e){
