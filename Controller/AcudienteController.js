@@ -19,10 +19,12 @@ const createAcudiente= async(req,res=response)=>{
         acudiente_.password = bcrypt.hashSync( password, bcrypt.genSaltSync() );
         req.body.Scouts.forEach(scout =>{scouts_.unshift(scout);});
         acudiente_.Scout=scouts_; 
+        if(acudiente_.link_imagen==undefined){acudiente_.link_imagen="";}
+        let linkImagen=acudiente_.link_imagen.split('upload/');
+        linkImagen.splice(1,0,'upload/w_1000,c_fill,ar_1:1,g_auto,r_max/');
+        acudiente_.link_imagen = linkImagen.join("");
         await acudiente_.save();
-        transporter.sendMail(mailOptions_(email,password,1,acudiente_.nombre),(err)=>{
-            if(err){logger.error(`createAcudiente: Internal mail server error: ${err}`);}
-        });
+        transporter.sendMail(mailOptions_(email,password,1,acudiente_.nombre),(err)=>{if(err){logger.error(`createAcudiente: Internal mail server error: ${err}`);}});
         const token= await generateJWT(acudiente_.id,acudiente_.nombre,acudiente_.apellido,acudiente_.email,3);
         return res.status(201).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX,token});
     } catch (error) {

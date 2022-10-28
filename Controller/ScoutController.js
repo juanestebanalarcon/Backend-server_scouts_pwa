@@ -18,6 +18,10 @@ const createScout = async(req,res=response) => {
         req.body.esActivo = true;
         dbScout=new Scout(req.body);
         dbScout.password=bcrypt.hashSync(password,bcrypt.genSaltSync());
+        if(dbScout.link_imagen==undefined){dbScout.link_imagen="";}
+        let linkImagen=dbScout.link_imagen.split('upload/');
+        linkImagen.splice(1,0,'upload/w_1000,c_fill,ar_1:1,g_auto,r_max/');
+        dbScout.link_imagen = linkImagen.join("");
         await dbScout.save();
         if(req.body.idRama===undefined){return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_FIELD_REQUIRED});}
         let rama = await Rama.findById(req.body.idRama);
