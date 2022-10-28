@@ -8,7 +8,7 @@ const logger = require('../Helpers/LoggerConfig');
 const createEvento= async(req,res=response)=>{
     try{
         
-        if(req.body.isGeneral!=undefined){
+        if(req.body.isGeneral){
             let evento = new Evento(req.body);
             await evento.save();
             return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});

@@ -36,6 +36,6 @@ inscritos:{
     ref:"Scout",
     required:false
 },
-isGeneral: {Type: Boolean,required:false}
+isGeneral: {type: Boolean,required:false}
 })
 module.exports = model("Evento",Evento)

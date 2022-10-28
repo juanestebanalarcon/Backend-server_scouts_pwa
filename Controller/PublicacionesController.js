@@ -8,7 +8,7 @@ const createPublicacion= async(req,res=response)=>{
     try{
         let publi_ = await Publicaciones.findOne({titulo:req.body.titulo});
         if(publi_){return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_ALREADY_EXISTS});}
-        if(req.body.isGeneral!=undefined){
+        if(req.body.isGeneral){
             let publi = new Publicaciones(req.body);
             await publi.save();
             return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
