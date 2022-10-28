@@ -73,7 +73,7 @@ const deleteRama= async(req,res=response)=>{
     try {
         const rama = await Rama.findById( req.params.id );
         if ( !rama ) {return res.status(404).json({ok: true,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
-        await rama.findByIdAndDelete( req.params.id );
+        await Rama.findByIdAndDelete( req.params.id );
         return res.status(200).json({ok: true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
     } catch (e) {
         logger.error(`deleteRama: Internal server error: ${e}`);
