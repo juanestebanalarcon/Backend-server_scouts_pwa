@@ -93,7 +93,7 @@ const readEventosByDate= async(req,res=response)=>{
 }
 const readlastTowEventosByBranch= async(req,res=response)=>{
     try{
-        const Eventos_ = await Evento.find({ramaAsignada:req.params.idRama}).limit(2);
+        const Eventos_ = await Evento.find({ramaAsignada:req.params.idRama}).sort({_id:-1});
         if(Eventos_){return res.status(200).json({ok:true,Eventos_,msg:RESPONSE_MESSAGES.SUCCESS_2XX});}
         return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
     }catch(e){
