@@ -2,6 +2,7 @@ const {response} = require("express");
 const { RESPONSE_MESSAGES } = require("../Helpers/ResponseMessages");
 const logger = require('../Helpers/LoggerConfig');
 const Publicaciones = require("../Model/Publicaciones");
+const Rama = require("../Model/Rama");
 
 
 const createPublicacion= async(req,res=response)=>{
