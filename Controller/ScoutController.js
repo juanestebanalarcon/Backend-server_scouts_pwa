@@ -149,10 +149,7 @@ const deleteScout = async (req,res=response) =>{
         let acudiente__ = await Acudiente.findOne({Scout:scoutDB.id});
         if(!acudiente__){
                 try{
-                    let ramaOldScout = rama.Scout;
-                    ramaOldScout.forEach((scout)=>{if(scout===req.params.id){rama.Scout.splice(scout, 1);}
-                    });
-                    rama.Scout = ramaOldScout;
+                    rama.Scout.forEach((scout)=>{if(scout===req.params.id){rama.Scout.splice(scout, 1);}});
                     await rama.save();
                     await Scout.findByIdAndDelete(req.params.id);
                     return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});

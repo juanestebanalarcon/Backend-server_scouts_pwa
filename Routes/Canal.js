@@ -5,7 +5,8 @@ const {createCanal,
     readCanal,
     readCanals,
     updateCanal,
-    deleteCanal} = require("../Controller/CanalController");
+    deleteCanal,
+    deletePostFromCanal} = require("../Controller/CanalController");
 const router = Router();
 
 router.post("/create-canal",[
@@ -19,4 +20,5 @@ router.put("/:id",updateCanal);
 router.get("/allCanals",readCanals);
 router.get("/:id",readCanal);
 router.delete("/:id",deleteCanal);
+router.delete("/deletePost/:id/:publicacion",deletePostFromCanal);
 module.exports=router;
