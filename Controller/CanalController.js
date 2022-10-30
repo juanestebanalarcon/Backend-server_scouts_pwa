@@ -69,7 +69,7 @@ const deletePostFromCanal= async(req,res=response)=>{
         canal.publicacion.forEach(publi => {if(publi ===req.params.publicacion){canal.publicacion.splice(publi,1)}});
         return res.status(200).json({ok: true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
     } catch (e) {
-        logger.error(`deleteCanal: Internal server error: ${e}`);
+        logger.error(`deletePostFromCanal: Internal server error: ${e}`);
         return res.status(500).json({ok: false,msg:RESPONSE_MESSAGES.ERR_500});
     }
 }
