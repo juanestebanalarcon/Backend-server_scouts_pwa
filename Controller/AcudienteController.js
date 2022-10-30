@@ -33,7 +33,7 @@ const createAcudiente= async(req,res=response)=>{
 const revalidateToken= async(req,res=response) => {
     let {id,nombre,apellido,email,rol}=req;
     const token= await generateJWT(id,nombre,apellido,email,rol);
-   return res.status(200).json({ok:true,token,uid:id,nombre,email,rol});
+   return res.status(200).json({ok:true,token,uid:id,nombre,apellido,email,rol});
 }
 const readAcudiente= async(req,res=response)=>{
     try{
