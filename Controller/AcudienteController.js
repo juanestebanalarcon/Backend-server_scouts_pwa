@@ -6,7 +6,6 @@ const { mailOptions_, transporter } = require("../Helpers/EmailConfig");
 const{RESPONSE_MESSAGES}=require('../Helpers/ResponseMessages');
 const logger = require('../Helpers/LoggerConfig');
 const Acudiente = require('../Model/Acudiente');
-const Scout = require("../Model/Scout");
 const Rama = require("../Model/Rama");
 
 const createAcudiente= async(req,res=response)=>{

@@ -10,7 +10,7 @@ const createCanal= async(req,res=response)=>{
         let canal_ = await Canal.findOne({nombre:req.body.nombre});
         if(canal_) {return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_ALREADY_EXISTS});}
         canal_ = new Canal(req.body);
-        let publicacion_ = await Publicaciones.findById(req.body.idPubli);
+        let publicacion_ = await Publicaciones.findById(req.body.publicacion);
         if(!publicacion_ ) {return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
         canal_.publicacion.push(publicacion_);
         await canal_.save();
@@ -22,7 +22,7 @@ const createCanal= async(req,res=response)=>{
 }
 const readCanals= async(req,res=response)=>{
     try{
-        const Canals_ = await Canal.find();
+        const Canals_ = await Canal.find().populate("publicacion");
         if(Canals_){return res.status(200).json({ok:true,Canals_});}
         return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
     }catch(e){
@@ -32,7 +32,7 @@ const readCanals= async(req,res=response)=>{
 }
 const readCanal= async(req,res=response)=>{
     try{
-        const Canal_ = await Canal.findById(req.params.id);
+        const Canal_ = await Canal.findById(req.params.id).populate("publicacion");
         if(Canal_){return res.status(200).json({ok:true,Canal_ });}
         return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
     }catch(e){
