@@ -6,6 +6,11 @@ const {createScout,readScouts,readScout,updateScout,deleteScout,
 const { validarJWT } = require("../middlewares/validar-jwt");
 const router = Router();
 
+router.post('/log-in-scout',[
+    check('email','El email es obligatorio').isEmail(),
+    check('password','La es contraseña es obligatoria').isLength({min:8}),
+    validarCampos
+],loginScout);
 router.post("/create-scout",[
     check("nombre","Nombre es obligatorio").not().isEmpty(),
     check("apellido","Nombre es obligatorio").not().isEmpty(),
@@ -14,11 +19,6 @@ router.post("/create-scout",[
     check("celular","celular es obligatorio").not().isEmpty(),
     validarCampos,
 ],createScout);
-router.post('/log-in-scout',[
-    check('email','El email es obligatorio').isEmail(),
-    check('password','La es contraseña es obligatoria').isLength({min:8}),
-    validarCampos
-],loginScout);
 router.put("/:id",updateScout);
 router.get("/allScouts",readScouts);
 router.get("/activeScouts",readActiveScouts);

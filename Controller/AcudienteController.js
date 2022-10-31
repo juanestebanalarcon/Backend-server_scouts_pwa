@@ -23,7 +23,7 @@ const createAcudiente= async(req,res=response)=>{
         linkImagen.splice(1,0,'upload/w_1000,c_fill,ar_1:1,g_auto,r_max/');
         acudiente_.link_imagen = linkImagen.join("");
         await acudiente_.save();
-        transporter.sendMail(mailOptions_(email,password,1,acudiente_.nombre),(err)=>{if(err){logger.error(`createAcudiente: Internal mail server error: ${err}`);}});
+        transporter.sendMail(mailOptions_(req.body.email,password,1,acudiente_.nombre),(err)=>{if(err){logger.error(`createAcudiente: Internal mail server error: ${err}`);}});
         const token= await generateJWT(acudiente_.id,acudiente_.nombre,acudiente_.apellido,acudiente_.email,3);
         return res.status(201).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX,token});
     } catch (error) {
