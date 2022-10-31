@@ -134,7 +134,7 @@ const readEvento= async(req,res=response)=>{
 const getScoutsAsignadosEvento = async(req, res=response) => {
     try{
         let evento_ = await Evento.findById(req.params.id).populate('inscritos');
-        if(evento_.length<=0){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
+        if(evento_.inscritos.length<=0){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
         return res.status(200).json({ok:true,evento_,msg:RESPONSE_MESSAGES.SUCCESS_2XX,Evento:evento_.titulo});
 }
     catch(e){ logger.error(`getScoutAsignadosEvento: Internal server error: ${e}`);
