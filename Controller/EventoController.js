@@ -142,6 +142,17 @@ const getScoutsAsignadosEvento = async(req, res=response) => {
 }
 
 }
+const getTotalInscritosEvento = async(req, res=response) => {
+    try{
+        let evento_ = await Evento.findById(req.params.id);
+        if(!evento_){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
+        return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX,Inscritos:evento_.inscritos.length});
+}
+    catch(e){ logger.error(`getTotalInscritosEvento: Internal server error: ${e}`);
+              return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
+}
+
+}
 
 const updateEvento = async (req, res = response) => {
     try {
@@ -179,6 +190,7 @@ module.exports={
     readEventos,
     readEventosOfWeek,
     getScoutsAsignadosEvento,
+    getTotalInscritosEvento,
     updateEvento,
     deleteEvento
 }
