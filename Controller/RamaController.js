@@ -2,6 +2,7 @@ const {response}=require('express');
 const Rama = require("../Model/Rama");
 const {RESPONSE_MESSAGES}=require('../Helpers/ResponseMessages');
 const logger = require('../Helpers/LoggerConfig');
+const Acudiente = require('../Model/Acudiente');
 
 
 const createRama= async(req,res=response)=>{
@@ -90,7 +91,18 @@ const getScoutsAsignados = async(req, res=response) => {
 catch(e){logger.error(`getScoutsAsignados: Internal server error: ${e}`);
 return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
 }
-
+}
+const getScoutAcudienteBranch = async(req,res=response)=>{
+    try{
+        let branchs = await Rama.findOne({_id:req.params.id}),scoutsBranchId=[],branchObj=[];
+        let scoutsAcudiente = await Acudiente.find();
+        if(!branchs){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
+            branchs.Scout.forEach((scoutAc)=>{
+                scoutsAcudiente.forEach((acudiente__)=>{acudiente__.Scout.forEach((scoutBranch)=>{if(scoutAc===scoutBranch){
+                branchObj.push({_id:rama.id,nombre:rama.nombre,edadMin:rama.edadMin,edadMax:rama.edadMax,Scouts:rama.Scout});
+                scoutsBranchId.push({Rama:rama.id,Scout:scoutAc});}});});});
+        return res.status(200).json({ok: true,msg:RESPONSE_MESSAGES.SUCCESS_2XX,scoutsBranchId,branchObj});
+    }catch(e){logger.error(`getScoutBranch: Internal server error: ${e}`);}
 }
 
 module.exports={
@@ -100,5 +112,6 @@ module.exports={
     updateRama,
     changeScoutBranch,
     deleteRama,
-    getScoutsAsignados
+    getScoutsAsignados,
+    getScoutAcudienteBranch
 }
