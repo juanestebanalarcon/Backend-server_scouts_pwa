@@ -99,8 +99,8 @@ const loginAcudiente= async(req,res=response) => {
      if(!acudiente_){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_EMAIL_NOT_FOUND})}
      let validPassword=bcrypt.compareSync(password,acudiente_.password);
      if(!validPassword){return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_INVALID_PASSWORD})}
-     const token= await generateJWT(acudiente_.id,acudiente_.nombre,acudiente_.email,3);
-     return res.status(200).json({ok:true,_id:acudiente_.id,nombre:acudiente_.nombre,email,rol: 3,token})
+     const token= await generateJWT(acudiente_.id,acudiente_.nombre,acudiente_.apellido,acudiente_.email,3);
+     return res.status(200).json({ok:true,_id:acudiente_.id,nombre:acudiente_.nombre,email,apellido: acudiente_.apellido,rol: 3,token})
     } catch (error) {
         logger.error(`loginAcudiente: Internal server error: ${error}`);
         return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500})
