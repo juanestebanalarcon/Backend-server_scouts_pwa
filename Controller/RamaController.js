@@ -97,7 +97,7 @@ const getScoutAcudienteBranch = async(req,res=response)=>{
         let branchs = await Rama.findOne({_id:req.params.id}),scoutsBranchId=[],branchObj=[];
         let scoutsAcudiente = await Acudiente.find();
         if(!branchs){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
-            branchs.Scout.forEach((scoutAc)=>{
+        branchs.Scout.forEach((scoutAc)=>{
                 scoutsAcudiente.forEach((acudiente__)=>{acudiente__.Scout.forEach((scoutBranch)=>{if(scoutAc===scoutBranch){
                 branchObj.push({_id:rama.id,nombre:rama.nombre,edadMin:rama.edadMin,edadMax:rama.edadMax,Scouts:rama.Scout});
                 scoutsBranchId.push({Rama:rama.id,Scout:scoutAc});}});});});

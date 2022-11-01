@@ -15,7 +15,8 @@ const {createEvento,
     readEventosByBranchAndDate,
     readEventosByDate,
     readGeneralEventos,
-    getTotalInscritosEvento} = require("../Controller/EventoController");
+    getTotalInscritosEvento,
+    isScoutPresent} = require("../Controller/EventoController");
 const router = Router();
 
 router.get("/getEventsOfWeek/:startDate",readEventosOfWeek);
@@ -40,4 +41,5 @@ router.get("/getScoutsAsignadosEvento/:id",getScoutsAsignadosEvento);
 router.delete("/:id",deleteEvento);
 router.get("/:id",readEvento);
 router.get("/countInscritos/:id",getTotalInscritosEvento);
+router.get("/ScoutIsPresent/:id/:idScout",isScoutPresent);
 module.exports=router;
