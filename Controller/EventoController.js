@@ -40,8 +40,10 @@ const addScoutToEvent= async(req,res=response)=>{
 }
 const addScoutsToEvent= async(req,res=response)=>{
     try{
-            let event_ = await Evento.findById(req.params.id);
+            let event_ = await Evento.findById(req.params.id),isPresent = false;
             if(!event_) {return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
+            event_.inscritos.forEach(inscrito => {if(req.body.inscritos.includes(inscrito)){isPresent=true;}});
+            if(isPresent){return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_ALREADY_EXISTS});}
             event_.inscritos=req.body.inscritos;
             await event_.save();
             return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
