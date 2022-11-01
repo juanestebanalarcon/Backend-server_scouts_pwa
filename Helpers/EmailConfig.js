@@ -1,6 +1,10 @@
 const nodemailer = require('nodemailer');
 const { google } = require("googleapis");
 const OAuth2 = google.auth.OAuth2;
+const fs = require('fs');
+const { promisify } = require('util');
+const readFile = promisify(fs.readFile);
+
 
 const OAuth2ClientCentinelas = new OAuth2(process.env.OAUTH_CLIENTID, process.env.OAUTH_CLIENT_SECRET, "https://developers.google.com/oauthplayground/");
 OAuth2ClientCentinelas.setCredentials({ refresh_token: process.env.OAUTH_REFRESH_TOKEN });
@@ -14,7 +18,8 @@ const transporter = nodemailer.createTransport({
         clientId: process.env.OAUTH_CLIENTID,
         clientSecret: process.env.OAUTH_CLIENT_SECRET,
         refreshToken: process.env.OAUTH_REFRESH_TOKEN,
-        accessToken: process.env.OAUTH_ACCESS_TOKEN
+        accessToken:  OAuth2ClientCentinelas.getAccessToken(),
+        expires:1484314697598
     }
 });
 
