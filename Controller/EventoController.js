@@ -30,6 +30,7 @@ const addScoutToEvent= async(req,res=response)=>{
             if(!event_) {return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
             let scout_= await Scout.findById(req.params.idScout);
             if(!scout_) {return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
+            if(event_.inscritos.contains(scout_.id)){return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_ALREADY_EXISTS})};
             event_.inscritos.push(scout_.id);
             await event_.save();
             return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
