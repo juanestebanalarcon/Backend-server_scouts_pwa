@@ -119,12 +119,12 @@ const deleteAcudiente = async (req,res=response) =>{
 }
 const getScoutBranch = async(req,res=response)=>{
     try{
-        let branchs = await Rama.find(),scoutsBranchId=[],branchObj=[];
+        let branchs = await Rama.find().populate("Scout"),scoutsBranchId=[],branchObj=[];
         let scoutsAcudiente = await Acudiente.findOne({_id:req.params.id}).populate("Scout");
         if(!scoutsAcudiente){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
         scoutsAcudiente.Scout.forEach((scoutAc)=>{
-            branchs.forEach((rama)=>{rama.Scout.forEach((scoutBranch)=>{if(scoutAc.id===scoutBranch){
-                branchObj.push({_id:rama.id,nombre:rama.nombre,edadMin:rama.edadMin,edadMax:rama.edadMax,Scouts:rama.Scout});
+            branchs.forEach((rama)=>{rama.Scout.forEach((scoutBranch)=>{if(scoutAc.id===scoutBranch.id){
+                branchObj.push({_id:rama.id,nombre:rama.nombre,edadMin:rama.edadMin,edadMax:rama.edadMax,Scouts:{_id:scoutBranch._id,nombre:scoutBranch.nombre,apellido:scoutBranch.apellido,email:scoutBranch.email,celular:scoutBranch.celular,fecha_nacimiento:scoutBranch.fecha_nacimiento}});
                 scoutsBranchId.push({Rama:rama.id,Scout:{_id:scoutAc._id,nombre:scoutAc.nombre,apellido:scoutAc.apellido,email:scoutAc.email,celular:scoutAc.celular,fecha_nacimiento:scoutAc.fecha_nacimiento}});}});});});
         return res.status(200).json({ok: true,msg:RESPONSE_MESSAGES.SUCCESS_2XX,scoutsBranchId,branchObj});
     }catch(e){logger.error(`getScoutBranch: Internal server error: ${e}`);}
