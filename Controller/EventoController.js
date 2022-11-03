@@ -105,7 +105,7 @@ const readlastTowEventosByBranch= async(req,res=response)=>{
 }
 const readGeneralEventos= async(req,res=response)=>{
     try{
-        const eventos_ = await Evento.find({isGeneral:true}).populate("ramaAsignada").populate("inscritos").sort({fechaYHoraInicio:"ascending"});
+        const eventos_ = await Evento.find({isGeneral:true}).populate("ramaAsignada").populate("inscritos").sort({fechaYHoraInicio:"ascending"}).limit(2);
         if(eventos_.length>0){return res.status(200).json({ok:true,eventos_,msg:RESPONSE_MESSAGES.SUCCESS_2XX});}
         return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
     }catch(e){
