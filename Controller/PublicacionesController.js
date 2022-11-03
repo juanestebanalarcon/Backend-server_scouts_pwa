@@ -95,7 +95,7 @@ const readGeneralPublicaciones= async(req,res=response)=>{
 }
 const readGeneralTwoPublicaciones= async(req,res=response)=>{
     try{
-        const publicaciones_ = await Publicaciones.find({isGeneral:true}).populate({path:"ramaAsignada",populate:{path:"Scout"}}).sort({fecha:"ascending"}).limit(2);
+        const publicaciones_ = await Publicaciones.find({isGeneral:true}).populate({path:"ramaAsignada",populate:{path:"Scout"}}).sort({fecha:"descending"}).limit(2);
         if(publicaciones_.length>0){return res.status(200).json({ok:true,publicaciones_,msg:RESPONSE_MESSAGES.SUCCESS_2XX});}
         return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
     }catch(e){
