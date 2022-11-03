@@ -1,3 +1,8 @@
+/*
+@author Ascent
+Backend developer: Juan Esteban Alarcón
+*/
+
 const cors = require('cors');
 const express = require('express');
 const logger = require('../Helpers/LoggerConfig');
