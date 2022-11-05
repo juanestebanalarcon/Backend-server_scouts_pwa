@@ -52,15 +52,13 @@ const readSuperAdministradors= async(req,res=response)=>{
     }
     
     const loginSuperAdministrador= async(req,res=response) => {
-        const {email,password}=req.body;
         try {
-            const SuperAdministradorDB = await SuperAdministrador.findOne({email});
+            const SuperAdministradorDB = await SuperAdministrador.findOne({email:req.body.email});
             if(!SuperAdministradorDB){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_EMAIL_NOT_FOUND});}
-            const validPassword=bcrypt.compareSync(password,SuperAdministradorDB.password);
-            if(!validPassword){return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_INVALID_PASSWORD});}
+            if(!bcrypt.compareSync(req.body.password,SuperAdministradorDB.password)){return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_INVALID_PASSWORD});}
             const token= await generateJWT(SuperAdministradorDB.id,SuperAdministradorDB.nombre,SuperAdministradorDB.apellido,SuperAdministradorDB.email,0);
-            return res.status(200).json({ok:true,_id:SuperAdministradorDB.id,nombre:SuperAdministradorDB.nombre,apellido:SuperAdministradorDB.apellido,email,rol:0,token});
-    } catch(e) {
+            return res.status(200).json({ok:true,_id:SuperAdministradorDB.id,nombre:SuperAdministradorDB.nombre,apellido:SuperAdministradorDB.apellido,email:SuperAdministradorDB.email,rol:0,token});
+        } catch(e) {
         logger.error(`loginSuperAdmin: Internal server error: ${e}`);
         return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
     }

@@ -108,14 +108,12 @@ const readScoutsWithoutAcudiente= async(req,res=response)=>{
 
 
 const loginScout= async(req,res=response) => {
-    let {email,password}=req.body;
     try {
-     let scoutDB=await Scout.findOne({email});
+     let scoutDB=await Scout.findOne({email:req.body.email});
      if(!scoutDB){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_EMAIL_NOT_FOUND})}
-     let validPassword=bcrypt.compareSync(password,scoutDB.password);
-     if(!validPassword){return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_INVALID_PASSWORD})}
+     if(!bcrypt.compareSync(req.body.password,scoutDB.password)){return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_INVALID_PASSWORD})}
      const token= await generateJWT(scoutDB.id,scoutDB.nombre,scoutDB.apellido,scoutDB.email,2);
-     return res.status(200).json({ok:true,_id:scoutDB.id,nombre:scoutDB.nombre,apellido:scoutDB.apellido,email,rol: 2,token})
+     return res.status(200).json({ok:true,_id:scoutDB.id,nombre:scoutDB.nombre,apellido:scoutDB.apellido,email:req.body.email,rol: 2,token})
     } catch (error) {
         logger.error(`loginScout: Internal server error: ${error}`);
         return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500})

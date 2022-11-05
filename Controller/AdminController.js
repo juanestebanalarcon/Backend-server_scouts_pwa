@@ -107,19 +107,17 @@ const deleteAdmin =async(req,res=response)=>{
             
         }
 const loginAdmin= async(req,res=response) => {
-    const {email,password}=req.body;
     try {
-        const adminDB=await Administrador.findOne({email});
+        const adminDB=await Administrador.findOne({email:req.body.email});
         if(!adminDB){
             logger.error("loginAdmin: admin email not found");
             return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_EMAIL_NOT_FOUND})
         }
-        const validPassword=bcrypt.compareSync(password,adminDB.password);
-        if(!validPassword){return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_INVALID_PASSWORD});}
+        if(!bcrypt.compareSync(req.body.password,adminDB.password)){return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_INVALID_PASSWORD});}
         logger.info("loginAdmin: building admin token");
         const token= await generateJWT(adminDB.id,adminDB.nombre,adminDB.apellido,adminDB.email,1);
         logger.info("loginAdmin: sending admin login info");
-        return res.status(200).json({ok:true,_id:adminDB.id,nombre:adminDB.nombre,apellido:adminDB.apellido,email,rol:1,token})
+        return res.status(200).json({ok:true,_id:adminDB.id,nombre:adminDB.nombre,apellido:adminDB.apellido,email:req.body.email,rol:1,token})
         } catch (e) {
             logger.error(`loginAdmin: Internal server error: ${e}`);
             return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500})
