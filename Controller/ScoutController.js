@@ -40,7 +40,7 @@ const changeScoutState = async(req,res=response) => {
         let scout_ = await Scout.findById(req.params.id);
         if(!scout_){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND}); }
         scout_.esActivo=req.body.esActivo;
-        scout_.save();
+        await scout_.save();
         return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX,scout_});
     }catch(e){logger.error(`changeScoutState: Internal server error: ${error}`);
     return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});}
@@ -171,15 +171,12 @@ const deleteScout = async (req,res=response) =>{
 
 const changePassword = async (req, res)=>{
     try{
-        let {newPassword,currentPassword,email} = req.body;
-        const scoutDB = await Scout.findOne({email:email});
+        let scoutDB = await Scout.findOne({email:req.body.email});
         if(!scoutDB){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_EMAIL_NOT_FOUND});}
-        if(!bcrypt.compareSync(currentPassword,scoutDB.password)){return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_INVALID_PASSWORD})}
-        scoutDB.password = bcrypt.hashSync(newPassword,bcrypt.genSaltSync());
+        if(!bcrypt.compareSync(req.body.currentPassword,scoutDB.password)){return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_INVALID_PASSWORD})}
+        scoutDB.password = bcrypt.hashSync(req.body.newPassword,bcrypt.genSaltSync());
         await scoutDB.save();
-        transporter.sendMail(mailOptions_(scoutDB.email,newPassword,2,scoutDB.nombre),(err)=>{
-            if(err){{logger.error(`changePasswordScout: Internal mail server error: ${err}`);}
-        }});
+        transporter.sendMail(mailOptions_(scoutDB.email,req.body.newPassword,2,scoutDB.nombre),(err)=>{if(err){{logger.error(`changePasswordScout: Internal mail server error: ${err}`);}}});
         return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
 }catch(e){
     logger.error(`changePasswordScout: Internal server error: ${e}`);
