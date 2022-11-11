@@ -11,9 +11,7 @@ const createSuperAdministrador = async(req,res=response) => {
     let password = generateRandomPass(10);
     try {
         let superAdmn=await SuperAdministrador.findOne({email:req.body.email});
-        if(superAdmn){
-            logger.error(`CreateSuperAdmin: Already exists an superAdmin account with the specified email`);
-            return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_ALREADY_EXISTS});}
+        if(superAdmn){return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_ALREADY_EXISTS});}
             let dbSuperAdministrador=new SuperAdministrador(req.body);
             dbSuperAdministrador.password=bcrypt.hashSync(password,bcrypt.genSaltSync());
             const token= await generateJWT(dbSuperAdministrador.id,dbSuperAdministrador.nombre,dbSuperAdministrador.apellido,dbSuperAdministrador.email,0);
@@ -27,11 +25,8 @@ const createSuperAdministrador = async(req,res=response) => {
 const readSuperAdministradors= async(req,res=response)=>{
     try{
         let SuperAdministradors_ = await SuperAdministrador.find( );
-        if(SuperAdministradors_){
-            logger.info("ReadSuperAdmins: sending superAdmins found...");
-            return res.status(200).json({ok:true,SuperAdministradors_,msg:RESPONSE_MESSAGES.SUCCESS_2XX });}
-            logger.error(`ReadSuperAdmins: SuperAdmins not found`);
-            return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
+        if(SuperAdministradors_){return res.status(200).json({ok:true,SuperAdministradors_,msg:RESPONSE_MESSAGES.SUCCESS_2XX });}
+        return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
         }catch(e){
             logger.error(`ReadSuperAdmins: Internal server error: ${e}`);
             return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
@@ -40,10 +35,7 @@ const readSuperAdministradors= async(req,res=response)=>{
     const readSuperAdministrador= async(req,res=response)=>{
         try{
             const SuperAdministrador_ = await SuperAdministrador.findById(req.params.id);
-            if(SuperAdministrador_){
-                logger.info("ReadSuperAdmin: sending superAdmin found...");
-                return res.status(200).json({ok:true,SuperAdministrador_, msg:RESPONSE_MESSAGES.SUCCESS_2XX });}
-            logger.error(`ReadSuperAdmin: SuperAdmin not found`);
+            if(SuperAdministrador_){return res.status(200).json({ok:true,SuperAdministrador_, msg:RESPONSE_MESSAGES.SUCCESS_2XX });}
             return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
         }catch(e){
             logger.error(`ReadSuperAdmin: Internal server error: ${e}`);

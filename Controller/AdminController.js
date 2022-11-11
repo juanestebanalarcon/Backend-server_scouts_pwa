@@ -33,11 +33,8 @@ const revalidateToken= async(req,res=response) => {
 const readAdmin= async(req,res=response)=>{
     try{
         let admin_ = await Administrador.findById(req.params.id);
-        if(admin_){
-            logger.info("ReadAdmin: sending admin found...");
-            return res.status(200).json({ok:true,admin_,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
+        if(admin_){return res.status(200).json({ok:true,admin_,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
         }
-        logger.error(`ReadAdmin: admin not found`);
         return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
     }catch(e){
         logger.error(`ReadAdmin: Internal server error: ${e}`);
@@ -47,9 +44,7 @@ const readAdmin= async(req,res=response)=>{
 const readAdmins= async(req,res=response)=>{
     try{
         let admins_ = await Administrador.find();
-        if(admins_){
-            logger.info("ReadAdmins: sending admins found...");
-            return res.status(200).json({ok:true,admins_});}
+        if(admins_){return res.status(200).json({ok:true,admins_});}
         logger.error(`ReadAdmins: admins not found`);
         return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
         }catch(e)
@@ -61,9 +56,7 @@ const readAdmins= async(req,res=response)=>{
 const readAdminBranch = async(req, res=response)=>{
         try{
             let admon = await Administrador.findById(req.params.id).populate('ramasAsignadas');
-            if(!admon){
-                logger.error(`readAdminBranch: admin not found`);
-                return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND})}
+            if(!admon){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND})}
             return res.status(200).json({ok:true,admon,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
             }catch(e){
                 logger.error(`readAdminBranch: Internal server error: ${e}`);
@@ -73,9 +66,7 @@ const readAdminBranchScouts = async(req, res=response)=>{
         try{
             let admonByBranchScout = await Administrador.findOne({_id:req.params.id}).populate({path:"ramasAsignadas",populate:{path:"Scout"}});
             let ScoutsBranchAdmin =[];
-            if(!admonByBranchScout){
-                logger.error(`readAdminBranch: admin not found`);
-                return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
+            if(!admonByBranchScout){return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
             admonByBranchScout.ramasAsignadas.forEach((rama)=>{rama.Scout.forEach((scout)=>{ScoutsBranchAdmin.push(scout);});});
             return res.status(200).json({ok:true,ScoutsBranchAdmin,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
             }catch(e){
@@ -109,14 +100,9 @@ const deleteAdmin =async(req,res=response)=>{
 const loginAdmin= async(req,res=response) => {
     try {
         const adminDB=await Administrador.findOne({email:req.body.email});
-        if(!adminDB){
-            logger.error("loginAdmin: admin email not found");
-            return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_EMAIL_NOT_FOUND})
-        }
+        if(!adminDB){return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_EMAIL_NOT_FOUND})}
         if(!bcrypt.compareSync(req.body.password,adminDB.password)){return res.status(400).json({ok:false,msg:RESPONSE_MESSAGES.ERR_INVALID_PASSWORD});}
-        logger.info("loginAdmin: building admin token");
         const token= await generateJWT(adminDB.id,adminDB.nombre,adminDB.apellido,adminDB.email,1);
-        logger.info("loginAdmin: sending admin login info");
         return res.status(200).json({ok:true,_id:adminDB.id,nombre:adminDB.nombre,apellido:adminDB.apellido,email:req.body.email,rol:1,token})
         } catch (e) {
             logger.error(`loginAdmin: Internal server error: ${e}`);
