@@ -32,7 +32,7 @@ const readCanals= async(req,res=response)=>{
 }
 const readCanal= async(req,res=response)=>{
     try{
-        const Canal_ = await Canal.findById(req.params.id).populate("publicacion");
+        let Canal_ = await Canal.findById(req.params.id).populate("publicacion");
         if(Canal_){return res.status(200).json({ok:true,Canal_ });}
         return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
     }catch(e){
@@ -42,7 +42,7 @@ const readCanal= async(req,res=response)=>{
 }
 const updateCanal = async (req, res = response) => {
     try {
-        const canal = await Canal.findById( req.params.id );
+        let canal = await Canal.findById( req.params.id );
         if ( !canal ) {return res.status(404).json({ok: true,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
         await Canal.updateOne({_id:req.params.id},{$set:{...req.body}}, { upsert: true });
         return res.status(200).json({ok: true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
@@ -53,7 +53,7 @@ const updateCanal = async (req, res = response) => {
 }
 const deleteCanal= async(req,res=response)=>{ 
     try {
-        const canal = await Canal.findById( req.params.id );
+        let canal = await Canal.findById( req.params.id );
         if ( !canal ) {return res.status(404).json({ok: true,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
         await canal.findByIdAndDelete( req.params.id );
         return res.status(200).json({ok: true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
@@ -64,7 +64,7 @@ const deleteCanal= async(req,res=response)=>{
 }
 const deletePostFromCanal= async(req,res=response)=>{ 
     try {
-        const canal = await Canal.findById( req.params.id );
+        let canal = await Canal.findById( req.params.id );
         if ( !canal ) {return res.status(404).json({ok: true,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
         canal.publicacion.forEach(publi => {if(publi ===req.params.publicacion){canal.publicacion.splice(publi,1)}});
         return res.status(200).json({ok: true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});

@@ -91,12 +91,7 @@ const readScoutsWithoutAcudiente= async(req,res=response)=>{
         let acudiente = await Acudiente.find();
         if(scouts_){
             scouts_.forEach((scout)=>{
-            acudiente.forEach((acudiente)=>{
-                acudiente.Scout.forEach((scout_)=>{
-                    if(scout_!==scout._id){scoutsWithoutAcudiente.push(scout);}
-                })
-            });
-            });
+            acudiente.forEach((acudiente)=>{acudiente.Scout.forEach((scout_)=>{ if(scout_!==scout._id){scoutsWithoutAcudiente.push(scout);} }); }); });
             return res.status(200).json({ok:true,scoutsWithoutAcudiente });
         }    
         return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
