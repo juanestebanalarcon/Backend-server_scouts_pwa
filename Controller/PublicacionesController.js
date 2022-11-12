@@ -14,7 +14,7 @@ const createPublicacion= async(req,res=response)=>{
             await publi.save();
             return res.status(200).json({ok:true,msg:RESPONSE_MESSAGES.SUCCESS_2XX});
         }
-        let rama_asociada = await Rama.findById(req.body.ramaAsociada);
+        let rama_asociada = await Rama.findById(req.body.ramaAsignada);
         if(!rama_asociada ) {return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});}
         publi_ = new Publicaciones(req.body);
         publi_.ramaAsignada.push(rama_asociada.id)
