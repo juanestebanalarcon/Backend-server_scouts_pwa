@@ -113,9 +113,19 @@ const readGeneralEventos= async(req,res=response)=>{
         return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
     }
 }
+const readGeneralEventosDate= async(req,res=response)=>{
+    try{
+        const eventos_ = await Evento.find({isGeneral:true,fechaYHoraInicio:{$gte:req.params.fechaInicio}}).populate("ramaAsignada").populate("inscritos").sort({fechaYHoraInicio:"ascending"});
+        if(eventos_.length>0){return res.status(200).json({ok:true,eventos_,msg:RESPONSE_MESSAGES.SUCCESS_2XX});}
+        return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
+    }catch(e){
+        logger.error(`readGeneralPublicaciones: Internal server error: ${e}`);
+        return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
+    }
+}
 const readTwoGeneralEventos= async(req,res=response)=>{
     try{
-        const eventos_ = await Evento.find({isGeneral:true}).populate("ramaAsignada").populate("inscritos").sort({fechaYHoraInicio:"ascending"}).limit(2);
+        const eventos_ = await Evento.find({isGeneral:true,fechaYHoraInicio:{$gte:req.body.fechaInicio}}).populate("ramaAsignada").populate("inscritos").sort({fechaYHoraInicio:"ascending"}).limit(2);
         if(eventos_.length>0){return res.status(200).json({ok:true,eventos_,msg:RESPONSE_MESSAGES.SUCCESS_2XX});}
         return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
     }catch(e){
@@ -126,6 +136,16 @@ const readTwoGeneralEventos= async(req,res=response)=>{
 const readAllEventosByBranch= async(req,res=response)=>{
     try{
         const Eventos_ = await Evento.find({ramaAsignada:req.params.idRama}).sort({fechaYHoraInicio:"ascending"});
+        if(Eventos_){return res.status(200).json({ok:true,Eventos_,msg:RESPONSE_MESSAGES.SUCCESS_2XX});}
+        return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
+    }catch(e){
+        logger.error(`readAllEventosByBranch: Internal server error: ${e}`);
+        return res.status(500).json({ok:false,msg:RESPONSE_MESSAGES.ERR_500});
+    }
+}
+const readAllEventosByBranchDate= async(req,res=response)=>{
+    try{
+        const Eventos_ = await Evento.find({ramaAsignada:req.params.idRama,fechaYHoraInicio:{$gte:req.params.fechaInicio}}).sort({fechaYHoraInicio:"ascending"});
         if(Eventos_){return res.status(200).json({ok:true,Eventos_,msg:RESPONSE_MESSAGES.SUCCESS_2XX});}
         return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
     }catch(e){
@@ -212,7 +232,9 @@ module.exports={
     getScoutsAsignadosEvento,
     getTotalInscritosEvento,
     readTwoGeneralEventos,
+    readAllEventosByBranchDate,
     isScoutPresent,
     updateEvento,
-    deleteEvento
+    deleteEvento,
+    readGeneralEventosDate
 }
