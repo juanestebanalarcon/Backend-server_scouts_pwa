@@ -115,7 +115,7 @@ const readGeneralEventos= async(req,res=response)=>{
 }
 const readGeneralEventosDate= async(req,res=response)=>{
     try{
-        const eventos_ = await Evento.find({isGeneral:true,fechaYHoraInicio:{$gte:req.params.fechaInicio}}).populate("ramaAsignada").populate("inscritos").sort({fechaYHoraInicio:"ascending"});
+        const eventos_ = await Evento.find({isGeneral:true,fechaYHoraInicio:{$gte:new Date()}}).populate("ramaAsignada").populate("inscritos").sort({fechaYHoraInicio:"ascending"});
         if(eventos_.length>0){return res.status(200).json({ok:true,eventos_,msg:RESPONSE_MESSAGES.SUCCESS_2XX});}
         return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
     }catch(e){
@@ -145,7 +145,7 @@ const readAllEventosByBranch= async(req,res=response)=>{
 }
 const readAllEventosByBranchDate= async(req,res=response)=>{
     try{
-        const Eventos_ = await Evento.find({ramaAsignada:req.params.idRama,fechaYHoraInicio:{$gte:req.params.fechaInicio}}).sort({fechaYHoraInicio:"ascending"});
+        const Eventos_ = await Evento.find({ramaAsignada:req.params.idRama,fechaYHoraInicio:{$gte:new Date()}}).sort({fechaYHoraInicio:"ascending"});
         if(Eventos_){return res.status(200).json({ok:true,Eventos_,msg:RESPONSE_MESSAGES.SUCCESS_2XX});}
         return res.status(404).json({ok:false,msg:RESPONSE_MESSAGES.ERR_NOT_FOUND});
     }catch(e){

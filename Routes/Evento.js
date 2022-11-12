@@ -38,10 +38,10 @@ router.get("/getEventByBranchAndDate/:idRama/:startDate",readEventosByBranchAndD
 router.get("/getEventByDate/:startDate",readEventosByDate);
 router.get("/allEvents",readEventos);
 router.get("/allGeneralEvents",readGeneralEventos);
-router.get("/allGeneralEventsDate/:fechaInicio",readGeneralEventosDate);
+router.get("/allGeneralEventsDate",readGeneralEventosDate);
 router.get("/TwoGeneralEvents",readTwoGeneralEventos);
 router.get("/getlastTwoEventByBranch/:idRama",readlastTowEventosByBranch);
-router.get("/getlastTwoEventByBranchDate/:idRama/:fechaInicio",readAllEventosByBranchDate);
+router.get("/getlastTwoEventByBranchDate/:idRama",readAllEventosByBranchDate);
 router.get("/getAllEventByBranch/:idRama",readAllEventosByBranch);
 router.get("/getScoutsAsignadosEvento/:id",getScoutsAsignadosEvento);
 router.delete("/:id",deleteEvento);
