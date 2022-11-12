@@ -1,25 +1,7 @@
 const { Router } = require("express");
 const {check} = require("express-validator");
 const { validarCampos } = require("../middlewares/validar-campos");
-const {createEvento,
-    readEvento,
-    readEventos,
-    updateEvento,
-    deleteEvento,
-    getScoutsAsignadosEvento,
-    addScoutToEvent,
-    addScoutsToEvent,
-    readlastTowEventosByBranch,
-    readEventosOfWeek,
-    readAllEventosByBranch,
-    readEventosByBranchAndDate,
-    readEventosByDate,
-    readGeneralEventos,
-    getTotalInscritosEvento,
-    isScoutPresent,
-    readTwoGeneralEventos,
-    readAllEventosByBranchDate,
-    readGeneralEventosDate} = require("../Controller/EventoController");
+const {createEvento,readEvento,readEventos,updateEvento,deleteEvento,getScoutsAsignadosEvento,addScoutToEvent,addScoutsToEvent,readlastTowEventosByBranch,readEventosOfWeek,readAllEventosByBranch,readEventosByBranchAndDate,readEventosByDate,readGeneralEventos,getTotalInscritosEvento,isScoutPresent,readTwoGeneralEventos,readAllEventosByBranchDate,readGeneralEventosDate} = require("../Controller/EventoController");
 const router = Router();
 
 router.get("/getEventsOfWeek/:startDate",readEventosOfWeek);
