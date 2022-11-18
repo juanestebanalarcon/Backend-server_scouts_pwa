@@ -49,7 +49,7 @@ const mailOptions_ = (recipient, password, type, name) => {
         <div id="seg" style="height: fit-content;/* width: 100vh; */ color: #ffff;padding: 0.5em;">
         <div id='img-principal' scr=""></div>
   
-        <img style="width: 20%;margin: auto;display: block;" src="https://i.ibb.co/HPNN42R/logo192.png" alt="logo512" >
+        <img style="width: 20%;margin: auto;display: block;" src="https://res.cloudinary.com/scouts2022/image/upload/v1668790197/recursos/logo192_z8bm0b.png" alt="logo512" >
         <div id="seg" style="height: fit-content;/* width: 100vh; */ color: #ffff;padding: 0.5em;">
         <h1 style=" font-family: 'Montserrat';font-style: normal;font-weight: 550;font-size: 2.5em;text-align: center;color: #00395A;margin-top: 0px;margin-bottom: 0px;">¡Hola, ${name}!</h1>
         <hr style="margin: auto;width: 95%;margin-top: 0.5em;margin-bottom: 1em;margin-left: 0px;border: 0;border-top: 1px solid #eee;"/>
