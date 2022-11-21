@@ -44,9 +44,9 @@ class Server {
         cert: fs.readFileSync(this.ssl_certificate),
         key: fs.readFileSync(this.ssl_certificate_key)
     },this.app).listen(this.port,'0.0.0.0', (err) => {if(!err){logger.info(`Server running on port ${this.port} with certificate`);} 
-      else{logger.error(`Error ocurred while trying to run backend server: ${err}`);}});
+    logger.error(`Error ocurred while trying to run backend server: ${err}`);});
     }else{
-    this.app.listen( this.port, (err) => {if(!err){logger.info(`Server running on port ${this.port} sin certificado`);} 
+    this.app.listen( this.port, (err) => {if(!err){logger.info(`Server running on port ${this.port} without certificate`);} 
     logger.error(`Error ocurred while trying to run backend server: ${err}`);});
     }
     }
