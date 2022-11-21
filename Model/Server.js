@@ -40,17 +40,16 @@ class Server {
     
     startService(){
     if (fs.existsSync(this.ssl_certificate) && fs.existsSync(this.ssl_certificate_key)) {
-    console.log("Aquí entra");
     https.createServer({
         cert: fs.readFileSync(this.ssl_certificate),
         key: fs.readFileSync(this.ssl_certificate_key)
-    },this.app).listen(this.port, (err) => {if (!err) {logger.info(`Server running on port ${this.port} con certificado `);} 
-    logger.error(err);});
-    }
+    },this.app).listen(this.port,'0.0.0.0', (err) => {if(!err){logger.info(`Server running on port ${this.port} with certificate`);} 
+      else{logger.error(`Error ocurred while trying to run backend server: ${err}`);}});
+    }else{
     this.app.listen( this.port, (err) => {if(!err){logger.info(`Server running on port ${this.port} sin certificado`);} 
-    logger.error(err);});
+    logger.error(`Error ocurred while trying to run backend server: ${err}`);});
     }
-    
+    }
     middlewares(){
     this.app.use( cors() );
     this.app.use( express.json() );
