@@ -43,10 +43,10 @@ class Server {
     https.createServer({
         cert: fs.readFileSync(this.ssl_certificate),
         key: fs.readFileSync(this.ssl_certificate_key)
-    },this.app).listen(this.port,'0.0.0.0', (err) => {if (!err) {logger.info(`Server running on port ${this.port} `);} 
+    },this.app).listen(this.port, (err) => {if (!err) {logger.info(`Server running on port ${this.port} `);} 
     logger.error(err);});
     }
-    this.app.listen( this.port,'0.0.0.0', (err) => {if(!err){logger.info(`Server running on port ${this.port} `);} 
+    this.app.listen( this.port, (err) => {if(!err){logger.info(`Server running on port ${this.port} `);} 
     logger.error(err);});
     }
     
