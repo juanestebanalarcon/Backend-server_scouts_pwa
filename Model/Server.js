@@ -6,6 +6,8 @@ Backend developer: Juan Esteban Alarcón
 const cors = require('cors');
 const express = require('express');
 const logger = require('../Helpers/LoggerConfig');
+const https = require('https');
+const fs = require('fs');
 
 class Server {
     constructor(){
@@ -19,6 +21,8 @@ class Server {
         this.CanalPath='canal';
         this.EventoPath='evento';
         this.PublicacionesPath='publicaciones';
+        this.ssl_certificate = '/etc/nginx/ssl/centinel_scoutscentinelas113cali.org/centinelapp_scoutscentinelas113cali_org.crt';
+        this.ssl_certificate_key = '/etc/nginx/ssl/centinel_scoutscentinelas113cali.org/centinelapp.scoutscentinelas113.key'; 
         this.middlewares();
         this.routes();
     }
@@ -33,6 +37,18 @@ class Server {
         this.app.use(`${process.env.BASE_URL}/${this.PublicacionesPath}`, require('../Routes/Publicaciones'));
     }
     listen() {this.app.listen( this.port,'0.0.0.0', () => {logger.info(`Server running on port ${this.port} `);});}
+    
+    startService(){
+    if (fs.existsSync(this.ssl_certificate) && fs.existsSync(this.ssl_certificate_key)) {
+    https.createServer({
+        cert: fs.readFileSync(this.ssl_certificate),
+        key: fs.readFileSync(this.ssl_certificate_key)
+    },this.app).listen(this.port,'0.0.0.0', (err) => {if (!err) {logger.info(`Server running on port ${this.port} `);} 
+    logger.error(err);});
+    }
+    this.app.listen( this.port,'0.0.0.0', (err) => {if(!err){logger.info(`Server running on port ${this.port} `);} 
+    logger.error(err);});
+    }
     
     middlewares(){
     this.app.use( cors() );
