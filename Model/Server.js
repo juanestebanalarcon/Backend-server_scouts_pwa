@@ -23,8 +23,8 @@ class Server {
         this.PublicacionesPath='publicaciones';
         // this.ssl_certificate = '/etc/nginx/ssl/centinel_scoutscentinelas113cali.org/centinelapp_scoutscentinelas113cali_org.crt';
         // this.ssl_certificate_key = '/etc/nginx/ssl/centinel_scoutscentinelas113cali.org/centinelapp.scoutscentinelas113.key'; 
-        this.ssl_certificate = 'centinelapp_scoutscentinelas113cali_org.crt';
-        this.ssl_certificate_key = 'centinelapp.scoutscentinelas113.key'; 
+        this.ssl_certificate = './centinelapp_scoutscentinelas113cali_org.crt';
+        this.ssl_certificate_key = './centinelapp.scoutscentinelas113.key'; 
         this.middlewares();
         this.routes();
     }
