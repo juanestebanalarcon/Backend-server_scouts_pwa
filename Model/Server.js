@@ -21,8 +21,6 @@ class Server {
         this.CanalPath='canal';
         this.EventoPath='evento';
         this.PublicacionesPath='publicaciones';
-        // this.ssl_certificate = '/etc/nginx/ssl/centinel_scoutscentinelas113cali.org/centinelapp_scoutscentinelas113cali_org.crt';
-        // this.ssl_certificate_key = '/etc/nginx/ssl/centinel_scoutscentinelas113cali.org/centinelapp.scoutscentinelas113.key'; 
         this.ssl_certificate = './centinelapp_scoutscentinelas113cali_org.crt';
         this.ssl_certificate_key = './centinelapp.scoutscentinelas113.key'; 
         this.middlewares();
@@ -40,37 +38,16 @@ class Server {
     }
     listen() {this.app.listen( this.port,'0.0.0.0', () => {logger.info(`Server running on port ${this.port} `);});}
     
-    // startService(){
-    // try {
-    // https.createServer({
-    //     cert: fs.readFileSync(this.ssl_certificate),
-    //     key: fs.readFileSync(this.ssl_certificate_key)
-    // },this.app).listen(this.port,'0.0.0.0', (err) => {if(!err){logger.info(`Server running on port ${this.port} with certificate`);} 
-    // logger.error(`Error ocurred while trying to run backend server: ${err}`);});
-    // }catch(e){
-    // this.app.listen( this.port, (err) => {if(!err){logger.info(`Server running on port ${this.port} without certificate`);} 
-    // logger.error(`Error ocurred while trying to run backend server: ${e}`);});
-    // }
-    // }
-
     startService(){
         try {
-            
             https.createServer({
                 cert: fs.readFileSync(this.ssl_certificate),
                 key: fs.readFileSync(this.ssl_certificate_key)
-            },this.app).listen(
-                this.port, () => {                    
-                    logger.info(`Server running on port ${this.port} with certificate`);
-                }
-            )
-
+            },this.app).listen(this.port,'0.0.0.0', () => {logger.info(`Server running on port ${this.port} with certificate`);})
         } catch (error) {
             logger.error(`Error ocurred while trying to run backend server: ${error}`);
         }
     }
-
-
     middlewares(){
     this.app.use( cors() );
     this.app.use( express.json() );
