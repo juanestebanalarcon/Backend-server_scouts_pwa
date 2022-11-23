@@ -9,6 +9,8 @@ const logger = require('../Helpers/LoggerConfig');
 const https = require('https');
 const fs = require('fs');
 
+https.globalAgent.options.rejectUnauthorized = false;
+
 class Server {
     constructor(){
         this.app  = express();
