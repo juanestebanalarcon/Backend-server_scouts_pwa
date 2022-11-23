@@ -43,7 +43,7 @@ class Server {
             https.createServer({
                 cert: fs.readFileSync(this.ssl_certificate),
                 key: fs.readFileSync(this.ssl_certificate_key)
-            },this.app).listen(this.port,'0.0.0.0', () => {logger.info(`Server running on port ${this.port} with certificate`);})
+            },this.app).listen(this.port, () => {logger.info(`Server running on port ${this.port} with certificate`);})
         } catch (error) {
             logger.error(`Error ocurred while trying to run backend server: ${error}`);
         }
